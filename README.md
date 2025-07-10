@@ -1,2 +1,0 @@
-# dailyminutes
-Dailyminutes Laundry
