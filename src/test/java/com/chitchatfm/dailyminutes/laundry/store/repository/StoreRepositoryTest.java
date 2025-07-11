@@ -13,6 +13,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Store repository test.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 class StoreRepositoryTest {
@@ -20,6 +23,9 @@ class StoreRepositoryTest {
     @Autowired
     private StoreRepository storeRepository;
 
+    /**
+     * Test save and find store.
+     */
     @Test
     void testSaveAndFindStore() {
         StoreEntity store = new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null);
@@ -33,6 +39,9 @@ class StoreRepositoryTest {
         assertThat(foundStore.get().getName()).isEqualTo("Test Store");
     }
 
+    /**
+     * Test find all stores.
+     */
     @Test
     void testFindAllStores() {
         storeRepository.save(new StoreEntity(null, "Store A", "Address A", "111", "a@example.com", null));
@@ -42,6 +51,9 @@ class StoreRepositoryTest {
         assertThat(stores).hasSize(2);
     }
 
+    /**
+     * Test delete store.
+     */
     @Test
     void testDeleteStore() {
         StoreEntity store = new StoreEntity(null, "Store to Delete", "Delete Address", "333", "delete@example.com", null);

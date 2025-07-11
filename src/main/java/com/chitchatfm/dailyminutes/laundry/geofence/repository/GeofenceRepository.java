@@ -1,11 +1,20 @@
 package com.chitchatfm.dailyminutes.laundry.geofence.repository;
 
 import com.chitchatfm.dailyminutes.laundry.geofence.domain.model.GeofenceEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
 
-public interface GeofenceRepository extends JpaRepository<GeofenceEntity, Long> {
+/**
+ * The interface Geofence repository.
+ */
+public interface GeofenceRepository extends ListCrudRepository<GeofenceEntity, Long> {
+    /**
+     * Find by store id list.
+     *
+     * @param storeId the store id
+     * @return the list
+     */
     List<GeofenceEntity> findByStoreId(Long storeId);
 }
 

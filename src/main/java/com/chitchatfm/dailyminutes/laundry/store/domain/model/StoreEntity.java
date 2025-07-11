@@ -1,14 +1,17 @@
 package com.chitchatfm.dailyminutes.laundry.store.domain.model;
 
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Entity
+/**
+ * The type Store entity.
+ */
 @Table(name = "DL_STORE")
 @Getter
 @Setter
@@ -18,15 +21,15 @@ import lombok.ToString;
 public class StoreEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generated ID
     private Long id;
 
     private String name;
+
     private String address;
+
     private String contactNumber;
+
     private String email;
 
-
-    @Column(nullable = false)
     private Long managerId;
 }

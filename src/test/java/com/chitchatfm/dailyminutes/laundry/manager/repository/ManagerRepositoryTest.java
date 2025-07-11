@@ -11,6 +11,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Manager repository test.
+ */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 class ManagerRepositoryTest {
@@ -18,6 +21,9 @@ class ManagerRepositoryTest {
     @Autowired
     private ManagerRepository managerRepository;
 
+    /**
+     * Test save and find manager.
+     */
     @Test
     void testSaveAndFindManager() {
         ManagerEntity manager = new ManagerEntity(null, "John Doe", "john.doe@example.com");

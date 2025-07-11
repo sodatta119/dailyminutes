@@ -3,22 +3,32 @@ package com.chitchatfm.dailyminutes.laundry.geofence.repository;
 import com.chitchatfm.dailyminutes.laundry.geofence.domain.model.GeofenceEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest; // Changed from DataJpaTest
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.context.annotation.ComponentScan; // Added import
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories; // Added import
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
+/**
+ * The type Geofence repository test.
+ */
+@DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@EnableJdbcRepositories(basePackages = "com.chitchatfm.dailyminutes.laundry.geofence.repository") // Specify repository package
+@ComponentScan(basePackages = "com.chitchatfm.dailyminutes.laundry.geofence.domain.model") // Specify domain model package
 class GeofenceRepositoryTest {
 
     @Autowired
     private GeofenceRepository geofenceRepository;
 
+    /**
+     * Test save and find geofence.
+     */
     @Test
     void testSaveAndFindGeofence() {
         GeofenceEntity geofence = new GeofenceEntity(null, 1L, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true);
@@ -32,6 +42,9 @@ class GeofenceRepositoryTest {
         assertThat(foundGeofence.get().getName()).isEqualTo("Zone A");
     }
 
+    /**
+     * Test find by store id.
+     */
     @Test
     void testFindByStoreId() {
         geofenceRepository.save(new GeofenceEntity(null, 100L, "Coords1", "TYPE1", "GF1", true));
@@ -41,5 +54,37 @@ class GeofenceRepositoryTest {
         List<GeofenceEntity> geofences = geofenceRepository.findByStoreId(100L);
         assertThat(geofences).hasSize(2);
         assertThat(geofences.get(0).getStoreId()).isEqualTo(100L);
+    }
+
+    /**
+     * Test update geofence.
+     */
+    @Test
+    void testUpdateGeofence() {
+        GeofenceEntity geofence = new GeofenceEntity(null, 5L, "POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))", "PICKUP_ZONE", "Zone B", true);
+        GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
+
+        savedGeofence.setName("Updated Zone B");
+        savedGeofence.setActive(false);
+        GeofenceEntity updatedGeofence = geofenceRepository.save(savedGeofence);
+
+        Optional<GeofenceEntity> foundUpdatedGeofence = geofenceRepository.findById(updatedGeofence.getId());
+        assertThat(foundUpdatedGeofence).isPresent();
+        assertThat(foundUpdatedGeofence.get().getName()).isEqualTo("Updated Zone B");
+        assertThat(foundUpdatedGeofence.get().isActive()).isFalse();
+    }
+
+    /**
+     * Test delete geofence.
+     */
+    @Test
+    void testDeleteGeofence() {
+        GeofenceEntity geofence = new GeofenceEntity(null, 99L, "POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))", "TEST_ZONE", "Zone C to Delete", true);
+        GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
+
+        geofenceRepository.deleteById(savedGeofence.getId());
+
+        Optional<GeofenceEntity> deletedGeofence = geofenceRepository.findById(savedGeofence.getId());
+        assertThat(deletedGeofence).isNotPresent();
     }
 }

@@ -1,19 +1,13 @@
 package com.chitchatfm.dailyminutes.laundry.geofence.domain.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Entity
+/**
+ * The type Geofence entity.
+ */
 @Table(name = "DL_GEOFENCE")
 @Getter
 @Setter
@@ -23,13 +17,10 @@ import lombok.ToString;
 public class GeofenceEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generated ID
     private Long id;
 
-    @Column(nullable = false)
     private Long storeId;
 
-    @Column(columnDefinition = "TEXT")
     private String polygonCoordinates;
 
     private String geofenceType;
