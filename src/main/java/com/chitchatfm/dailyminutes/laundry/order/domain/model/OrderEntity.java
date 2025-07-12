@@ -24,7 +24,7 @@ public class OrderEntity {
 
     private Long storeId;
 
-    private String customerId;
+    private Long customerId;
 
     private LocalDateTime orderDate;
 

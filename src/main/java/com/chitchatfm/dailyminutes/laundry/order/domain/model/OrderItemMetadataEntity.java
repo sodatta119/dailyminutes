@@ -22,7 +22,7 @@ public class OrderItemMetadataEntity {
 
     private String type; // e.g., "IMAGE", "TEXT_NOTE", "SPECIAL_INSTRUCTION"
 
-    private String value; // Content of the metadata (e.g., image URL, text)
+    private String itemValue; // Content of the metadata (e.g., image URL, text)
 
     private String description; // Optional description for the metadata
 }

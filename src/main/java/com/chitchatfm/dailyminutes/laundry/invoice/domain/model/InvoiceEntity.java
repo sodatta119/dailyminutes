@@ -7,9 +7,6 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * The type Invoice entity.
- */
 @Table(name = "DL_INVOICE")
 @Getter
 @Setter
@@ -23,7 +20,7 @@ public class InvoiceEntity {
 
     private String swipeInvoiceId; // ID from the external Swipe system
 
-    private String customerPhoneNumber; // Logical link to the Customer module
+    private Long customerId; // Logical link to the Customer module
 
     private LocalDateTime invoiceDate;
 

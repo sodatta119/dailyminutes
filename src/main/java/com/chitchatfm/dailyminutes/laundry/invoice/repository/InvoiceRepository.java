@@ -4,6 +4,7 @@ import com.chitchatfm.dailyminutes.laundry.invoice.domain.model.InvoiceEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.ListCrudRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,5 +18,7 @@ public interface InvoiceRepository extends ListCrudRepository<InvoiceEntity, Lon
      * @return the optional
      */
     Optional<InvoiceEntity> findBySwipeInvoiceId(String swipeInvoiceId);
+
+    List<InvoiceEntity> findAllByCustomerId(Long customerId);
 }
 

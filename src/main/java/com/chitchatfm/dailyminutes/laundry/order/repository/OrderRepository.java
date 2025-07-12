@@ -16,7 +16,7 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Long> {
      * @param customerId the customer id
      * @return the list
      */
-    List<OrderEntity> findByCustomerId(String customerId);
+    List<OrderEntity> findByCustomerId(Long customerId);
 
     /**
      * Find by store id list.

@@ -3,9 +3,12 @@ package com.chitchatfm.dailyminutes.laundry.manager.repository;
 import com.chitchatfm.dailyminutes.laundry.manager.domain.model.ManagerEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
 import java.util.Optional;
 
@@ -14,8 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * The type Manager repository test.
  */
-@DataJpaTest
+@DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@EnableJdbcRepositories(basePackages = "com.chitchatfm.dailyminutes.laundry.manager.repository") // Specify repository package
+@ComponentScan(basePackages = "com.chitchatfm.dailyminutes.laundry.manager.domain.model") // Specify domain model package
 class ManagerRepositoryTest {
 
     @Autowired

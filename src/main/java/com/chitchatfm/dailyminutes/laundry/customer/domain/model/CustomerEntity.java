@@ -16,9 +16,11 @@ import org.springframework.data.relational.core.mapping.Table;
 public class CustomerEntity {
 
     @Id
-    private String id;
+    private Long id;
 
     private String subscriberId;
+
+    private String phoneNumber;
 
     private String name;
 
@@ -26,7 +28,11 @@ public class CustomerEntity {
 
     private String address;
 
-    private Long homeGeofenceId;
+    private String homeGeofenceId;
+
+    private String addressLongitude;
+
+    private String addressLatitude;
 
 }
 

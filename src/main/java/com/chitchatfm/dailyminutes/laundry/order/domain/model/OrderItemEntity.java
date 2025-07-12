@@ -25,7 +25,7 @@ public class OrderItemEntity {
 
     private Long catalogId;
 
-    private Integer quantity;
+    private BigDecimal quantity;
 
     private BigDecimal itemPriceAtOrder;
 
