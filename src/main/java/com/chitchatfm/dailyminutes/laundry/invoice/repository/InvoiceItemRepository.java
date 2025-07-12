@@ -1,3 +1,7 @@
+/**
+ * @author Somendra Datta <sodatta@gmail.com>
+ * @version 12/07/25
+ */
 package com.chitchatfm.dailyminutes.laundry.invoice.repository;
 
 import com.chitchatfm.dailyminutes.laundry.invoice.domain.model.InvoiceEntity;

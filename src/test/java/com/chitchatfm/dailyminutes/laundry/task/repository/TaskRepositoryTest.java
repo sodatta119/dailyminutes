@@ -18,6 +18,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Task repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = "com.chitchatfm.dailyminutes.laundry.task.repository")
@@ -27,6 +30,9 @@ class TaskRepositoryTest {
     @Autowired
     private TaskRepository taskRepository;
 
+    /**
+     * Test save and find task.
+     */
     @Test
     void testSaveAndFindTask() {
         TaskEntity task = new TaskEntity(null, "Pickup Order 1", "Collect laundry from customer", TaskType.PICKUP,
@@ -43,6 +49,9 @@ class TaskRepositoryTest {
         assertThat(foundTask.get().getOrderId()).isEqualTo(1L);
     }
 
+    /**
+     * Test update task.
+     */
     @Test
     void testUpdateTask() {
         TaskEntity task = new TaskEntity(null, "Process Order 2", "Wash and iron clothes", TaskType.PROCESS,
@@ -61,6 +70,9 @@ class TaskRepositoryTest {
         assertThat(foundUpdatedTask.get().getTaskComment()).isEqualTo("Started processing at 10:00 AM");
     }
 
+    /**
+     * Test delete task.
+     */
     @Test
     void testDeleteTask() {
         TaskEntity task = new TaskEntity(null, "Delivery Order 3", "Deliver clean clothes", TaskType.DELIVERY,
@@ -73,6 +85,9 @@ class TaskRepositoryTest {
         assertThat(deletedTask).isNotPresent();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         taskRepository.save(new TaskEntity(null, "Task A", "Desc A", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr A", null, "Dest A", null, "Comment A", 100L));
@@ -84,6 +99,9 @@ class TaskRepositoryTest {
         assertThat(tasks.get(0).getOrderId()).isEqualTo(100L);
     }
 
+    /**
+     * Test find by agent id.
+     */
     @Test
     void testFindByAgentId() {
         taskRepository.save(new TaskEntity(null, "Task D", "Desc D", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, null, 1L, "Addr D", null, "Dest D", null, "Comment D", 300L));
@@ -95,6 +113,9 @@ class TaskRepositoryTest {
         assertThat(tasks.get(0).getAgentId()).isEqualTo(1L);
     }
 
+    /**
+     * Test find by team id.
+     */
     @Test
     void testFindByTeamId() {
         taskRepository.save(new TaskEntity(null, "Task G", "Desc G", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10L, null, "Addr G", null, "Dest G", null, "Comment G", 600L));
@@ -106,6 +127,9 @@ class TaskRepositoryTest {
         assertThat(tasks.get(0).getTeamId()).isEqualTo(10L);
     }
 
+    /**
+     * Test find by status.
+     */
     @Test
     void testFindByStatus() {
         taskRepository.save(new TaskEntity(null, "Task J", "Desc J", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr J", null, "Dest J", null, "Comment J", 900L));
@@ -117,6 +141,9 @@ class TaskRepositoryTest {
         assertThat(tasks.get(0).getStatus()).isEqualTo(TaskStatus.NEW);
     }
 
+    /**
+     * Test find by type.
+     */
     @Test
     void testFindByType() {
         taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr M", null, "Dest M", null, "Comment M", 1000L));
@@ -128,6 +155,9 @@ class TaskRepositoryTest {
         assertThat(tasks.get(0).getType()).isEqualTo(TaskType.PICKUP);
     }
 
+    /**
+     * Test find by name.
+     */
     @Test
     void testFindByName() {
         taskRepository.save(new TaskEntity(null, "Specific Task Name", "A very specific task", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr X", null, "Dest X", null, "Comment X", 1100L));

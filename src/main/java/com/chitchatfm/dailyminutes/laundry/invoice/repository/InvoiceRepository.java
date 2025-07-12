@@ -1,3 +1,7 @@
+/**
+ * @author Somendra Datta <sodatta@gmail.com>
+ * @version 12/07/25
+ */
 package com.chitchatfm.dailyminutes.laundry.invoice.repository;
 
 import com.chitchatfm.dailyminutes.laundry.invoice.domain.model.InvoiceEntity;
@@ -19,6 +23,12 @@ public interface InvoiceRepository extends ListCrudRepository<InvoiceEntity, Lon
      */
     Optional<InvoiceEntity> findBySwipeInvoiceId(String swipeInvoiceId);
 
+    /**
+     * Find all by customer id list.
+     *
+     * @param customerId the customer id
+     * @return the list
+     */
     List<InvoiceEntity> findAllByCustomerId(Long customerId);
 }
 

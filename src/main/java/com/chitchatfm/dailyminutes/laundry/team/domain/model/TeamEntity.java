@@ -1,3 +1,7 @@
+/**
+ * @author Somendra Datta <sodatta@gmail.com>
+ * @version 12/07/25
+ */
 package com.chitchatfm.dailyminutes.laundry.team.domain.model;
 
 import lombok.*;

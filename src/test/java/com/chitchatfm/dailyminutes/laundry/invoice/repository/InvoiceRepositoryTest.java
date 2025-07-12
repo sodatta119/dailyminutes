@@ -25,6 +25,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Invoice repository test.
+ */
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = {"com.chitchatfm.dailyminutes.laundry.invoice.repository", "com.chitchatfm.dailyminutes.laundry.catalog.repository", "com.chitchatfm.dailyminutes.laundry.customer.repository"})
@@ -48,6 +51,9 @@ class InvoiceRepositoryTest {
     private CatalogEntity catalog2;
     private CustomerEntity customer;
 
+    /**
+     * Setup.
+     */
     @BeforeEach
     void setup(){
     this.customer=customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
@@ -55,6 +61,9 @@ class InvoiceRepositoryTest {
         this.catalog2=catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("2.20")));
     }
 
+    /**
+     * Test save and find invoice with items.
+     */
     @Test
     void testSaveAndFindInvoiceWithItems() {
         // 1. Save the parent InvoiceEntity
@@ -81,6 +90,9 @@ class InvoiceRepositoryTest {
         assertThat(foundItems.stream().map(InvoiceItemEntity::getCatalogId)).containsExactlyInAnyOrder(catalog1.getId(), catalog2.getId());
     }
 
+    /**
+     * Test find by swipe invoice id.
+     */
     @Test
     void testFindBySwipeInvoiceId() {
         invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", customer.getId(), LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
@@ -89,6 +101,9 @@ class InvoiceRepositoryTest {
         assertThat(foundInvoice.get().getCustomerId()).isEqualTo(customer.getId());
     }
 
+    /**
+     * Test update invoice.
+     */
     @Test
     void testUpdateInvoice() {
         InvoiceEntity invoice = new InvoiceEntity(null, "UPDATE789", customer.getId(), LocalDateTime.now(), new BigDecimal("70.00"), new BigDecimal("7.00"), new BigDecimal("3.00"));
@@ -104,6 +119,9 @@ class InvoiceRepositoryTest {
         assertThat(updatedInvoice.get().getTotalTax()).isEqualByComparingTo("7.50");
     }
 
+    /**
+     * Test delete invoice and associated items.
+     */
     @Test
     void testDeleteInvoiceAndAssociatedItems() {
         // Create and save Invoice

@@ -15,6 +15,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Team repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class) // Exclude main app class
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = "com.chitchatfm.dailyminutes.laundry.team.repository") // Specify repository package
@@ -24,6 +27,9 @@ class TeamRepositoryTest {
     @Autowired
     private TeamRepository teamRepository;
 
+    /**
+     * Test save and find team.
+     */
     @Test
     void testSaveAndFindTeam() {
         TeamEntity team = new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS);
@@ -38,6 +44,9 @@ class TeamRepositoryTest {
         assertThat(foundTeam.get().getRole()).isEqualTo(TeamRole.OPS);
     }
 
+    /**
+     * Test update team.
+     */
     @Test
     void testUpdateTeam() {
         TeamEntity team = new TeamEntity(null, "Support Team Alpha", "Customer support", TeamRole.SUPPORT);
@@ -54,6 +63,9 @@ class TeamRepositoryTest {
         assertThat(updatedTeam.get().getRole()).isEqualTo(TeamRole.ADMIN);
     }
 
+    /**
+     * Test delete team.
+     */
     @Test
     void testDeleteTeam() {
         TeamEntity team = new TeamEntity(null, "Fleet Team X", "Vehicle management", TeamRole.FLEET);
@@ -64,6 +76,9 @@ class TeamRepositoryTest {
         assertThat(deletedTeam).isNotPresent();
     }
 
+    /**
+     * Test find by name.
+     */
     @Test
     void testFindByName() {
         teamRepository.save(new TeamEntity(null, "Unique Team Name", "A unique team", TeamRole.OPS));

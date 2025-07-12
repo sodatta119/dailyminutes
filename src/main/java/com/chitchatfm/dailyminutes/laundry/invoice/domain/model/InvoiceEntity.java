@@ -1,3 +1,7 @@
+/**
+ * @author Somendra Datta <sodatta@gmail.com>
+ * @version 12/07/25
+ */
 package com.chitchatfm.dailyminutes.laundry.invoice.domain.model;
 
 import lombok.*;
@@ -7,6 +11,9 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Invoice entity.
+ */
 @Table(name = "DL_INVOICE")
 @Getter
 @Setter

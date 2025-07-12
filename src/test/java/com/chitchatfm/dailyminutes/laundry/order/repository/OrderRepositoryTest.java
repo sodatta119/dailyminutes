@@ -28,6 +28,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Order repository test.
+ */
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = {
@@ -63,6 +66,9 @@ class OrderRepositoryTest {
     @Autowired
     private CatalogRepository catalogRepository;
 
+    /**
+     * Test save and find order with items and metadata.
+     */
     @Test
     void testSaveAndFindOrderWithItemsAndMetadata() {
 
@@ -103,6 +109,9 @@ class OrderRepositoryTest {
         assertThat(foundMetadata1.stream().map(OrderItemMetadataEntity::getType)).containsExactlyInAnyOrder("IMAGE", "TEXT_NOTE");
     }
 
+    /**
+     * Test find by customer id.
+     */
     @Test
     void testFindByCustomerId() { // Updated test method name
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -120,6 +129,9 @@ class OrderRepositoryTest {
         assertThat(orders.get(0).getCustomerId()).isEqualTo(customer1.getId()); // Assert customer ID
     }
 
+    /**
+     * Test find by store id.
+     */
     @Test
     void testFindByStoreId() {
         CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
@@ -137,6 +149,9 @@ class OrderRepositoryTest {
         assertThat(orders.get(0).getStoreId()).isEqualTo(store1.getId());
     }
 
+    /**
+     * Test update order.
+     */
     @Test
     void testUpdateOrder() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -154,6 +169,9 @@ class OrderRepositoryTest {
         assertThat(updatedOrder.get().getTotalAmount()).isEqualByComparingTo("12.50");
     }
 
+    /**
+     * Test delete order and associated items.
+     */
     @Test
     void testDeleteOrderAndAssociatedItems() {
         // Create and save Order

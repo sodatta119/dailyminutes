@@ -1,3 +1,7 @@
+/**
+ * @author Somendra Datta <sodatta@gmail.com>
+ * @version 12/07/25
+ */
 package com.chitchatfm.dailyminutes.laundry.task.repository;
 
 import com.chitchatfm.dailyminutes.laundry.task.domain.model.TaskEntity;
@@ -52,6 +56,12 @@ public interface TaskRepository extends ListCrudRepository<TaskEntity, Long> {
      */
     List<TaskEntity> findByType(TaskType type);
 
+    /**
+     * Find by name optional.
+     *
+     * @param specificTaskName the specific task name
+     * @return the optional
+     */
     Optional<TaskEntity> findByName(String specificTaskName);
 }
 
