@@ -3,6 +3,9 @@ package com.chitchatfm.dailyminutes.laundry.agent.repository;
 import com.chitchatfm.dailyminutes.laundry.agent.domain.model.AgentEntity;
 import com.chitchatfm.dailyminutes.laundry.agent.domain.model.AgentDesignation;
 import com.chitchatfm.dailyminutes.laundry.agent.domain.model.AgentState;
+import com.chitchatfm.dailyminutes.laundry.team.domain.model.TeamEntity;
+import com.chitchatfm.dailyminutes.laundry.team.domain.model.TeamRole;
+import com.chitchatfm.dailyminutes.laundry.team.repository.TeamRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -22,19 +25,23 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@EnableJdbcRepositories(basePackages = "com.chitchatfm.dailyminutes.laundry.agent.repository")
-@ComponentScan(basePackages = "com.chitchatfm.dailyminutes.laundry.agent.domain.model")
+@EnableJdbcRepositories(basePackages = {"com.chitchatfm.dailyminutes.laundry.agent.repository","com.chitchatfm.dailyminutes.laundry.team.repository"})
+@ComponentScan(basePackages = {"com.chitchatfm.dailyminutes.laundry.agent.domain.model","com.chitchatfm.dailyminutes.laundry.team.domain.model"})
 class AgentRepositoryTest {
 
     @Autowired
     private AgentRepository agentRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
 
     /**
      * Test save and find agent.
      */
     @Test
     void testSaveAndFindAgent() {
-        AgentEntity agent = new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 1L, "9876543210", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT); // Updated
+        TeamEntity team=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        AgentEntity agent = new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "9876543210", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT); // Updated
         AgentEntity savedAgent = agentRepository.save(agent);
 
         assertThat(savedAgent).isNotNull();
@@ -51,7 +58,8 @@ class AgentRepositoryTest {
      */
     @Test
     void testFindByPhoneNumber() {
-        AgentEntity agent = new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, 2L, "1112223333", "A002", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT); // Updated
+        TeamEntity team=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        AgentEntity agent = new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, team.getId(), "1112223333", "A002", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT); // Updated
         agentRepository.save(agent);
         Optional<AgentEntity> foundAgent = agentRepository.findByPhoneNumber("1112223333");
         assertThat(foundAgent).isPresent();
@@ -63,7 +71,8 @@ class AgentRepositoryTest {
      */
     @Test
     void testFindByUniqueId() {
-        AgentEntity agent = new AgentEntity(null, "Agent Gamma", AgentState.INACTIVE, 3L, "4445556666", "A003", LocalDate.now(), LocalDate.now().plusDays(10), AgentDesignation.PROCESS_MANAGER);
+        TeamEntity team=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        AgentEntity agent = new AgentEntity(null, "Agent Gamma", AgentState.INACTIVE, team.getId(), "4445556666", "A003", LocalDate.now(), LocalDate.now().plusDays(10), AgentDesignation.PROCESS_MANAGER);
         agentRepository.save(agent);
         Optional<AgentEntity> foundAgent = agentRepository.findByUniqueId("A003");
         assertThat(foundAgent).isPresent();
@@ -75,13 +84,15 @@ class AgentRepositoryTest {
      */
     @Test
     void testFindByTeamId() {
-        agentRepository.save(new AgentEntity(null, "Agent Delta", AgentState.ACTIVE, 10L, "7778889999", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        agentRepository.save(new AgentEntity(null, "Agent Epsilon", AgentState.ACTIVE, 10L, "0001112222", "A005", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT));
-        agentRepository.save(new AgentEntity(null, "Agent Zeta", AgentState.INACTIVE, 20L, "3334445555", "A006", LocalDate.now(), null, AgentDesignation.CUSTOMER_SUPPORT));
+        TeamEntity team1=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        TeamEntity team2=teamRepository.save(new TeamEntity(null, "team2","team2", TeamRole.FLEET));
+        agentRepository.save(new AgentEntity(null, "Agent Delta", AgentState.ACTIVE, team1.getId(), "7778889999", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        agentRepository.save(new AgentEntity(null, "Agent Epsilon", AgentState.ACTIVE, team1.getId(), "0001112222", "A005", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT));
+        agentRepository.save(new AgentEntity(null, "Agent Zeta", AgentState.INACTIVE, team2.getId(), "3334445555", "A006", LocalDate.now(), null, AgentDesignation.CUSTOMER_SUPPORT));
 
-        List<AgentEntity> agents = agentRepository.findByTeamId(10L);
+        List<AgentEntity> agents = agentRepository.findByTeamId(team1.getId());
         assertThat(agents).hasSize(2);
-        assertThat(agents.get(0).getTeamId()).isEqualTo(10L);
+        assertThat(agents.get(0).getTeamId()).isEqualTo(team1.getId());
     }
 
     /**
@@ -89,8 +100,9 @@ class AgentRepositoryTest {
      */
     @Test
     void testFindByState() {
-        agentRepository.save(new AgentEntity(null, "Agent Eta", AgentState.ACTIVE, 1L, "6667778888", "A007", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        agentRepository.save(new AgentEntity(null, "Agent Theta", AgentState.INACTIVE, 1L, "9990001111", "A008", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT));
+        TeamEntity team=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        agentRepository.save(new AgentEntity(null, "Agent Eta", AgentState.ACTIVE, team.getId(), "6667778888", "A007", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        agentRepository.save(new AgentEntity(null, "Agent Theta", AgentState.INACTIVE, team.getId(), "9990001111", "A008", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT));
 
         List<AgentEntity> activeAgents = agentRepository.findByState(AgentState.ACTIVE);
         assertThat(activeAgents).hasSize(1);
@@ -102,9 +114,12 @@ class AgentRepositoryTest {
      */
     @Test
     void testFindByDesignation() {
-        agentRepository.save(new AgentEntity(null, "Agent Iota", AgentState.ACTIVE, 1L, "1231231234", "A009", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        agentRepository.save(new AgentEntity(null, "Agent Kappa", AgentState.ACTIVE, 2L, "4564564567", "A010", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        agentRepository.save(new AgentEntity(null, "Agent Lambda", AgentState.ACTIVE, 3L, "7897897890", "A011", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT));
+        TeamEntity team1=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        TeamEntity team2=teamRepository.save(new TeamEntity(null, "team2","team2", TeamRole.FLEET));
+        TeamEntity team3=teamRepository.save(new TeamEntity(null, "team3","team3", TeamRole.FLEET));
+        agentRepository.save(new AgentEntity(null, "Agent Iota", AgentState.ACTIVE, team1.getId(), "1231231234", "A009", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        agentRepository.save(new AgentEntity(null, "Agent Kappa", AgentState.ACTIVE, team2.getId(), "4564564567", "A010", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        agentRepository.save(new AgentEntity(null, "Agent Lambda", AgentState.ACTIVE, team3.getId(), "7897897890", "A011", LocalDate.now(), null, AgentDesignation.PROCESS_AGENT));
 
         List<AgentEntity> fieldAgents = agentRepository.findByDesignation(AgentDesignation.FLEET_AGENT);
         assertThat(fieldAgents).hasSize(2);
@@ -116,7 +131,8 @@ class AgentRepositoryTest {
      */
     @Test
     void testUpdateAgent() {
-        AgentEntity agent = new AgentEntity(null, "Agent Update", AgentState.ACTIVE, 1L, "1002003000", "U001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT); // Updated
+        TeamEntity team=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        AgentEntity agent = new AgentEntity(null, "Agent Update", AgentState.ACTIVE, team.getId(), "1002003000", "U001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT); // Updated
         AgentEntity savedAgent = agentRepository.save(agent);
 
         savedAgent.setState(AgentState.INACTIVE);
@@ -134,7 +150,8 @@ class AgentRepositoryTest {
      */
     @Test
     void testDeleteAgent() {
-        AgentEntity agent = new AgentEntity(null, "Agent Delete", AgentState.ACTIVE, 1L, "9999999999", "D001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT); // Updated
+        TeamEntity team=teamRepository.save(new TeamEntity(null, "team1","team1", TeamRole.FLEET));
+        AgentEntity agent = new AgentEntity(null, "Agent Delete", AgentState.ACTIVE, team.getId(), "9999999999", "D001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT); // Updated
         AgentEntity savedAgent = agentRepository.save(agent);
 
         agentRepository.deleteById(savedAgent.getId());

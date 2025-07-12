@@ -6,6 +6,7 @@ import com.chitchatfm.dailyminutes.laundry.task.domain.model.TaskType;
 import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The interface Task repository.
@@ -50,5 +51,7 @@ public interface TaskRepository extends ListCrudRepository<TaskEntity, Long> {
      * @return the list
      */
     List<TaskEntity> findByType(TaskType type);
+
+    Optional<TaskEntity> findByName(String specificTaskName);
 }
 
