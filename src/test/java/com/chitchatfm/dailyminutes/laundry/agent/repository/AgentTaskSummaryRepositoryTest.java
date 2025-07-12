@@ -40,6 +40,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Agent task summary repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = {"com.chitchatfm.dailyminutes.laundry.agent.repository", "com.chitchatfm.dailyminutes.laundry.task.repository", "com.chitchatfm.dailyminutes.laundry.team.repository", "com.chitchatfm.dailyminutes.laundry.store.repository", "com.chitchatfm.dailyminutes.laundry.customer.repository", "com.chitchatfm.dailyminutes.laundry.order.repository"})
@@ -67,16 +70,37 @@ class AgentTaskSummaryRepositoryTest {
     @Autowired
     private AgentRepository agentRepository;
 
+    /**
+     * The Store.
+     */
     StoreEntity store;
+    /**
+     * The Customer.
+     */
     CustomerEntity customer;
 
+    /**
+     * The Order.
+     */
     OrderEntity order;
 
+    /**
+     * The Team.
+     */
     TeamEntity team;
+    /**
+     * The Agent.
+     */
     AgentEntity agent;
+    /**
+     * The Task.
+     */
     TaskEntity task;
 
 
+    /**
+     * Sets .
+     */
     @BeforeEach
     void setup() {
         this.store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -87,6 +111,9 @@ class AgentTaskSummaryRepositoryTest {
         this.task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, team.getId(), agent.getId(), "Addr M", null, "Dest M", null, "Comment M", order.getId()));
     }
 
+    /**
+     * Test save and find agent task summary.
+     */
     @Test
     void testSaveAndFindAgentTaskSummary() {
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, task.getId(), // taskId
@@ -104,6 +131,9 @@ class AgentTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getAgentId()).isEqualTo(agent.getId()); // Re-assert agentId
     }
 
+    /**
+     * Test update agent task summary.
+     */
     @Test
     void testUpdateAgentTaskSummary() {
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, task.getId(), // taskId
@@ -122,6 +152,9 @@ class AgentTaskSummaryRepositoryTest {
         assertThat(updatedSummary.get().getTaskName()).isEqualTo("Completed Order 456");
     }
 
+    /**
+     * Test delete agent task summary.
+     */
     @Test
     void testDeleteAgentTaskSummary() {
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, task.getId(), // taskId
@@ -134,6 +167,9 @@ class AgentTaskSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by agent id.
+     */
     @Test
     void testFindByAgentId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -156,6 +192,9 @@ class AgentTaskSummaryRepositoryTest {
         assertThat(tasksForAgent20.stream().allMatch(s -> s.getAgentId().equals(agent1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by task status.
+     */
     @Test
     void testFindByTaskStatus() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
