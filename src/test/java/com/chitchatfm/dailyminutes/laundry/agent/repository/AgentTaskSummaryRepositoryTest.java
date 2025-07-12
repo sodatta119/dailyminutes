@@ -139,9 +139,9 @@ class AgentTaskSummaryRepositoryTest {
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, task.getId(), // taskId
                 agent.getId(), // agentId
                 "Process Order 456", "PROCESS", "STARTED", LocalDateTime.now(), "Facility A", "Facility B", order.getId());
-        agentTaskSummaryRepository.save(summary);
+        summary = agentTaskSummaryRepository.save(summary);
 
-        AgentTaskSummaryEntity foundSummary = agentTaskSummaryRepository.findById(agent.getId()).orElseThrow();
+        AgentTaskSummaryEntity foundSummary = agentTaskSummaryRepository.findById(summary.getId()).orElseThrow();
         foundSummary.setTaskStatus("COMPLETED");
         foundSummary.setTaskName("Completed Order 456");
         agentTaskSummaryRepository.save(foundSummary);
