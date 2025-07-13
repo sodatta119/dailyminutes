@@ -31,7 +31,7 @@ class GeofenceRepositoryTest {
      */
     @Test
     void testSaveAndFindGeofence() {
-        GeofenceEntity geofence = new GeofenceEntity(null, 1L, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true);
+        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true);
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
 
         assertThat(savedGeofence).isNotNull();
@@ -43,25 +43,11 @@ class GeofenceRepositoryTest {
     }
 
     /**
-     * Test find by store id.
-     */
-    @Test
-    void testFindByStoreId() {
-        geofenceRepository.save(new GeofenceEntity(null, 100L, "Coords1", "TYPE1", "GF1", true));
-        geofenceRepository.save(new GeofenceEntity(null, 100L, "Coords2", "TYPE2", "GF2", true));
-        geofenceRepository.save(new GeofenceEntity(null, 200L, "Coords3", "TYPE3", "GF3", true));
-
-        List<GeofenceEntity> geofences = geofenceRepository.findByStoreId(100L);
-        assertThat(geofences).hasSize(2);
-        assertThat(geofences.get(0).getStoreId()).isEqualTo(100L);
-    }
-
-    /**
      * Test update geofence.
      */
     @Test
     void testUpdateGeofence() {
-        GeofenceEntity geofence = new GeofenceEntity(null, 5L, "POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))", "PICKUP_ZONE", "Zone B", true);
+        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))", "PICKUP_ZONE", "Zone B", true);
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
 
         savedGeofence.setName("Updated Zone B");
@@ -79,7 +65,7 @@ class GeofenceRepositoryTest {
      */
     @Test
     void testDeleteGeofence() {
-        GeofenceEntity geofence = new GeofenceEntity(null, 99L, "POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))", "TEST_ZONE", "Zone C to Delete", true);
+        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))", "TEST_ZONE", "Zone C to Delete", true);
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
 
         geofenceRepository.deleteById(savedGeofence.getId());

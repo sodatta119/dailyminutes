@@ -35,4 +35,8 @@ public class OrderEntity {
     private OrderStatus status;
 
     private BigDecimal totalAmount;
+//
+//    private String orderAddress;
+//
+//    private Long orderGeofenceId;
 }

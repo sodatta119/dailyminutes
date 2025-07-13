@@ -31,13 +31,5 @@ public class CustomerEntity {
 
     private String email;
 
-    private String address;
-
-    private String homeGeofenceId;
-
-    private String addressLongitude;
-
-    private String addressLatitude;
-
 }
 

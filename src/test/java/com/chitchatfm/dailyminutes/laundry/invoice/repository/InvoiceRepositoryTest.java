@@ -56,7 +56,7 @@ class InvoiceRepositoryTest {
      */
     @BeforeEach
     void setup(){
-    this.customer=customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
+    this.customer=customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         this.catalog1=catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("1.50")));
         this.catalog2=catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("2.20")));
     }

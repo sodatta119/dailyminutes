@@ -73,7 +73,7 @@ class OrderRepositoryTest {
     void testSaveAndFindOrderWithItemsAndMetadata() {
 
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
 
         OrderEntity order = new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50"));
         OrderEntity savedOrder = orderRepository.save(order);
@@ -117,8 +117,8 @@ class OrderRepositoryTest {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
         StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10L));
         StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store3", "123 Main St", "123-456-7890", "test@example.com", 10L));
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB124", "9876543211", "John Doe", "john@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB124", "9876543211", "John Doe", "john@example.com"));
 
         orderRepository.save(new OrderEntity(null, store1.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00")));
         orderRepository.save(new OrderEntity(null, store2.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.DELIVERED, new BigDecimal("20.00")));
@@ -134,9 +134,9 @@ class OrderRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB124", "9876543211", "John Doe", "john@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
-        CustomerEntity customer3 = customerRepository.save(new CustomerEntity(null, "SUB125", "9876543211", "Foo Bar", "fb@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB124", "9876543211", "John Doe", "john@example.com"));
+        CustomerEntity customer3 = customerRepository.save(new CustomerEntity(null, "SUB125", "9876543211", "Foo Bar", "fb@example.com"));
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
         StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10L));
 
@@ -155,7 +155,7 @@ class OrderRepositoryTest {
     @Test
     void testUpdateOrder() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         OrderEntity order = new OrderEntity(null, store1.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00"));
         OrderEntity savedOrder = orderRepository.save(order);
 
@@ -176,7 +176,7 @@ class OrderRepositoryTest {
     void testDeleteOrderAndAssociatedItems() {
         // Create and save Order
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com", "101 Elm St, Springfield, IL", "GEOFENCE_HOME_1", "12.345", "67.890"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         CatalogEntity catalog=catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
 
         OrderEntity order = new OrderEntity(null, store1.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("5.00"));

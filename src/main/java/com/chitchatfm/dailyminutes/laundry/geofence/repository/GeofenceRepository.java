@@ -13,12 +13,5 @@ import java.util.List;
  * The interface Geofence repository.
  */
 public interface GeofenceRepository extends ListCrudRepository<GeofenceEntity, Long> {
-    /**
-     * Find by store id list.
-     *
-     * @param storeId the store id
-     * @return the list
-     */
-    List<GeofenceEntity> findByStoreId(Long storeId);
 }
 

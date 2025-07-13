@@ -23,8 +23,6 @@ public class GeofenceEntity {
     @Id
     private Long id;
 
-    private Long storeId;
-
     private String polygonCoordinates;
 
     private String geofenceType;
