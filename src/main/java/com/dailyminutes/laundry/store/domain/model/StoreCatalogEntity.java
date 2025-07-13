@@ -1,5 +1,5 @@
 /**
- * @author Somendra Datta <sodatta@example.com>
+ * @author Somendra Datta <sodatta@gmail.com>
  * @version 13/07/25
  */
 package com.dailyminutes.laundry.store.domain.model;

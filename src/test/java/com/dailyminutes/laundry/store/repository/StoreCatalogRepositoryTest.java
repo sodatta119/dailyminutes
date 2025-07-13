@@ -23,6 +23,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Store catalog repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.store.repository",
@@ -40,11 +43,17 @@ class StoreCatalogRepositoryTest { // Updated class name
     @Autowired
     private CatalogRepository catalogRepository;
 
+    /**
+     * Setup.
+     */
     @BeforeEach
     void setup(){
 
     }
 
+    /**
+     * Test save and find store catalog.
+     */
     @Test
     void testSaveAndFindStoreCatalog() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -63,6 +72,9 @@ class StoreCatalogRepositoryTest { // Updated class name
         assertThat(foundSupport.get().getCatalogId()).isEqualTo(catalog.getId());
     }
 
+    /**
+     * Test update store catalog.
+     */
     @Test
     void testUpdateStoreCatalog() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -86,6 +98,9 @@ class StoreCatalogRepositoryTest { // Updated class name
         assertThat(foundUpdatedSupport.get().getCatalogId()).isEqualTo(catalog2.getId());
     }
 
+    /**
+     * Test delete store catalog.
+     */
     @Test
     void testDeleteStoreCatalog() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -98,6 +113,9 @@ class StoreCatalogRepositoryTest { // Updated class name
         assertThat(deletedSupport).isNotPresent();
     }
 
+    /**
+     * Test find by store id.
+     */
     @Test
     void testFindByStoreId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -115,6 +133,9 @@ class StoreCatalogRepositoryTest { // Updated class name
         assertThat(storeCatalogs.stream().allMatch(s -> s.getStoreId().equals(store1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by catalog id.
+     */
     @Test
     void testFindByCatalogId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
@@ -131,6 +152,9 @@ class StoreCatalogRepositoryTest { // Updated class name
         assertThat(storeCatalogs.stream().allMatch(s -> s.getCatalogId().equals(catalog1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by store id and catalog id.
+     */
     @Test
     void testFindByStoreIdAndCatalogId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10L));

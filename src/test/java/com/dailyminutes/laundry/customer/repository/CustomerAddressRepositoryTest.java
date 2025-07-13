@@ -20,6 +20,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Customer address repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.customer.repository",
@@ -40,11 +43,18 @@ class CustomerAddressRepositoryTest {
     private GeofenceEntity geofence;
     private CustomerEntity customer;
 
+    /**
+     * Setup.
+     */
     @BeforeEach
     void setup(){
         geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
     }
+
+    /**
+     * Test save and find customer address.
+     */
     @Test
     void testSaveAndFindCustomerAddress() {
         CustomerAddressEntity address = new CustomerAddressEntity(
@@ -70,6 +80,9 @@ class CustomerAddressRepositoryTest {
         assertThat(foundAddress.get().getCity()).isEqualTo("Springfield");
     }
 
+    /**
+     * Test save address with nullable fields null.
+     */
     @Test
     void testSaveAddressWithNullableFieldsNull() {
         CustomerAddressEntity address = new CustomerAddressEntity(
@@ -87,6 +100,9 @@ class CustomerAddressRepositoryTest {
         assertThat(savedAddress.getCountry()).isNull();
     }
 
+    /**
+     * Test update customer address.
+     */
     @Test
     void testUpdateCustomerAddress() {
         CustomerAddressEntity address = new CustomerAddressEntity(
@@ -107,6 +123,9 @@ class CustomerAddressRepositoryTest {
         assertThat(updatedAddress.get().isDefault()).isTrue();
     }
 
+    /**
+     * Test delete customer address.
+     */
     @Test
     void testDeleteCustomerAddress() {
         CustomerAddressEntity address = new CustomerAddressEntity(
@@ -118,6 +137,9 @@ class CustomerAddressRepositoryTest {
         assertThat(deletedAddress).isNotPresent();
     }
 
+    /**
+     * Test find by customer id.
+     */
     @Test
     void testFindByCustomerId() {
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -133,6 +155,9 @@ class CustomerAddressRepositoryTest {
         assertThat(addressesForCustomer5.stream().allMatch(a -> a.getCustomerId().equals(customer1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by customer id and is default true.
+     */
     @Test
     void testFindByCustomerIdAndIsDefaultTrue() {
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -150,6 +175,9 @@ class CustomerAddressRepositoryTest {
         assertThat(defaultAddressForCustomer7.get().isDefault()).isTrue();
     }
 
+    /**
+     * Test find by geofence id.
+     */
     @Test
     void testFindByGeofenceId() {
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -166,6 +194,9 @@ class CustomerAddressRepositoryTest {
         assertThat(addressesInGeofence401.stream().allMatch(a -> a.getGeofenceId().equals(customer1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by customer id and address type.
+     */
     @Test
     void testFindByCustomerIdAndAddressType() {
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
