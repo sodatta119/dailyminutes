@@ -2,12 +2,19 @@ package com.dailyminutes.laundry.store.repository;
 
 
 import com.dailyminutes.DailyminutesApplication;
+import com.dailyminutes.laundry.agent.domain.model.AgentDesignation;
+import com.dailyminutes.laundry.agent.domain.model.AgentEntity;
+import com.dailyminutes.laundry.agent.domain.model.AgentState;
+import com.dailyminutes.laundry.agent.repository.AgentRepository;
 import com.dailyminutes.laundry.catalog.domain.model.CatalogEntity;
 import com.dailyminutes.laundry.catalog.domain.model.CatalogType;
 import com.dailyminutes.laundry.catalog.domain.model.UnitType;
 import com.dailyminutes.laundry.catalog.repository.CatalogRepository;
 import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity; // Updated import
 import com.dailyminutes.laundry.store.domain.model.StoreEntity;
+import com.dailyminutes.laundry.team.domain.model.TeamEntity;
+import com.dailyminutes.laundry.team.domain.model.TeamRole;
+import com.dailyminutes.laundry.team.repository.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +25,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +37,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.store.repository",
+        "com.dailyminutes.laundry.team.repository",
+        "com.dailyminutes.laundry.agent.repository",
         "com.dailyminutes.laundry.catalog.repository"})
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.store.domain.model",
-        "com.dailyminutes.laundry.catalog.domain.model"})
+        "com.dailyminutes.laundry.catalog.domain.model",
+        "com.dailyminutes.laundry.team.domain.model",
+        "com.dailyminutes.laundry.agent.domain.model"})
 class StoreCatalogRepositoryTest { // Updated class name
 
     @Autowired
@@ -41,13 +53,23 @@ class StoreCatalogRepositoryTest { // Updated class name
     private StoreRepository storeRepository;
 
     @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
+    private AgentRepository agentRepository;
+
+    @Autowired
     private CatalogRepository catalogRepository;
 
+    private TeamEntity team;
+    private AgentEntity manager;
     /**
      * Setup.
      */
     @BeforeEach
     void setup(){
+        team=teamRepository.save(new TeamEntity(null, "Unique Team Name", "A unique team", TeamRole.OPS));
+        manager = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "9876543210", "A001", LocalDate.now(), null, AgentDesignation.STORE_AGENT)); // Updated
 
     }
 
@@ -56,7 +78,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testSaveAndFindStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
         CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
         StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), catalog.getId());
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
@@ -77,7 +99,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testUpdateStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
         CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
         CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
         StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), catalog1.getId());
@@ -103,7 +125,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testDeleteStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
         CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
         StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), catalog.getId());
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
@@ -118,8 +140,8 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByStoreId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
         CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
         CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
         CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dryclean", UnitType.KG, new BigDecimal("3.50")));
@@ -138,8 +160,8 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByCatalogId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10L));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
         CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
         CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
 
@@ -157,7 +179,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByStoreIdAndCatalogId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
         CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
         CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
 

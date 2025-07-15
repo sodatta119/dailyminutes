@@ -16,7 +16,7 @@ public enum AgentDesignation {
     /**
      * Process agent agent designation.
      */
-    PROCESS_AGENT,
+    STORE_AGENT,
     /**
      * Process manager agent designation.
      */
