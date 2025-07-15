@@ -5,14 +5,14 @@
 package com.dailyminutes.laundry.agent.repository;
 
 import com.dailyminutes.laundry.agent.domain.model.AgentTaskSummaryEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
 
 /**
  * The interface Agent task summary repository.
  */
-public interface AgentTaskSummaryRepository extends CrudRepository<AgentTaskSummaryEntity, Long> {
+public interface AgentTaskSummaryRepository extends ListCrudRepository<AgentTaskSummaryEntity, Long> {
     /**
      * Find by agent id list.
      *

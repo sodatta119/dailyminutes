@@ -5,7 +5,7 @@
 package com.dailyminutes.laundry.customer.repository;
 
 import com.dailyminutes.laundry.customer.domain.model.CustomerOrderSummaryEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * The interface Customer order summary repository.
  */
-public interface CustomerOrderSummaryRepository extends CrudRepository<CustomerOrderSummaryEntity, Long> {
+public interface CustomerOrderSummaryRepository extends ListCrudRepository<CustomerOrderSummaryEntity, Long> {
     /**
      * Find by customer id list.
      *

@@ -3,8 +3,9 @@
  * @version 14/07/25
  */
 package com.dailyminutes.laundry.geofence.repository;
+
 import com.dailyminutes.laundry.geofence.domain.model.GeofenceOrderSummaryEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 /**
  * The interface Geofence order summary repository.
  */
-public interface GeofenceOrderSummaryRepository extends CrudRepository<GeofenceOrderSummaryEntity, Long> {
+public interface GeofenceOrderSummaryRepository extends ListCrudRepository<GeofenceOrderSummaryEntity, Long> {
     /**
      * Find by geofence id list.
      *

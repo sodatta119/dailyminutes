@@ -2,9 +2,10 @@ package com.dailyminutes.laundry.customer.repository; /**
  * @author Somendra Datta <sodatta@gmail.com>
  * @version 13/07/25
  */
-import com.dailyminutes.laundry.customer.domain.model.CustomerAddressEntity;
+
 import com.dailyminutes.laundry.customer.domain.model.AddressType;
-import org.springframework.data.repository.CrudRepository;
+import com.dailyminutes.laundry.customer.domain.model.CustomerAddressEntity;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 /**
  * The interface Customer address repository.
  */
-public interface CustomerAddressRepository extends CrudRepository<CustomerAddressEntity, Long> {
+public interface CustomerAddressRepository extends ListCrudRepository<CustomerAddressEntity, Long> {
     /**
      * Find by customer id list.
      *

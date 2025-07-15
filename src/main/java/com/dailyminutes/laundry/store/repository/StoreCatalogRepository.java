@@ -4,8 +4,8 @@
  */
 package com.dailyminutes.laundry.store.repository;
 
-import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity; // Updated import
-import org.springframework.data.repository.CrudRepository;
+import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * The interface Store catalog repository.
  */
-public interface StoreCatalogRepository extends CrudRepository<StoreCatalogEntity, Long> { // Updated entity name
+public interface StoreCatalogRepository extends ListCrudRepository<StoreCatalogEntity, Long> { // Updated entity name
     /**
      * Find by store id list.
      *
