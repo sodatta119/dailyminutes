@@ -103,7 +103,7 @@ class AgentTaskSummaryRepositoryTest {
      */
     @BeforeEach
     void setup() {
-        this.store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        this.store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
         this.customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         this.order = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         this.team = teamRepository.save(new TeamEntity(null, "Fleet Team X", "Vehicle management", TeamRole.FLEET));

@@ -61,7 +61,7 @@ class GeofenceStoreSummaryRepositoryTest {
 
     @Test
     void testUpdateGeofenceStoreSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))", "TEST_ZONE", "Zone C to Delete", true));
 
         GeofenceStoreSummaryEntity summary = new GeofenceStoreSummaryEntity(
@@ -80,7 +80,7 @@ class GeofenceStoreSummaryRepositoryTest {
 
     @Test
     void testDeleteGeofenceStoreSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10L));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))", "TEST_ZONE", "Zone C to Delete", true));
 
         GeofenceStoreSummaryEntity summary = new GeofenceStoreSummaryEntity(
