@@ -1,7 +1,7 @@
 package com.dailyminutes.laundry.store.repository;
 
-import com.dailyminutes.DailyminutesApplication; // Updated import
-import com.dailyminutes.laundry.store.domain.model.StoreAgentSummaryEntity; // Updated import
+import com.dailyminutes.DailyminutesApplication;
+import com.dailyminutes.laundry.store.domain.model.StoreAgentSummaryEntity;
 import com.dailyminutes.laundry.store.domain.model.StoreEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,7 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID; // For generating unique IDs
-import java.util.concurrent.atomic.AtomicLong; // For generating unique IDs
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

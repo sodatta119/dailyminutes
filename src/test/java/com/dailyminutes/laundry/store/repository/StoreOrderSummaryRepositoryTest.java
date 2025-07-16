@@ -1,8 +1,8 @@
 package com.dailyminutes.laundry.store.repository;
 
-import com.dailyminutes.DailyminutesApplication; // Updated import
+import com.dailyminutes.DailyminutesApplication;
 import com.dailyminutes.laundry.store.domain.model.StoreEntity;
-import com.dailyminutes.laundry.store.domain.model.StoreOrderSummaryEntity; // Updated import
+import com.dailyminutes.laundry.store.domain.model.StoreOrderSummaryEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong; // For generating unique IDs
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,8 +39,7 @@ class StoreOrderSummaryRepositoryTest {
     void testSaveAndFindStoreOrderSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
 
-        StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(
-                null, store.getId(), 10l, LocalDateTime.now(), "PENDING", new BigDecimal("100.00"), 10l);
+        StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(null, store.getId(), 10l, LocalDateTime.now(), "PENDING", new BigDecimal("100.00"), 10l);
         StoreOrderSummaryEntity savedSummary = storeOrderSummaryRepository.save(summary);
 
         assertThat(savedSummary).isNotNull();
@@ -60,8 +58,7 @@ class StoreOrderSummaryRepositoryTest {
     void testUpdateStoreOrderSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
 
-        StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(
-                null, store.getId(), 10l, LocalDateTime.now(), "ACCEPTED", new BigDecimal("150.00"), 10l);
+        StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(null, store.getId(), 10l, LocalDateTime.now(), "ACCEPTED", new BigDecimal("150.00"), 10l);
         StoreOrderSummaryEntity savedSummary = storeOrderSummaryRepository.save(summary);
 
         savedSummary.setStatus("DELIVERED");
@@ -78,8 +75,7 @@ class StoreOrderSummaryRepositoryTest {
     void testDeleteStoreOrderSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
 
-        StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(
-                null, store.getId(), 10l, LocalDateTime.now(), "CANCELLED", new BigDecimal("50.00"), 10l);
+        StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(null, store.getId(), 10l, LocalDateTime.now(), "CANCELLED", new BigDecimal("50.00"), 10l);
         StoreOrderSummaryEntity savedSummary = storeOrderSummaryRepository.save(summary);
 
         storeOrderSummaryRepository.deleteById(savedSummary.getId());

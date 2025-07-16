@@ -1,17 +1,10 @@
 package com.dailyminutes.laundry.invoice.repository;
 
-import com.dailyminutes.laundry.catalog.domain.model.CatalogEntity;
-import com.dailyminutes.laundry.catalog.domain.model.CatalogType;
-import com.dailyminutes.laundry.catalog.domain.model.UnitType;
-import com.dailyminutes.laundry.catalog.repository.CatalogRepository;
-import com.dailyminutes.laundry.customer.domain.model.CustomerEntity;
-import com.dailyminutes.laundry.customer.repository.CustomerRepository;
 import com.dailyminutes.laundry.invoice.domain.model.InvoiceEntity;
 import com.dailyminutes.laundry.invoice.domain.model.InvoiceItemEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest; // Changed from DataJpaTest
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.context.annotation.ComponentScan;
@@ -29,36 +22,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.invoice.repository", "com.dailyminutes.laundry.catalog.repository", "com.dailyminutes.laundry.customer.repository"})
+@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.invoice.repository"})
 // Specify repository package
-@ComponentScan(basePackages = {"com.dailyminutes.laundry.invoice.domain.model", "com.dailyminutes.laundry.catalog.domain.model", "com.dailyminutes.laundry.customer.domain.model"}) // Specify domain model package
+@ComponentScan(basePackages = {"com.dailyminutes.laundry.invoice.domain.model"})
 class InvoiceRepositoryTest {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private CatalogRepository catalogRepository;
-
-    @Autowired
     private InvoiceItemRepository invoiceItemRepository;
 
-    private CatalogEntity catalog1;
-    private CatalogEntity catalog2;
-    private CustomerEntity customer;
-
-    /**
-     * Setup.
-     */
-    @BeforeEach
-    void setup(){
-    this.customer=customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        this.catalog1=catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("1.50")));
-        this.catalog2=catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("2.20")));
-    }
 
     /**
      * Test save and find invoice with items.
@@ -66,15 +40,15 @@ class InvoiceRepositoryTest {
     @Test
     void testSaveAndFindInvoiceWithItems() {
         // 1. Save the parent InvoiceEntity
-        InvoiceEntity invoice = new InvoiceEntity(null, "SWIPE123", customer.getId(), LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         assertThat(savedInvoice).isNotNull();
         assertThat(savedInvoice.getId()).isNotNull();
 
         // 2. Save InvoiceItemEntities, linking them to the saved Invoice's ID
-        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), catalog1.getId(), 1, new BigDecimal("25.00"), new BigDecimal("2.50"));
-        InvoiceItemEntity item2 = new InvoiceItemEntity(null, savedInvoice.getId(), catalog2.getId(), 2, new BigDecimal("10.00"), new BigDecimal("1.00"));
+        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), 10l, 1, new BigDecimal("25.00"), new BigDecimal("2.50"));
+        InvoiceItemEntity item2 = new InvoiceItemEntity(null, savedInvoice.getId(), 20l, 2, new BigDecimal("10.00"), new BigDecimal("1.00"));
         invoiceItemRepository.save(item1);
         invoiceItemRepository.save(item2);
 
@@ -86,7 +60,7 @@ class InvoiceRepositoryTest {
         // Verify associated invoice items
         List<InvoiceItemEntity> foundItems = invoiceItemRepository.findByInvoiceId(savedInvoice.getId());
         assertThat(foundItems).hasSize(2);
-        assertThat(foundItems.stream().map(InvoiceItemEntity::getCatalogId)).containsExactlyInAnyOrder(catalog1.getId(), catalog2.getId());
+        assertThat(foundItems.stream().map(InvoiceItemEntity::getCatalogId)).containsExactlyInAnyOrder(10l, 20l);
     }
 
     /**
@@ -94,10 +68,10 @@ class InvoiceRepositoryTest {
      */
     @Test
     void testFindBySwipeInvoiceId() {
-        invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", customer.getId(), LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
+        invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", 10l, LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
         Optional<InvoiceEntity> foundInvoice = invoiceRepository.findBySwipeInvoiceId("SWIPE456");
         assertThat(foundInvoice).isPresent();
-        assertThat(foundInvoice.get().getCustomerId()).isEqualTo(customer.getId());
+        assertThat(foundInvoice.get().getCustomerId()).isEqualTo(10l);
     }
 
     /**
@@ -105,7 +79,7 @@ class InvoiceRepositoryTest {
      */
     @Test
     void testUpdateInvoice() {
-        InvoiceEntity invoice = new InvoiceEntity(null, "UPDATE789", customer.getId(), LocalDateTime.now(), new BigDecimal("70.00"), new BigDecimal("7.00"), new BigDecimal("3.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "UPDATE789", 10l, LocalDateTime.now(), new BigDecimal("70.00"), new BigDecimal("7.00"), new BigDecimal("3.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         savedInvoice.setTotalPrice(new BigDecimal("75.00"));
@@ -124,11 +98,11 @@ class InvoiceRepositoryTest {
     @Test
     void testDeleteInvoiceAndAssociatedItems() {
         // Create and save Invoice
-        InvoiceEntity invoice = new InvoiceEntity(null, "DELETE000", customer.getId(), LocalDateTime.now(), new BigDecimal("20.00"), new BigDecimal("2.00"), new BigDecimal("1.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "DELETE000", 10l, LocalDateTime.now(), new BigDecimal("20.00"), new BigDecimal("2.00"), new BigDecimal("1.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         // Create and save InvoiceItem
-        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), catalog1.getId(), 1, new BigDecimal("20.00"), new BigDecimal("2.00"));
+        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), 10l, 1, new BigDecimal("20.00"), new BigDecimal("2.00"));
         invoiceItemRepository.save(item1);
 
         // Verify they exist

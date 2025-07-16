@@ -1,24 +1,9 @@
 package com.dailyminutes.laundry.task.repository;
 
-import com.dailyminutes.DailyminutesApplication; // Import the main application class
-import com.dailyminutes.laundry.agent.domain.model.AgentDesignation;
-import com.dailyminutes.laundry.agent.domain.model.AgentEntity;
-import com.dailyminutes.laundry.agent.domain.model.AgentState;
-import com.dailyminutes.laundry.agent.repository.AgentRepository;
-import com.dailyminutes.laundry.customer.domain.model.CustomerEntity;
-import com.dailyminutes.laundry.customer.repository.CustomerRepository;
-import com.dailyminutes.laundry.order.domain.model.OrderEntity;
-import com.dailyminutes.laundry.order.domain.model.OrderStatus;
-import com.dailyminutes.laundry.order.repository.OrderRepository;
-import com.dailyminutes.laundry.store.domain.model.StoreEntity;
-import com.dailyminutes.laundry.store.repository.StoreRepository;
+import com.dailyminutes.DailyminutesApplication;
 import com.dailyminutes.laundry.task.domain.model.TaskEntity;
 import com.dailyminutes.laundry.task.domain.model.TaskStatus;
 import com.dailyminutes.laundry.task.domain.model.TaskType;
-import com.dailyminutes.laundry.team.domain.model.TeamEntity;
-import com.dailyminutes.laundry.team.domain.model.TeamRole;
-import com.dailyminutes.laundry.team.repository.TeamRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -27,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -40,89 +23,19 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.task.repository",
-        "com.dailyminutes.laundry.order.repository",
-        "com.dailyminutes.laundry.agent.repository",
-        "com.dailyminutes.laundry.store.repository",
-        "com.dailyminutes.laundry.team.repository",
-        "com.dailyminutes.laundry.customer.repository"})
-@ComponentScan(basePackages = {"com.dailyminutes.laundry.task.domain.model",
-        "com.dailyminutes.laundry.order.domain.model",
-        "com.dailyminutes.laundry.agent.domain.model",
-        "com.dailyminutes.laundry.store.domain.model",
-        "com.dailyminutes.laundry.team.domain.model",
-        "com.dailyminutes.laundry.customer.domain.model"})
+@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.task.repository"})
+@ComponentScan(basePackages = {"com.dailyminutes.laundry.task.domain.model"})
 class TaskRepositoryTest {
-
 
     @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
-    private StoreRepository storeRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    private AgentRepository agentRepository;
-
-    /**
-     * The Store.
-     */
-    StoreEntity store;
-    /**
-     * The Customer.
-     */
-    CustomerEntity customer;
-
-    /**
-     * The Order.
-     */
-    OrderEntity order;
-
-    /**
-     * The Team.
-     */
-    TeamEntity team;
-    /**
-     * The Agent.
-     */
-    AgentEntity agent;
-    /**
-     * The Task.
-     */
-    TaskEntity task;
-
-
-    /**
-     * Sets .
-     */
-    @BeforeEach
-    void setup() {
-        this.store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com",null));
-        this.customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        this.order = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        this.team = teamRepository.save(new TeamEntity(null, "Fleet Team X", "Vehicle management", TeamRole.FLEET));
-        this.agent = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "9876543210", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        this.task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, team.getId(), agent.getId(), "Addr M", null, "Dest M", null, "Comment M", order.getId()));
-    }
-
 
     /**
      * Test save and find task.
      */
     @Test
     void testSaveAndFindTask() {
-        TaskEntity task = new TaskEntity(null, "Pickup Order 1", "Collect laundry from customer", TaskType.PICKUP,
-                LocalDateTime.now(), null, null, TaskStatus.NEW,
-                team.getId(), agent.getId(), "Customer Address 1", null, "Store Address 1", null, "Call customer 15 mins prior", order.getId());
+        TaskEntity task = new TaskEntity(null, "Pickup Order 1", "Collect laundry from customer", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 20l, "Customer Address 1", null, "Store Address 1", null, "Call customer 15 mins prior", 30l);
         TaskEntity savedTask = taskRepository.save(task);
 
         assertThat(savedTask).isNotNull();
@@ -131,7 +44,7 @@ class TaskRepositoryTest {
         Optional<TaskEntity> foundTask = taskRepository.findById(savedTask.getId());
         assertThat(foundTask).isPresent();
         assertThat(foundTask.get().getName()).isEqualTo("Pickup Order 1");
-        assertThat(foundTask.get().getOrderId()).isEqualTo(order.getId());
+        assertThat(foundTask.get().getOrderId()).isEqualTo(30l);
     }
 
     /**
@@ -139,9 +52,7 @@ class TaskRepositoryTest {
      */
     @Test
     void testUpdateTask() {
-        TaskEntity task = new TaskEntity(null, "Process Order 2", "Wash and iron clothes", TaskType.PROCESS,
-                LocalDateTime.now(), null, null, TaskStatus.NEW,
-                team.getId(), agent.getId(), "Laundry Facility", null, "Customer Address 2", null, "Handle with care", order.getId());
+        TaskEntity task = new TaskEntity(null, "Process Order 2", "Wash and iron clothes", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 20l, "Laundry Facility", null, "Customer Address 2", null, "Handle with care", 30l);
         TaskEntity savedTask = taskRepository.save(task);
 
         savedTask.setStatus(TaskStatus.STARTED);
@@ -160,9 +71,7 @@ class TaskRepositoryTest {
      */
     @Test
     void testDeleteTask() {
-        TaskEntity task = new TaskEntity(null, "Delivery Order 3", "Deliver clean clothes", TaskType.DELIVERY,
-                LocalDateTime.now(), null, null, TaskStatus.ASSIGNED,
-                team.getId(), agent.getId(), "Store Address 3", null, "Customer Address 3", null, "Confirm delivery with OTP", order.getId());
+        TaskEntity task = new TaskEntity(null, "Delivery Order 3", "Deliver clean clothes", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 10l, 20l, "Store Address 3", null, "Customer Address 3", null, "Confirm delivery with OTP", 30l);
         TaskEntity savedTask = taskRepository.save(task);
 
         taskRepository.deleteById(savedTask.getId());
@@ -175,21 +84,13 @@ class TaskRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("20.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("15.50")));
+        taskRepository.save(new TaskEntity(null, "Task A", "Desc A", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr A", null, "Dest A", null, "Comment A", 10l));
+        taskRepository.save(new TaskEntity(null, "Task B", "Desc B", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 10l, 20l, "Addr B", null, "Dest B", null, "Comment B", 10l));
+        taskRepository.save(new TaskEntity(null, "Task C", "Desc C", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.STARTED, 10l, 30l, "Addr C", null, "Dest C", null, "Comment C", 20l));
 
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, team.getId(), "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, team.getId(), "767657676", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-
-        taskRepository.save(new TaskEntity(null, "Task A", "Desc A", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, team.getId(), agent1.getId(), "Addr A", null, "Dest A", null, "Comment A", order1.getId()));
-        taskRepository.save(new TaskEntity(null, "Task B", "Desc B", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, team.getId(), agent2.getId(), "Addr B", null, "Dest B", null, "Comment B", order1.getId()));
-        taskRepository.save(new TaskEntity(null, "Task C", "Desc C", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.STARTED, team.getId(), agent3.getId(), "Addr C", null, "Dest C", null, "Comment C", order3.getId()));
-
-        List<TaskEntity> tasks = taskRepository.findByOrderId(order1.getId());
+        List<TaskEntity> tasks = taskRepository.findByOrderId(10l);
         assertThat(tasks).hasSize(2);
-        assertThat(tasks.get(0).getOrderId()).isEqualTo(order1.getId());
+        assertThat(tasks.get(0).getOrderId()).isEqualTo(10l);
     }
 
     /**
@@ -197,21 +98,13 @@ class TaskRepositoryTest {
      */
     @Test
     void testFindByAgentId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("20.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("15.50")));
+        taskRepository.save(new TaskEntity(null, "Task D", "Desc D", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 10l, 10l, "Addr D", null, "Dest D", null, "Comment D", 10l));
+        taskRepository.save(new TaskEntity(null, "Task E", "Desc E", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.STARTED, 20l, 10l, "Addr E", null, "Dest E", null, "Comment E", 20l));
+        taskRepository.save(new TaskEntity(null, "Task F", "Desc F", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.NEW, 30l, 30l, "Addr F", null, "Dest F", null, "Comment F", 30l));
 
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, team.getId(), "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, team.getId(), "767657676", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-
-        taskRepository.save(new TaskEntity(null, "Task D", "Desc D", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, team.getId(), agent1.getId(), "Addr D", null, "Dest D", null, "Comment D", order1.getId()));
-        taskRepository.save(new TaskEntity(null, "Task E", "Desc E", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.STARTED, team.getId(), agent1.getId(), "Addr E", null, "Dest E", null, "Comment E", order2.getId()));
-        taskRepository.save(new TaskEntity(null, "Task F", "Desc F", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.NEW, team.getId(), agent2.getId(), "Addr F", null, "Dest F", null, "Comment F", order3.getId()));
-
-        List<TaskEntity> tasks = taskRepository.findByAgentId(agent1.getId());
+        List<TaskEntity> tasks = taskRepository.findByAgentId(10l);
         assertThat(tasks).hasSize(2);
-        assertThat(tasks.get(0).getAgentId()).isEqualTo(agent1.getId());
+        assertThat(tasks.get(0).getAgentId()).isEqualTo(10l);
     }
 
     /**
@@ -219,21 +112,13 @@ class TaskRepositoryTest {
      */
     @Test
     void testFindByTeamId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("20.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("15.50")));
+        taskRepository.save(new TaskEntity(null, "Task G", "Desc G", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, null, "Addr G", null, "Dest G", null, "Comment G", 10l));
+        taskRepository.save(new TaskEntity(null, "Task H", "Desc H", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 10l, null, "Addr H", null, "Dest H", null, "Comment H", 20l));
+        taskRepository.save(new TaskEntity(null, "Task I", "Desc I", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.STARTED, 10l, null, "Addr I", null, "Dest I", null, "Comment I", 30l));
 
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, team.getId(), "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, team.getId(), "767657676", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-
-        taskRepository.save(new TaskEntity(null, "Task G", "Desc G", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, team.getId(), null, "Addr G", null, "Dest G", null, "Comment G", order1.getId()));
-        taskRepository.save(new TaskEntity(null, "Task H", "Desc H", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, team.getId(), null, "Addr H", null, "Dest H", null, "Comment H", order2.getId()));
-        taskRepository.save(new TaskEntity(null, "Task I", "Desc I", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.STARTED, team.getId(), null, "Addr I", null, "Dest I", null, "Comment I", order3.getId()));
-
-        List<TaskEntity> tasks = taskRepository.findByTeamId(team.getId());
-        assertThat(tasks).hasSize(4);
-        assertThat(tasks.get(0).getTeamId()).isEqualTo(team.getId());
+        List<TaskEntity> tasks = taskRepository.findByTeamId(10l);
+        assertThat(tasks).hasSize(3);
+        assertThat(tasks.get(0).getTeamId()).isEqualTo(10l);
     }
 
     /**
@@ -241,20 +126,12 @@ class TaskRepositoryTest {
      */
     @Test
     void testFindByStatus() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("20.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("15.50")));
-
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, team.getId(), "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, team.getId(), "767657676", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-
-        taskRepository.save(new TaskEntity(null, "Task J", "Desc J", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr J", null, "Dest J", null, "Comment J", order1.getId()));
-        taskRepository.save(new TaskEntity(null, "Task K", "Desc K", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr K", null, "Dest K", null, "Comment K", order2.getId()));
-        taskRepository.save(new TaskEntity(null, "Task L", "Desc L", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, null, null, "Addr L", null, "Dest L", null, "Comment L", order3.getId()));
+        taskRepository.save(new TaskEntity(null, "Task J", "Desc J", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr J", null, "Dest J", null, "Comment J", 10l));
+        taskRepository.save(new TaskEntity(null, "Task K", "Desc K", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr K", null, "Dest K", null, "Comment K", 20l));
+        taskRepository.save(new TaskEntity(null, "Task L", "Desc L", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, null, null, "Addr L", null, "Dest L", null, "Comment L", 30l));
 
         List<TaskEntity> tasks = taskRepository.findByStatus(TaskStatus.NEW);
-        assertThat(tasks).hasSize(3);
+        assertThat(tasks).hasSize(2);
         assertThat(tasks.get(0).getStatus()).isEqualTo(TaskStatus.NEW);
     }
 
@@ -263,20 +140,12 @@ class TaskRepositoryTest {
      */
     @Test
     void testFindByType() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("20.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("15.50")));
-
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, team.getId(), "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, team.getId(), "767657676", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-
-        taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr M", null, "Dest M", null, "Comment M", order1.getId()));
-        taskRepository.save(new TaskEntity(null, "Task N", "Desc N", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, null, null, "Addr N", null, "Dest N", null, "Comment N", order2.getId()));
-        taskRepository.save(new TaskEntity(null, "Task O", "Desc O", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.STARTED, null, null, "Addr O", null, "Dest O", null, "Comment O", order3.getId()));
+        taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        taskRepository.save(new TaskEntity(null, "Task N", "Desc N", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, null, null, "Addr N", null, "Dest N", null, "Comment N", 20l));
+        taskRepository.save(new TaskEntity(null, "Task O", "Desc O", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.STARTED, null, null, "Addr O", null, "Dest O", null, "Comment O", 30l));
 
         List<TaskEntity> tasks = taskRepository.findByType(TaskType.PICKUP);
-        assertThat(tasks).hasSize(3);
+        assertThat(tasks).hasSize(2);
         assertThat(tasks.get(0).getType()).isEqualTo(TaskType.PICKUP);
     }
 
@@ -285,7 +154,7 @@ class TaskRepositoryTest {
      */
     @Test
     void testFindByName() {
-        taskRepository.save(new TaskEntity(null, "Specific Task Name", "A very specific task", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr X", null, "Dest X", null, "Comment X", order.getId()));
+        taskRepository.save(new TaskEntity(null, "Specific Task Name", "A very specific task", TaskType.PROCESS, LocalDateTime.now(), null, null, TaskStatus.NEW, null, null, "Addr X", null, "Dest X", null, "Comment X", 10l));
         Optional<TaskEntity> foundTask = taskRepository.findByName("Specific Task Name");
         assertThat(foundTask).isPresent();
         assertThat(foundTask.get().getType()).isEqualTo(TaskType.PROCESS);

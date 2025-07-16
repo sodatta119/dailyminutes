@@ -3,11 +3,11 @@ package com.dailyminutes.laundry.geofence.repository;
 import com.dailyminutes.laundry.geofence.domain.model.GeofenceEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest; // Changed from DataJpaTest
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.context.annotation.ComponentScan; // Added import
-import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories; // Added import
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
 import java.util.Optional;
 

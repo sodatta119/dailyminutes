@@ -1,8 +1,8 @@
 package com.dailyminutes.laundry.payment.repository;
 
-import com.dailyminutes.DailyminutesApplication; // Updated import
+import com.dailyminutes.DailyminutesApplication;
 import com.dailyminutes.laundry.payment.domain.model.PaymentEntity;
-import com.dailyminutes.laundry.payment.domain.model.PaymentInvoiceSummaryEntity; // Updated import
+import com.dailyminutes.laundry.payment.domain.model.PaymentInvoiceSummaryEntity;
 import com.dailyminutes.laundry.payment.domain.model.PaymentMethod;
 import com.dailyminutes.laundry.payment.domain.model.PaymentStatus;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong; // For generating unique IDs
 
 import static org.assertj.core.api.Assertions.assertThat;
 

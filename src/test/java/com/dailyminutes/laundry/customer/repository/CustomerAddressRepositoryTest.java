@@ -1,12 +1,9 @@
 package com.dailyminutes.laundry.customer.repository;
 
 import com.dailyminutes.DailyminutesApplication;
-import com.dailyminutes.laundry.customer.domain.model.CustomerAddressEntity;
 import com.dailyminutes.laundry.customer.domain.model.AddressType;
+import com.dailyminutes.laundry.customer.domain.model.CustomerAddressEntity;
 import com.dailyminutes.laundry.customer.domain.model.CustomerEntity;
-import com.dailyminutes.laundry.geofence.domain.model.GeofenceEntity;
-import com.dailyminutes.laundry.geofence.repository.GeofenceRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -25,10 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.customer.repository",
-        "com.dailyminutes.laundry.geofence.repository"})
-@ComponentScan(basePackages = {"com.dailyminutes.laundry.customer.domain.model",
-        "com.dailyminutes.laundry.customer.domain.model"})
+@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.customer.repository"})
+@ComponentScan(basePackages = {"com.dailyminutes.laundry.customer.domain.model"})
 class CustomerAddressRepositoryTest {
 
     @Autowired
@@ -37,28 +32,14 @@ class CustomerAddressRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private GeofenceRepository geofenceRepository;
-
-    private GeofenceEntity geofence;
-    private CustomerEntity customer;
-
-    /**
-     * Setup.
-     */
-    @BeforeEach
-    void setup(){
-        geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-    }
-
     /**
      * Test save and find customer address.
      */
     @Test
     void testSaveAndFindCustomerAddress() {
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         CustomerAddressEntity address = new CustomerAddressEntity(
-                null, customer.getId(), AddressType.HOME, true, "Apt 101", "123 Main St", "Main Street", "Springfield", "IL", "62704", "USA", "39.79", "-89.65", geofence.getId());
+                null, customer.getId(), AddressType.HOME, true, "Apt 101", "123 Main St", "Main Street", "Springfield", "IL", "62704", "USA", "39.79", "-89.65", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
 
         assertThat(savedAddress).isNotNull();
@@ -73,7 +54,7 @@ class CustomerAddressRepositoryTest {
         assertThat(savedAddress.getState()).isEqualTo("IL");
         assertThat(savedAddress.getZipCode()).isEqualTo("62704");
         assertThat(savedAddress.getCountry()).isEqualTo("USA");
-        assertThat(savedAddress.getGeofenceId()).isEqualTo(geofence.getId());
+        assertThat(savedAddress.getGeofenceId()).isEqualTo(10l);
 
         Optional<CustomerAddressEntity> foundAddress = customerAddressRepository.findById(savedAddress.getId());
         assertThat(foundAddress).isPresent();
@@ -85,8 +66,9 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testSaveAddressWithNullableFieldsNull() {
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         CustomerAddressEntity address = new CustomerAddressEntity(
-                null, customer.getId(), AddressType.WORK, false, null, "456 Oak Ave", null, null, null, null, null, "40.71", "-74.00", geofence.getId());
+                null, customer.getId(), AddressType.WORK, false, null, "456 Oak Ave", null, null, null, null, null, "40.71", "-74.00", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
 
         assertThat(savedAddress).isNotNull();
@@ -105,8 +87,9 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testUpdateCustomerAddress() {
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         CustomerAddressEntity address = new CustomerAddressEntity(
-                null, customer.getId(), AddressType.WORK, false, "Suite 200", "456 Oak Ave", "Oak Avenue", "Metropolis", "NY", "10001", "USA", "40.71", "-74.00", geofence.getId());
+                null, customer.getId(), AddressType.WORK, false, "Suite 200", "456 Oak Ave", "Oak Avenue", "Metropolis", "NY", "10001", "USA", "40.71", "-74.00", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
 
         savedAddress.setFlatApartment("Unit 300");
@@ -128,8 +111,9 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testDeleteCustomerAddress() {
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
         CustomerAddressEntity address = new CustomerAddressEntity(
-                null, customer.getId(), AddressType.OTHER, false, null, "999 Test Rd", null, "Testville", "CA", "90210", "USA", "34.05", "-118.25", geofence.getId());
+                null, customer.getId(), AddressType.OTHER, false, null, "999 Test Rd", null, "Testville", "CA", "90210", "USA", "34.05", "-118.25", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
 
         customerAddressRepository.deleteById(savedAddress.getId());
@@ -142,13 +126,12 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByCustomerId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
         CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
 
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt A", "Addr A", "St A", "City A", "ST", "11111", "USA", "1.0", "1.0", geofence1.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.WORK, false, null, "Addr B", "St B", "City B", "ST", "22222", "USA", "2.0", "2.0", geofence1.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.HOME, true, "Apt C", "Addr C", "St C", "City C", "ST", "33333", "USA", "3.0", "3.0", geofence1.getId()));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt A", "Addr A", "St A", "City A", "ST", "11111", "USA", "1.0", "1.0", 10l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.WORK, false, null, "Addr B", "St B", "City B", "ST", "22222", "USA", "2.0", "2.0", 10l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.HOME, true, "Apt C", "Addr C", "St C", "City C", "ST", "33333", "USA", "3.0", "3.0", 10l));
 
         List<CustomerAddressEntity> addressesForCustomer5 = customerAddressRepository.findByCustomerId(customer1.getId());
         assertThat(addressesForCustomer5).hasSize(2);
@@ -160,14 +143,12 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByCustomerIdAndIsDefaultTrue() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
         CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
 
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt D", "Default Home", "DefSt", "DefCity", "DF", "00000", "USA", "10.0", "10.0", geofence1.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.WORK, false, null, "Work Addr", "WorkSt", "WorkCity", "WK", "11111", "USA", "11.0", "11.0", geofence1.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.HOME, true, "Apt E", "Another Default", "AnSt", "AnCity", "AN", "22222", "USA", "12.0", "12.0", geofence2.getId()));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt D", "Default Home", "DefSt", "DefCity", "DF", "00000", "USA", "10.0", "10.0", 10l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.WORK, false, null, "Work Addr", "WorkSt", "WorkCity", "WK", "11111", "USA", "11.0", "11.0", 10l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.HOME, true, "Apt E", "Another Default", "AnSt", "AnCity", "AN", "22222", "USA", "12.0", "12.0", 20l));
 
         Optional<CustomerAddressEntity> defaultAddressForCustomer7 = customerAddressRepository.findByCustomerIdAndIsDefaultTrue(customer1.getId());
         assertThat(defaultAddressForCustomer7).isPresent();
@@ -180,18 +161,16 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByGeofenceId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
         CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
 
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt F", "GF Addr 1", "GF St", "GF City", "GF", "40001", "USA", "20.0", "20.0", geofence1.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.WORK, false, null, "GF Addr 2", "GF St", "GF City", "GF", "40002", "USA", "21.0", "21.0", geofence1.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.OTHER, false, "Apt G", "GF Addr 3", "GF St", "GF City", "GF", "40003", "USA", "22.0", "22.0", geofence2.getId()));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt F", "GF Addr 1", "GF St", "GF City", "GF", "40001", "USA", "20.0", "20.0", 10l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.WORK, false, null, "GF Addr 2", "GF St", "GF City", "GF", "40002", "USA", "21.0", "21.0", 10l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.OTHER, false, "Apt G", "GF Addr 3", "GF St", "GF City", "GF", "40003", "USA", "22.0", "22.0", 20l));
 
-        List<CustomerAddressEntity> addressesInGeofence401 = customerAddressRepository.findByGeofenceId(geofence1.getId());
+        List<CustomerAddressEntity> addressesInGeofence401 = customerAddressRepository.findByGeofenceId(10l);
         assertThat(addressesInGeofence401).hasSize(2);
-        assertThat(addressesInGeofence401.stream().allMatch(a -> a.getGeofenceId().equals(customer1.getId()))).isTrue();
+        assertThat(addressesInGeofence401.stream().allMatch(a -> a.getGeofenceId().equals(10l))).isTrue();
     }
 
     /**
@@ -199,14 +178,12 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByCustomerIdAndAddressType() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
         CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
 
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt H", "Home A", "Home St", "City X", "CX", "50001", "USA", "30.0", "30.0", geofence1.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.OTHER, false, null, "Billing A", "Billing St", "City Y", "CY", "50002", "USA", "31.0", "31.0", geofence2.getId()));
-        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.HOME, true, "Apt I", "Home B", "Home St B", "City Z", "CZ", "50003", "USA", "32.0", "32.0", geofence1.getId()));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt H", "Home A", "Home St", "City X", "CX", "50001", "USA", "30.0", "30.0", 10l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.OTHER, false, null, "Billing A", "Billing St", "City Y", "CY", "50002", "USA", "31.0", "31.0", 20l));
+        customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.HOME, true, "Apt I", "Home B", "Home St B", "City Z", "CZ", "50003", "USA", "32.0", "32.0", 10l));
 
         List<CustomerAddressEntity> customer12HomeAddresses = customerAddressRepository.findByCustomerIdAndAddressType(customer1.getId(), AddressType.HOME);
         assertThat(customer12HomeAddresses).hasSize(1);

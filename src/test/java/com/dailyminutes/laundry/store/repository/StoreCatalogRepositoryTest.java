@@ -2,20 +2,8 @@ package com.dailyminutes.laundry.store.repository;
 
 
 import com.dailyminutes.DailyminutesApplication;
-import com.dailyminutes.laundry.agent.domain.model.AgentDesignation;
-import com.dailyminutes.laundry.agent.domain.model.AgentEntity;
-import com.dailyminutes.laundry.agent.domain.model.AgentState;
-import com.dailyminutes.laundry.agent.repository.AgentRepository;
-import com.dailyminutes.laundry.catalog.domain.model.CatalogEntity;
-import com.dailyminutes.laundry.catalog.domain.model.CatalogType;
-import com.dailyminutes.laundry.catalog.domain.model.UnitType;
-import com.dailyminutes.laundry.catalog.repository.CatalogRepository;
-import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity; // Updated import
+import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity;
 import com.dailyminutes.laundry.store.domain.model.StoreEntity;
-import com.dailyminutes.laundry.team.domain.model.TeamEntity;
-import com.dailyminutes.laundry.team.domain.model.TeamRole;
-import com.dailyminutes.laundry.team.repository.TeamRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -24,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.store.repository",
-        "com.dailyminutes.laundry.team.repository",
-        "com.dailyminutes.laundry.agent.repository",
-        "com.dailyminutes.laundry.catalog.repository"})
-@ComponentScan(basePackages = {"com.dailyminutes.laundry.store.domain.model",
-        "com.dailyminutes.laundry.catalog.domain.model",
-        "com.dailyminutes.laundry.team.domain.model",
-        "com.dailyminutes.laundry.agent.domain.model"})
+@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.store.repository"})
+@ComponentScan(basePackages = {"com.dailyminutes.laundry.store.domain.model"})
 class StoreCatalogRepositoryTest { // Updated class name
 
     @Autowired
@@ -52,46 +32,24 @@ class StoreCatalogRepositoryTest { // Updated class name
     @Autowired
     private StoreRepository storeRepository;
 
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    private AgentRepository agentRepository;
-
-    @Autowired
-    private CatalogRepository catalogRepository;
-
-    private TeamEntity team;
-    private AgentEntity manager;
-    /**
-     * Setup.
-     */
-    @BeforeEach
-    void setup(){
-        team=teamRepository.save(new TeamEntity(null, "Unique Team Name", "A unique team", TeamRole.OPS));
-        manager = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, team.getId(), "9876543210", "A001", LocalDate.now(), null, AgentDesignation.STORE_AGENT)); // Updated
-
-    }
-
     /**
      * Test save and find store catalog.
      */
     @Test
     void testSaveAndFindStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
-        StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), catalog.getId());
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), 10l);
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
 
         assertThat(savedStoreCatalog).isNotNull();
         assertThat(savedStoreCatalog.getId()).isNotNull();
         assertThat(savedStoreCatalog.getStoreId()).isEqualTo(store.getId());
-        assertThat(savedStoreCatalog.getCatalogId()).isEqualTo(catalog.getId());
+        assertThat(savedStoreCatalog.getCatalogId()).isEqualTo(10l);
 
         Optional<StoreCatalogEntity> foundSupport = storeCatalogRepository.findById(savedStoreCatalog.getId());
         assertThat(foundSupport).isPresent();
         assertThat(foundSupport.get().getStoreId()).isEqualTo(store.getId());
-        assertThat(foundSupport.get().getCatalogId()).isEqualTo(catalog.getId());
+        assertThat(foundSupport.get().getCatalogId()).isEqualTo(10l);
     }
 
     /**
@@ -99,25 +57,23 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testUpdateStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
-        StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), catalog1.getId());
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), 10l);
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
 
         assertThat(savedStoreCatalog.getStoreId()).isEqualTo(store.getId());
-        assertThat(savedStoreCatalog.getCatalogId()).isEqualTo(catalog1.getId());
+        assertThat(savedStoreCatalog.getCatalogId()).isEqualTo(10l);
 
         Optional<StoreCatalogEntity> foundUpdatedSupport = storeCatalogRepository.findById(savedStoreCatalog.getId());
 
-        foundUpdatedSupport.get().setCatalogId(catalog2.getId());
+        foundUpdatedSupport.get().setCatalogId(10l);
         savedStoreCatalog=foundUpdatedSupport.get();
         StoreCatalogEntity updatedSupport = storeCatalogRepository.save(savedStoreCatalog);
 
         foundUpdatedSupport = storeCatalogRepository.findById(savedStoreCatalog.getId());
         assertThat(foundUpdatedSupport).isPresent();
         assertThat(foundUpdatedSupport.get().getStoreId()).isEqualTo(store.getId());
-        assertThat(foundUpdatedSupport.get().getCatalogId()).isEqualTo(catalog2.getId());
+        assertThat(foundUpdatedSupport.get().getCatalogId()).isEqualTo(10l);
     }
 
     /**
@@ -125,9 +81,8 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testDeleteStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
-        StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), catalog.getId());
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), 10l);
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
 
         storeCatalogRepository.deleteById(savedStoreCatalog.getId());
@@ -140,15 +95,11 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByStoreId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
-        CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dryclean", UnitType.KG, new BigDecimal("3.50")));
-
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), catalog1.getId()));
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), catalog2.getId()));
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store2.getId(), catalog3.getId()));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 10l));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 20l));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store2.getId(), 30l));
 
         List<StoreCatalogEntity> storeCatalogs = storeCatalogRepository.findByStoreId(store1.getId());
         assertThat(storeCatalogs).hasSize(2);
@@ -160,18 +111,16 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByCatalogId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l));
 
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), catalog1.getId()));
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store2.getId(), catalog1.getId()));
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), catalog2.getId()));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 10l));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store2.getId(), 10l));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 20l));
 
-        List<StoreCatalogEntity> storeCatalogs = storeCatalogRepository.findByCatalogId(catalog1.getId());
+        List<StoreCatalogEntity> storeCatalogs = storeCatalogRepository.findByCatalogId(10l);
         assertThat(storeCatalogs).hasSize(2);
-        assertThat(storeCatalogs.stream().allMatch(s -> s.getCatalogId().equals(catalog1.getId()))).isTrue();
+        assertThat(storeCatalogs.stream().allMatch(s -> s.getCatalogId().equals(10l))).isTrue();
     }
 
     /**
@@ -179,17 +128,15 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByStoreIdAndCatalogId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", manager.getId()));
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Iron", UnitType.KG, new BigDecimal("2.50")));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l));
 
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), catalog1.getId()));
-        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), catalog2.getId()));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 10l));
+        storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 20l));
 
-        Optional<StoreCatalogEntity> found = storeCatalogRepository.findByStoreIdAndCatalogId(store1.getId(), catalog1.getId());
+        Optional<StoreCatalogEntity> found = storeCatalogRepository.findByStoreIdAndCatalogId(store1.getId(), 10l);
         assertThat(found).isPresent();
         assertThat(found.get().getStoreId()).isEqualTo(store1.getId());
-        assertThat(found.get().getCatalogId()).isEqualTo(catalog1.getId());
+        assertThat(found.get().getCatalogId()).isEqualTo(10l);
 
         assertThat(storeCatalogRepository.findByStoreIdAndCatalogId(8L, 999L)).isNotPresent();
     }

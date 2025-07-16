@@ -1,8 +1,8 @@
 package com.dailyminutes.laundry.team.repository;
 
-import com.dailyminutes.DailyminutesApplication; // Import the main application class
-import com.dailyminutes.laundry.team.domain.model.TeamEntity; // Updated import
-import com.dailyminutes.laundry.team.domain.model.TeamRole; // Updated import
+import com.dailyminutes.DailyminutesApplication;
+import com.dailyminutes.laundry.team.domain.model.TeamEntity;
+import com.dailyminutes.laundry.team.domain.model.TeamRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;

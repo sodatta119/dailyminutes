@@ -1,8 +1,8 @@
 package com.dailyminutes.laundry.order.repository;
 
-import com.dailyminutes.DailyminutesApplication; // Updated import
+import com.dailyminutes.DailyminutesApplication;
 import com.dailyminutes.laundry.order.domain.model.OrderEntity;
-import com.dailyminutes.laundry.order.domain.model.OrderPaymentSummaryEntity; // Updated import
+import com.dailyminutes.laundry.order.domain.model.OrderPaymentSummaryEntity;
 import com.dailyminutes.laundry.order.domain.model.OrderStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID; // For generating unique transaction IDs
-import java.util.concurrent.atomic.AtomicLong; // For generating unique IDs
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,17 +1,9 @@
 package com.dailyminutes.laundry.order.repository;
 
-import com.dailyminutes.laundry.catalog.domain.model.CatalogEntity;
-import com.dailyminutes.laundry.catalog.domain.model.CatalogType;
-import com.dailyminutes.laundry.catalog.domain.model.UnitType;
-import com.dailyminutes.laundry.catalog.repository.CatalogRepository;
-import com.dailyminutes.laundry.customer.domain.model.CustomerEntity;
-import com.dailyminutes.laundry.customer.repository.CustomerRepository;
 import com.dailyminutes.laundry.order.domain.model.OrderEntity;
 import com.dailyminutes.laundry.order.domain.model.OrderItemEntity;
 import com.dailyminutes.laundry.order.domain.model.OrderItemMetadataEntity;
 import com.dailyminutes.laundry.order.domain.model.OrderStatus;
-import com.dailyminutes.laundry.store.domain.model.StoreEntity;
-import com.dailyminutes.laundry.store.repository.StoreRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -33,25 +25,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @EnableJdbcRepositories(basePackages = {
-        "com.dailyminutes.laundry.order.repository",
-        "com.dailyminutes.laundry.customer.repository",
-        "com.dailyminutes.laundry.store.repository",
-        "com.dailyminutes.laundry.catalog.repository"
+        "com.dailyminutes.laundry.order.repository"
 })
 @ComponentScan(basePackages = {
-        "com.dailyminutes.laundry.order.domain.model",
-        "com.dailyminutes.laundry.customer.domain.model",
-        "com.dailyminutes.laundry.store.domain.model",
-        "com.dailyminutes.laundry.catalog.domain.model"
+        "com.dailyminutes.laundry.order.domain.model"
 })
 class OrderRepositoryTest {
-
-
-    @Autowired
-    private StoreRepository storeRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -62,19 +41,13 @@ class OrderRepositoryTest {
     @Autowired
     private OrderItemMetadataRepository orderItemMetadataRepository;
 
-    @Autowired
-    private CatalogRepository catalogRepository;
-
     /**
      * Test save and find order with items and metadata.
      */
     @Test
     void testSaveAndFindOrderWithItemsAndMetadata() {
 
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-
-        OrderEntity order = new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50"));
+        OrderEntity order = new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50"));
         OrderEntity savedOrder = orderRepository.save(order);
 
         assertThat(savedOrder).isNotNull();
@@ -95,7 +68,7 @@ class OrderRepositoryTest {
         // Verify the order itself
         Optional<OrderEntity> foundOrder = orderRepository.findById(savedOrder.getId());
         assertThat(foundOrder).isPresent();
-        assertThat(foundOrder.get().getCustomerId()).isEqualTo(customer.getId()); // Assert customer ID
+        assertThat(foundOrder.get().getCustomerId()).isEqualTo(10l); // Assert customer ID
 
         // Verify order items for this order
         List<OrderItemEntity> foundItems = orderItemRepository.findByOrderId(savedOrder.getId());
@@ -113,19 +86,13 @@ class OrderRepositoryTest {
      */
     @Test
     void testFindByCustomerId() { // Updated test method name
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", null));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", null));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store3", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB124", "9876543211", "John Doe", "john@example.com"));
+        orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00")));
+        orderRepository.save(new OrderEntity(null, 20l, 10l, LocalDateTime.now(), OrderStatus.DELIVERED, new BigDecimal("20.00")));
+        orderRepository.save(new OrderEntity(null, 30l, 30l, LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("15.00")));
 
-        orderRepository.save(new OrderEntity(null, store1.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00")));
-        orderRepository.save(new OrderEntity(null, store2.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.DELIVERED, new BigDecimal("20.00")));
-        orderRepository.save(new OrderEntity(null, store3.getId(), customer2.getId(), LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("15.00")));
-
-        List<OrderEntity> orders = orderRepository.findByCustomerId(customer1.getId()); // Using customer ID
+        List<OrderEntity> orders = orderRepository.findByCustomerId(10l); // Using customer ID
         assertThat(orders).hasSize(2);
-        assertThat(orders.get(0).getCustomerId()).isEqualTo(customer1.getId()); // Assert customer ID
+        assertThat(orders.get(0).getCustomerId()).isEqualTo(10l); // Assert customer ID
     }
 
     /**
@@ -133,19 +100,13 @@ class OrderRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB124", "9876543211", "John Doe", "john@example.com"));
-        CustomerEntity customer3 = customerRepository.save(new CustomerEntity(null, "SUB125", "9876543211", "Foo Bar", "fb@example.com"));
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", null));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", null));
+        orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("50.00")));
+        orderRepository.save(new OrderEntity(null, 10l, 20l, LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("75.00")));
+        orderRepository.save(new OrderEntity(null, 30l, 30l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("30.00")));
 
-        orderRepository.save(new OrderEntity(null, store1.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("50.00")));
-        orderRepository.save(new OrderEntity(null, store1.getId(), customer2.getId(), LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("75.00")));
-        orderRepository.save(new OrderEntity(null, store2.getId(), customer3.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("30.00")));
-
-        List<OrderEntity> orders = orderRepository.findByStoreId(store1.getId());
+        List<OrderEntity> orders = orderRepository.findByStoreId(10l);
         assertThat(orders).hasSize(2);
-        assertThat(orders.get(0).getStoreId()).isEqualTo(store1.getId());
+        assertThat(orders.get(0).getStoreId()).isEqualTo(10l);
     }
 
     /**
@@ -153,9 +114,7 @@ class OrderRepositoryTest {
      */
     @Test
     void testUpdateOrder() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order = new OrderEntity(null, store1.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00"));
+        OrderEntity order = new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00"));
         OrderEntity savedOrder = orderRepository.save(order);
 
         savedOrder.setStatus(OrderStatus.DELIVERED);
@@ -174,15 +133,11 @@ class OrderRepositoryTest {
     @Test
     void testDeleteOrderAndAssociatedItems() {
         // Create and save Order
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        CatalogEntity catalog=catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("1.50")));
-
-        OrderEntity order = new OrderEntity(null, store1.getId(), customer1.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("5.00"));
+        OrderEntity order = new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("5.00"));
         OrderEntity savedOrder = orderRepository.save(order);
 
         // Create and save OrderItem
-        OrderItemEntity item1 = new OrderItemEntity(null, savedOrder.getId(), catalog.getId(), new BigDecimal("1.0"), new BigDecimal("20.00"), "Item to delete");
+        OrderItemEntity item1 = new OrderItemEntity(null, savedOrder.getId(), 10l, new BigDecimal("1.0"), new BigDecimal("20.00"), "Item to delete");
         OrderItemEntity savedItem1 = orderItemRepository.save(item1);
 
         // Create and save OrderItemMetadata

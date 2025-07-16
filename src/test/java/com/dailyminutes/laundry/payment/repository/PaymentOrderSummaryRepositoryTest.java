@@ -1,9 +1,9 @@
 package com.dailyminutes.laundry.payment.repository; // Updated package name
 
-import com.dailyminutes.DailyminutesApplication; // Updated import
+import com.dailyminutes.DailyminutesApplication;
 import com.dailyminutes.laundry.payment.domain.model.PaymentEntity;
 import com.dailyminutes.laundry.payment.domain.model.PaymentMethod;
-import com.dailyminutes.laundry.payment.domain.model.PaymentOrderSummaryEntity; // Updated import
+import com.dailyminutes.laundry.payment.domain.model.PaymentOrderSummaryEntity;
 import com.dailyminutes.laundry.payment.domain.model.PaymentStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong; // For generating unique IDs
 
 import static org.assertj.core.api.Assertions.assertThat;
 

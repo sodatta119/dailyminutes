@@ -1,15 +1,8 @@
 package com.dailyminutes.laundry.geofence.repository;
 
 import com.dailyminutes.DailyminutesApplication;
-import com.dailyminutes.laundry.customer.domain.model.CustomerEntity;
-import com.dailyminutes.laundry.customer.repository.CustomerRepository;
 import com.dailyminutes.laundry.geofence.domain.model.GeofenceEntity;
 import com.dailyminutes.laundry.geofence.domain.model.GeofenceOrderSummaryEntity;
-import com.dailyminutes.laundry.order.domain.model.OrderEntity;
-import com.dailyminutes.laundry.order.domain.model.OrderStatus;
-import com.dailyminutes.laundry.order.repository.OrderRepository;
-import com.dailyminutes.laundry.store.domain.model.StoreEntity;
-import com.dailyminutes.laundry.store.repository.StoreRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
@@ -30,14 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.geofence.repository",
-        "com.dailyminutes.laundry.order.repository",
-        "com.dailyminutes.laundry.customer.repository",
-        "com.dailyminutes.laundry.store.repository"})
-@ComponentScan(basePackages = {"com.dailyminutes.laundry.geofence.domain.model",
-        "com.dailyminutes.laundry.order.domain.model",
-        "com.dailyminutes.laundry.customer.domain.model",
-        "com.dailyminutes.laundry.store.domain.model"})
+@EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.geofence.repository"})
+@ComponentScan(basePackages = {"com.dailyminutes.laundry.geofence.domain.model"})
 class GeofenceOrderSummaryRepositoryTest {
 
     @Autowired
@@ -48,37 +35,23 @@ class GeofenceOrderSummaryRepositoryTest {
     private GeofenceRepository geofenceRepository;
 
 
-    @Autowired
-    private OrderRepository orderRepository;
-
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-
-    @Autowired
-    private StoreRepository storeRepository;
-
     /**
      * Test save and find geofence order summary.
      */
     @Test
     void testSaveAndFindGeofenceOrderSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
 
         GeofenceOrderSummaryEntity summary = new GeofenceOrderSummaryEntity(
-                null, order.getId(), geofence.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("50.00"), customer.getId(), store.getId());
+                null, 10l, geofence.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("50.00"), 20l, 30l);
         GeofenceOrderSummaryEntity savedSummary = geofenceOrderSummaryRepository.save(summary);
 
         assertThat(savedSummary).isNotNull();
         assertThat(savedSummary.getId()).isNotNull();
-        assertThat(savedSummary.getOrderId()).isEqualTo(order.getId());
+        assertThat(savedSummary.getOrderId()).isEqualTo(10l);
         assertThat(savedSummary.getGeofenceId()).isEqualTo(geofence.getId());
-        assertThat(savedSummary.getCustomerId()).isEqualTo(customer.getId());
-        assertThat(savedSummary.getStoreId()).isEqualTo(store.getId());
+        assertThat(savedSummary.getCustomerId()).isEqualTo(20l);
+        assertThat(savedSummary.getStoreId()).isEqualTo(30l);
 
         Optional<GeofenceOrderSummaryEntity> foundSummary = geofenceOrderSummaryRepository.findById(savedSummary.getId());
         assertThat(foundSummary).isPresent();
@@ -91,13 +64,10 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testUpdateGeofenceOrderSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
 
         GeofenceOrderSummaryEntity summary = new GeofenceOrderSummaryEntity(
-                null, order.getId(), geofence.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("75.00"), customer.getId(), store.getId());
+                null, 10l, geofence.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("75.00"), 20l, 30l);
         GeofenceOrderSummaryEntity savedSummary = geofenceOrderSummaryRepository.save(summary);
 
         savedSummary.setStatus("DELIVERED");
@@ -115,13 +85,10 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testDeleteGeofenceOrderSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
 
         GeofenceOrderSummaryEntity summary = new GeofenceOrderSummaryEntity(
-                null, order.getId(), geofence.getId(), LocalDateTime.now(), "CANCELLED", new BigDecimal("20.00"), customer.getId(), store.getId());
+                null, 10l, geofence.getId(), LocalDateTime.now(), "CANCELLED", new BigDecimal("20.00"), 20l, 30l);
         GeofenceOrderSummaryEntity savedSummary = geofenceOrderSummaryRepository.save(summary);
 
         geofenceOrderSummaryRepository.deleteById(savedSummary.getId());
@@ -134,17 +101,12 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByGeofenceId() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
 
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order1.getId(), geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("10.00"), customer.getId(), store.getId()));
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order2.getId(), geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("25.00"), customer.getId(), store.getId()));
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order3.getId(), geofence2.getId(), LocalDateTime.now(), "NEW", new BigDecimal("30.00"), customer.getId(), store.getId()));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("10.00"), 10l, 10l));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("25.00"), 20l, 20l));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 30l, geofence2.getId(), LocalDateTime.now(), "NEW", new BigDecimal("30.00"), 30l, 30l));
 
         List<GeofenceOrderSummaryEntity> ordersForGeofence10 = geofenceOrderSummaryRepository.findByGeofenceId(geofence1.getId());
         assertThat(ordersForGeofence10).hasSize(2);
@@ -156,17 +118,13 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
 
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order1.getId(), geofence1.getId(), LocalDateTime.now(), "NEW", new BigDecimal("15.00"), customer.getId(), store.getId()));
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order2.getId(), geofence2.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("18.00"), customer.getId(), store.getId()));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "NEW", new BigDecimal("15.00"), 10l, 10l));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence2.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("18.00"), 20l, 20l));
 
-        Optional<GeofenceOrderSummaryEntity> foundSummary = geofenceOrderSummaryRepository.findByOrderId(order1.getId());
+        Optional<GeofenceOrderSummaryEntity> foundSummary = geofenceOrderSummaryRepository.findByOrderId(10l);
         assertThat(foundSummary).isPresent();
         assertThat(foundSummary.get().getGeofenceId()).isEqualTo(geofence1.getId());
     }
@@ -176,21 +134,16 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByCustomerId() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
 
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order1.getId(), geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("100.00"), customer.getId(), store.getId()));
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order2.getId(), geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("120.00"), customer.getId(), store.getId()));
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order3.getId(), geofence2.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("80.00"), customer.getId(), store.getId()));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("100.00"), 10l, 10l));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("120.00"), 10l, 20l));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 30l, geofence2.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("80.00"), 10l, 30l));
 
-        List<GeofenceOrderSummaryEntity> ordersForCustomer40 = geofenceOrderSummaryRepository.findByCustomerId(customer.getId());
+        List<GeofenceOrderSummaryEntity> ordersForCustomer40 = geofenceOrderSummaryRepository.findByCustomerId(10l);
         assertThat(ordersForCustomer40).hasSize(3);
-        assertThat(ordersForCustomer40.stream().allMatch(s -> s.getCustomerId().equals(customer.getId()))).isTrue();
+        assertThat(ordersForCustomer40.stream().allMatch(s -> s.getCustomerId().equals(10l))).isTrue();
     }
 
     /**
@@ -198,20 +151,15 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", null));
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, store.getId(), customer.getId(), LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
         GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
 
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order1.getId(), geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("60.00"), customer.getId(), store.getId()));
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order2.getId(), geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("70.00"), customer.getId(), store.getId()));
-        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, order3.getId(), geofence2.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("80.00"), customer.getId(), store.getId()));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("60.00"), 10l, 10l));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("70.00"), 20l, 10l));
+        geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 30l, geofence2.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("80.00"), 30l, 10l));
 
-        List<GeofenceOrderSummaryEntity> ordersForStore500 = geofenceOrderSummaryRepository.findByStoreId(store.getId());
+        List<GeofenceOrderSummaryEntity> ordersForStore500 = geofenceOrderSummaryRepository.findByStoreId(10l);
         assertThat(ordersForStore500).hasSize(3);
-        assertThat(ordersForStore500.stream().allMatch(s -> s.getStoreId().equals(store.getId()))).isTrue();
+        assertThat(ordersForStore500.stream().allMatch(s -> s.getStoreId().equals(10l))).isTrue();
     }
 }
