@@ -6,7 +6,6 @@ package com.dailyminutes.laundry.agent.domain.event;
 
 import com.dailyminutes.laundry.agent.domain.model.AgentDesignation;
 import com.dailyminutes.laundry.agent.domain.model.AgentState;
-import com.dailyminutes.laundry.common.exception.EntityPersistenceException;
 
 import java.time.LocalDate;
 
@@ -21,12 +20,12 @@ public record AgentCreatedEvent(
         AgentDesignation designation
 ) {
     public AgentCreatedEvent {
-        if (agentId == null) throw new EntityPersistenceException("Agent ID cannot be null");
-        if (name == null || name.isBlank()) throw new EntityPersistenceException("Agent name cannot be null or blank");
-        if (state == null) throw new EntityPersistenceException("Agent state cannot be null");
-        if (phoneNumber == null || phoneNumber.isBlank()) throw new EntityPersistenceException("Agent phone number cannot be null or blank");
-        if (uniqueId == null || uniqueId.isBlank()) throw new EntityPersistenceException("Agent unique ID cannot be null or blank");
-        if (dateOfJoining == null) throw new EntityPersistenceException("Date of joining cannot be null");
-        if (designation == null) throw new EntityPersistenceException("Agent designation cannot be null");
+        if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
+        if (name == null || name.isBlank()) throw new IllegalArgumentException("Agent name cannot be null or blank");
+        if (state == null) throw new IllegalArgumentException("Agent state cannot be null");
+        if (phoneNumber == null || phoneNumber.isBlank()) throw new IllegalArgumentException("Agent phone number cannot be null or blank");
+        if (uniqueId == null || uniqueId.isBlank()) throw new IllegalArgumentException("Agent unique ID cannot be null or blank");
+        if (dateOfJoining == null) throw new IllegalArgumentException("Date of joining cannot be null");
+        if (designation == null) throw new IllegalArgumentException("Agent designation cannot be null");
     }
 }

@@ -4,8 +4,6 @@
  */
 package com.dailyminutes.laundry.agent.domain.event;
 
-import com.dailyminutes.laundry.common.exception.EntityPersistenceException;
-
 /**
  * Event fired when an Agent is deleted.
  * Contains the ID of the deleted agent.
@@ -14,6 +12,6 @@ public record AgentDeletedEvent(
         Long agentId
 ) {
     public AgentDeletedEvent {
-        if (agentId == null) throw new EntityPersistenceException("Agent ID cannot be null");
+        if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
     }
 }

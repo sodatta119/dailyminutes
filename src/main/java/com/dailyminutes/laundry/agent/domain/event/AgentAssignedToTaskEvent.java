@@ -5,8 +5,6 @@
 package com.dailyminutes.laundry.agent.domain.event;
 
 
-import com.dailyminutes.laundry.common.exception.EntityPersistenceException;
-
 /**
  * Event fired when an Agent is assigned to or unassigned to a Task.
  * This can be a specific event for team changes, or part of AgentUpdatedEvent.
@@ -18,8 +16,8 @@ public record AgentAssignedToTaskEvent(
         Long toTaskId
 ) {
     public AgentAssignedToTaskEvent {
-        if (agentId == null) throw new EntityPersistenceException("Agent ID cannot be null");
-        if (fromTaskId == null && toTaskId==null) throw new EntityPersistenceException("Task ID cannot be null");
+        if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
+        if (fromTaskId == null && toTaskId==null) throw new IllegalArgumentException("Task ID cannot be null");
     }
 }
 
