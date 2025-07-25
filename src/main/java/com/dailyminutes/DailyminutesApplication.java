@@ -6,10 +6,12 @@ package com.dailyminutes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.modulith.Modulithic;
 
 /**
  * The type Dailyminutes application.
  */
+@Modulithic(sharedModules = {"laundry.customer"})
 @SpringBootApplication
 public class DailyminutesApplication {
 

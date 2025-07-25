@@ -1,11 +1,11 @@
 /**
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 18/07/25
+ * @version 26/07/25
  */
-package com.dailyminutes.laundry.team;
+package com.dailyminutes.laundry.payment;
 
 import org.springframework.modulith.ApplicationModule;
 
 @ApplicationModule
-public class TeamModule {
+public class PaymentModule {
 }
