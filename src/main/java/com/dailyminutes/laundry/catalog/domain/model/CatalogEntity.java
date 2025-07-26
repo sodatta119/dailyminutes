@@ -29,7 +29,7 @@ public class CatalogEntity {
 
     private String name;
 
-    private UnitType unit;
+    private UnitType unitType;
 
     private BigDecimal unitPrice;
 }

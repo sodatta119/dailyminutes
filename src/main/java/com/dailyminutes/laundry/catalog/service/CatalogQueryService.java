@@ -80,7 +80,7 @@ public class CatalogQueryService {
                 entity.getId(),
                 entity.getType(),
                 entity.getName(),
-                entity.getUnit(),
+                entity.getUnitType(),
                 entity.getUnitPrice()
         );
     }

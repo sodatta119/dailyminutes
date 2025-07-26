@@ -39,7 +39,7 @@ public class CatalogService {
                 savedCatalog.getId(),
                 savedCatalog.getType(),
                 savedCatalog.getName(),
-                savedCatalog.getUnit(),
+                savedCatalog.getUnitType(),
                 savedCatalog.getUnitPrice()
         ));
         return toCatalogResponse(savedCatalog);
@@ -51,7 +51,7 @@ public class CatalogService {
 
         existingCatalog.setType(request.type());
         existingCatalog.setName(request.name());
-        existingCatalog.setUnit(request.unit());
+        existingCatalog.setUnitType(request.unit());
         existingCatalog.setUnitPrice(request.unitPrice());
 
         CatalogEntity updatedCatalog = catalogRepository.save(existingCatalog);
@@ -60,7 +60,7 @@ public class CatalogService {
                 updatedCatalog.getId(),
                 updatedCatalog.getType(),
                 updatedCatalog.getName(),
-                updatedCatalog.getUnit(),
+                updatedCatalog.getUnitType(),
                 updatedCatalog.getUnitPrice()
         ));
 
@@ -80,7 +80,7 @@ public class CatalogService {
                 entity.getId(),
                 entity.getType(),
                 entity.getName(),
-                entity.getUnit(),
+                entity.getUnitType(),
                 entity.getUnitPrice()
         );
     }
