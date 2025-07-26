@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.geofence.repository"})
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.geofence.domain.model"})
 class GeofenceStoreSummaryRepositoryTest {

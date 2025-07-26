@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Geofence order summary repository test.
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.geofence.repository"})
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.geofence.domain.model"})
 class GeofenceOrderSummaryRepositoryTest {

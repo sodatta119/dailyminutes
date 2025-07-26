@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Team repository test.
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class) // Exclude main app class
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = "com.dailyminutes.laundry.team.repository") // Specify repository package
 @ComponentScan(basePackages = "com.dailyminutes.laundry.team.domain.model") // Specify domain model package
 class TeamRepositoryTest {

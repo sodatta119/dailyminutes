@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Store catalog repository test.
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.store.repository"})
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.store.domain.model"})
 class StoreCatalogRepositoryTest { // Updated class name

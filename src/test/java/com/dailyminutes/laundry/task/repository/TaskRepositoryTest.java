@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Task repository test.
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.task.repository"})
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.task.domain.model"})
 class TaskRepositoryTest {

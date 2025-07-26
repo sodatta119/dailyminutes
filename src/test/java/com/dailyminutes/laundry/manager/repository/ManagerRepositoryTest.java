@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Manager repository test.
  */
 @DataJdbcTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = "com.dailyminutes.laundry.manager.repository") // Specify repository package
 @ComponentScan(basePackages = "com.dailyminutes.laundry.manager.domain.model") // Specify domain model package
 class ManagerRepositoryTest {

@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Agent team summary repository test.
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.agent.repository"})
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.agent.domain.model"})
 class AgentTeamSummaryRepositoryTest {

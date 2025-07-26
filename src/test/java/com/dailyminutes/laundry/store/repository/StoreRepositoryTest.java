@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Store repository test.
  */
 @DataJdbcTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.store.repository"})
 // Point to your repository package
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.store.domain.model"}) // Point to your domain model package

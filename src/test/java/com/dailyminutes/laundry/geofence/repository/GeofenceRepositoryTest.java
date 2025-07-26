@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Geofence repository test.
  */
 @DataJdbcTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = "com.dailyminutes.laundry.geofence.repository") // Specify repository package
 @ComponentScan(basePackages = "com.dailyminutes.laundry.geofence.domain.model") // Specify domain model package
 class GeofenceRepositoryTest {

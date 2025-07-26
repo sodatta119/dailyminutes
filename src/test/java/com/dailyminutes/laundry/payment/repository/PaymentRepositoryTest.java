@@ -20,7 +20,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJdbcTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.payment.repository"})
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.payment.domain.model"})
 class PaymentRepositoryTest {

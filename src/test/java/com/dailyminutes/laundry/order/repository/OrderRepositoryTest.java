@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Order repository test.
  */
 @DataJdbcTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {
         "com.dailyminutes.laundry.order.repository"
 })

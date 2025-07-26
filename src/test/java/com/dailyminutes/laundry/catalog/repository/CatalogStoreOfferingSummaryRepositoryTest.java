@@ -22,7 +22,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = "com.dailyminutes.laundry.catalog.repository")
 @ComponentScan(basePackages = "com.dailyminutes.laundry.catalog.domain.model")
 class CatalogStoreOfferingSummaryRepositoryTest {

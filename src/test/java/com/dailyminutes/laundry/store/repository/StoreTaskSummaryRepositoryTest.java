@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = "com.dailyminutes.laundry.store.repository") // Updated package name
 @ComponentScan(basePackages = "com.dailyminutes.laundry.store.domain.model") // Updated package name
 class StoreTaskSummaryRepositoryTest {

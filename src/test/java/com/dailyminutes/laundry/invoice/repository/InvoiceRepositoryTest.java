@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * The type Invoice repository test.
  */
 @DataJdbcTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.invoice.repository"})
 // Specify repository package
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.invoice.domain.model"})
