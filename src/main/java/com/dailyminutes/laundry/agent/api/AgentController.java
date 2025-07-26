@@ -4,11 +4,13 @@
  */
 package com.dailyminutes.laundry.agent.api;
 
-import com.dailyminutes.laundry.agent.domain.model.AgentDesignation;
-import com.dailyminutes.laundry.agent.domain.model.AgentState;
 import com.dailyminutes.laundry.agent.dto.*;
 import com.dailyminutes.laundry.agent.service.AgentQueryService;
 import com.dailyminutes.laundry.agent.service.AgentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,174 +20,111 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-/**
- * REST Controller for managing Agent resources.
- * Exposes endpoints for CRUD operations on agents and querying agent-related summaries.
- */
 @RestController
-@RequestMapping("/agents") // Base path for all agent-related endpoints
-@RequiredArgsConstructor // Lombok annotation for constructor injection
+@RequestMapping("/agents")
+@RequiredArgsConstructor
+@Tag(name = "Agent Management", description = "APIs for managing agents")
 public class AgentController {
 
     private final AgentService agentService;
     private final AgentQueryService agentQueryService;
 
-    /**
-     * Creates a new agent.
-     *
-     * @param request The DTO containing the details of the agent to create.
-     * @return A ResponseEntity with the created AgentResponse DTO and HTTP status 201 (Created).
-     */
+    @Operation(summary = "Create a new agent")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Agent created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
+    })
     @PostMapping
     public ResponseEntity<AgentResponse> createAgent(@Valid @RequestBody CreateAgentRequest request) {
-        try {
-            AgentResponse response = agentService.createAgent(request);
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            // Handle validation or business rule exceptions
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        }
+        return new ResponseEntity<>(agentService.createAgent(request), HttpStatus.CREATED);
     }
 
-    /**
-     * Updates an existing agent.
-     *
-     * @param id The ID of the agent to update.
-     * @param request The DTO containing the updated details of the agent.
-     * @return A ResponseEntity with the updated AgentResponse DTO and HTTP status 200 (OK).
-     */
+    @Operation(summary = "Update an existing agent")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Agent updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Agent not found")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<AgentResponse> updateAgent(@PathVariable Long id, @Valid @RequestBody UpdateAgentRequest request) {
-        // Ensure the ID in the path matches the ID in the request body for consistency
         if (!id.equals(request.id())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID in path must match ID in request body.");
         }
-        try {
-            AgentResponse response = agentService.updateAgent(request);
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            // Handle cases where agent not found or other business rule violations
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }
+        return ResponseEntity.ok(agentService.updateAgent(request));
     }
 
-    /**
-     * Deletes an agent by ID.
-     *
-     * @param id The ID of the agent to delete.
-     * @return A ResponseEntity with HTTP status 204 (No Content).
-     */
+    @Operation(summary = "Delete an agent")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Agent deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Agent not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAgent(@PathVariable Long id) {
-        try {
-            agentService.deleteAgent(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            // Handle case where agent not found
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }
+        agentService.deleteAgent(id);
+        return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Retrieves an agent by ID.
-     *
-     * @param id The ID of the agent to retrieve.
-     * @return A ResponseEntity with the AgentResponse DTO and HTTP status 200 (OK).
-     */
+    @Operation(summary = "Get an agent by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the agent"),
+            @ApiResponse(responseCode = "404", description = "Agent not found")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<AgentResponse> getAgentById(@PathVariable Long id) {
         return agentQueryService.findAgentById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent with ID " + id + " not found."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent not found"));
     }
 
-    /**
-     * Retrieves all agents.
-     *
-     * @return A ResponseEntity with a list of AgentResponse DTOs and HTTP status 200 (OK).
-     */
+    @Operation(summary = "Get all agents")
+    @ApiResponse(responseCode = "200", description = "List of all agents")
     @GetMapping
     public ResponseEntity<List<AgentResponse>> getAllAgents() {
-        List<AgentResponse> agents = agentQueryService.findAllAgents();
-        return ResponseEntity.ok(agents);
+        return ResponseEntity.ok(agentQueryService.findAllAgents());
     }
 
-    /**
-     * Retrieves agents by team ID.
-     *
-     * @param teamId The ID of the team.
-     * @return A ResponseEntity with a list of AgentResponse DTOs and HTTP status 200 (OK).
-     */
+    @Operation(summary = "Get agents by team ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found agents for the team"),
+            @ApiResponse(responseCode = "404", description = "No agents found for the team")
+    })
     @GetMapping("/by-team/{teamId}")
     public ResponseEntity<List<AgentResponse>> getAgentsByTeamId(@PathVariable Long teamId) {
-        List<AgentResponse> agents = agentQueryService.findAgentsByTeamId(teamId);
-        if (agents.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No agents found for team ID " + teamId);
-        }
-        return ResponseEntity.ok(agents);
+        return ResponseEntity.ok(agentQueryService.findAgentsByTeamId(teamId));
     }
 
-    /**
-     * Retrieves agents by their state.
-     *
-     * @param state The state of the agent (e.g., ACTIVE, INACTIVE).
-     * @return A ResponseEntity with a list of AgentResponse DTOs and HTTP status 200 (OK).
-     */
-    @GetMapping("/by-state/{state}")
-    public ResponseEntity<List<AgentResponse>> getAgentsByState(@PathVariable AgentState state) {
-        List<AgentResponse> agents = agentQueryService.findAgentsByState(state);
-        if (agents.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No agents found with state " + state);
-        }
-        return ResponseEntity.ok(agents);
+    @Operation(summary = "Assign a team to an agent")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Team assigned successfully"),
+            @ApiResponse(responseCode = "404", description = "Agent not found")
+    })
+    @PutMapping("/{id}/assign-team/{teamId}")
+    public ResponseEntity<AgentResponse> assignTeam(@PathVariable Long id, @PathVariable Long teamId) {
+        return ResponseEntity.ok(agentService.assignTeam(id, teamId));
     }
 
-    /**
-     * Retrieves agents by their designation.
-     *
-     * @param designation The designation of the agent (e.g., FLEET_AGENT, DELIVERY_EXECUTIVE).
-     * @return A ResponseEntity with a list of AgentResponse DTOs and HTTP status 200 (OK).
-     */
-    @GetMapping("/by-designation/{designation}")
-    public ResponseEntity<List<AgentResponse>> getAgentsByDesignation(@PathVariable AgentDesignation designation) {
-        List<AgentResponse> agents = agentQueryService.findAgentsByDesignation(designation);
-        if (agents.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No agents found with designation " + designation);
-        }
-        return ResponseEntity.ok(agents);
+//    @PutMapping("/{id}/unassign-team")
+//    public ResponseEntity<AgentResponse> unassignTeam(@PathVariable Long id) {
+//        return ResponseEntity.ok(agentService.unassignTeam(id));
+//    }
+
+    @Operation(summary = "Get team summary for an agent")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found team summary"),
+            @ApiResponse(responseCode = "404", description = "Agent not found")
+    })
+    @GetMapping("/{id}/team-summary")
+    public ResponseEntity<List<AgentTeamSummaryResponse>> getTeamSummary(@PathVariable Long id) {
+        return ResponseEntity.ok(agentQueryService.findAgentTeamSummariesByAgentId(id));
     }
 
-    /**
-     * Retrieves agent-team summaries by agent ID.
-     *
-     * @param agentId The ID of the agent.
-     * @return A ResponseEntity with a list of AgentTeamSummaryResponse DTOs and HTTP status 200 (OK).
-     */
-    @GetMapping("/{agentId}/team-summaries")
-    public ResponseEntity<List<AgentTeamSummaryResponse>> getAgentTeamSummaries(@PathVariable Long agentId) {
-        List<AgentTeamSummaryResponse> summaries = agentQueryService.findAgentTeamSummariesByAgentId(agentId);
-        if (summaries.isEmpty()) {
-            // It's possible an agent exists but has no team summary if the event hasn't propagated yet
-            // or if they are genuinely not associated with any team in the summary view.
-            // Consider if NOT_FOUND is appropriate here, or an empty list with OK.
-            // For now, returning NOT_FOUND if no summaries are found for the agent.
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No team summaries found for agent ID " + agentId);
-        }
-        return ResponseEntity.ok(summaries);
-    }
-
-    /**
-     * Retrieves agent-task summaries by agent ID.
-     *
-     * @param agentId The ID of the agent.
-     * @return A ResponseEntity with a list of AgentTaskSummaryResponse DTOs and HTTP status 200 (OK).
-     */
-    @GetMapping("/{agentId}/task-summaries")
-    public ResponseEntity<List<AgentTaskSummaryResponse>> getAgentTaskSummaries(@PathVariable Long agentId) {
-        List<AgentTaskSummaryResponse> summaries = agentQueryService.findAgentTaskSummariesByAgentId(agentId);
-        if (summaries.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No task summaries found for agent ID " + agentId);
-        }
-        return ResponseEntity.ok(summaries);
+    @Operation(summary = "Get task summary for an agent")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found task summary"),
+            @ApiResponse(responseCode = "404", description = "Agent not found")
+    })
+    @GetMapping("/{id}/task-summary")
+    public ResponseEntity<List<AgentTaskSummaryResponse>> getTaskSummary(@PathVariable Long id) {
+        return ResponseEntity.ok(agentQueryService.findAgentTaskSummariesByAgentId(id));
     }
 }

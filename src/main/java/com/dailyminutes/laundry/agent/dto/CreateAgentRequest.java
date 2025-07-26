@@ -12,16 +12,13 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-/**
- * DTO for creating a new Agent.
- */
 public record CreateAgentRequest(
         @NotBlank(message = "Agent name cannot be blank")
         String name,
         @NotNull(message = "Agent state cannot be null")
         AgentState state,
         @NotNull(message = "Team cannot be null")
-        Long teamId, // Optional: can be null initially
+        Long teamId,
         @NotBlank(message = "Phone number cannot be blank")
         @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
         String phoneNumber,

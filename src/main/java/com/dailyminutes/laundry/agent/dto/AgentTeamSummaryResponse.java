@@ -4,9 +4,6 @@
  */
 package com.dailyminutes.laundry.agent.dto;
 
-/**
- * DTO for AgentTeamSummary response.
- */
 public record AgentTeamSummaryResponse(
         Long id,
         Long teamId,

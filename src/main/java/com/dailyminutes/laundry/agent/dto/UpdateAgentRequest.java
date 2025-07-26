@@ -12,9 +12,6 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-/**
- * DTO for updating an existing Agent.
- */
 public record UpdateAgentRequest(
         @NotNull(message = "Agent ID cannot be null for update")
         Long id,
@@ -22,7 +19,7 @@ public record UpdateAgentRequest(
         String name,
         @NotNull(message = "Agent state cannot be null")
         AgentState state,
-        Long teamId, // Optional: can be null for unassignment
+        Long teamId,
         @NotBlank(message = "Phone number cannot be blank")
         @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
         String phoneNumber,
@@ -30,7 +27,7 @@ public record UpdateAgentRequest(
         String uniqueId,
         @NotNull(message = "Joining date cannot be null")
         LocalDate joiningDate,
-        LocalDate terminationDate, // Optional: for setting termination date
+        LocalDate terminationDate,
         @NotNull(message = "Designation cannot be null")
         AgentDesignation designation
 ) {}

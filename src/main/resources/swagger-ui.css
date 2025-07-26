@@ -1,0 +1,23 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+}
+
+.topbar {
+  display: none;
+}
+
+.topbar-wrapper span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.swagger-ui .info .title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+.swagger-ui .opblock-summary-description {
+  font-style: italic;
+}
