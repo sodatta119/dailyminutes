@@ -52,7 +52,7 @@ class StoreControllerTest {
     @Test
     void createStore_shouldReturnCreated() throws Exception {
         when(storeService.createStore(any())).thenReturn(storeResponse);
-        mockMvc.perform(post("/stores")
+        mockMvc.perform(post("/api/stores")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createStoreRequest)))
                 .andExpect(status().isCreated());
@@ -61,7 +61,7 @@ class StoreControllerTest {
     @Test
     void getStoreById_shouldReturnStore() throws Exception {
         when(storeQueryService.findStoreById(1L)).thenReturn(Optional.of(storeResponse));
-        mockMvc.perform(get("/stores/1"))
+        mockMvc.perform(get("/api/stores/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Test Store"));
     }
@@ -69,7 +69,7 @@ class StoreControllerTest {
     @Test
     void updateStore_shouldReturnOk() throws Exception {
         when(storeService.updateStore(any())).thenReturn(storeResponse);
-        mockMvc.perform(put("/stores/1")
+        mockMvc.perform(put("/api/stores/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateStoreRequest)))
                 .andExpect(status().isOk());
@@ -78,7 +78,7 @@ class StoreControllerTest {
     @Test
     void deleteStore_shouldReturnNoContent() throws Exception {
         doNothing().when(storeService).deleteStore(1L);
-        mockMvc.perform(delete("/stores/1"))
+        mockMvc.perform(delete("/api/stores/1"))
                 .andExpect(status().isNoContent());
     }
 }

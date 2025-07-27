@@ -57,7 +57,7 @@ class OrderControllerTest {
     @Test
     void createOrder_shouldReturnCreated() throws Exception {
         when(orderService.createOrder(any())).thenReturn(orderResponse);
-        mockMvc.perform(post("/orders")
+        mockMvc.perform(post("/api/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createOrderRequest)))
                 .andExpect(status().isCreated());
@@ -66,7 +66,7 @@ class OrderControllerTest {
     @Test
     void getOrderById_shouldReturnOrder() throws Exception {
         when(orderQueryService.findOrderById(1L)).thenReturn(Optional.of(orderResponse));
-        mockMvc.perform(get("/orders/1"))
+        mockMvc.perform(get("/api/orders/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.storeId").value(1L));
     }
@@ -74,7 +74,7 @@ class OrderControllerTest {
     @Test
     void updateOrder_shouldReturnOk() throws Exception {
         when(orderService.updateOrder(any())).thenReturn(orderResponse);
-        mockMvc.perform(put("/orders/1")
+        mockMvc.perform(put("/api/orders/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateOrderRequest)))
                 .andExpect(status().isOk());
@@ -83,7 +83,7 @@ class OrderControllerTest {
     @Test
     void deleteOrder_shouldReturnNoContent() throws Exception {
         doNothing().when(orderService).deleteOrder(1L);
-        mockMvc.perform(delete("/orders/1"))
+        mockMvc.perform(delete("/api/orders/1"))
                 .andExpect(status().isNoContent());
     }
 }

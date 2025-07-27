@@ -53,7 +53,7 @@ class CatalogControllerTest {
     void createCatalog_shouldReturnCreatedCatalog() throws Exception {
         when(catalogService.createCatalog(any(CreateCatalogRequest.class))).thenReturn(catalogResponse);
 
-        mockMvc.perform(post("/catalogs")
+        mockMvc.perform(post("/api/catalogs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createRequest)))
                 .andExpect(status().isCreated())

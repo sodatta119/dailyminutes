@@ -4,7 +4,6 @@
  */
 package com.dailyminutes.laundry.invoice.service;
 
-
 import com.dailyminutes.laundry.invoice.dto.*;
 import com.dailyminutes.laundry.invoice.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -42,16 +41,14 @@ public class InvoiceQueryService {
                 .collect(Collectors.toList());
     }
 
-    public List<InvoiceCustomerSummaryResponse> findCustomerSummariesByInvoiceId(Long invoiceId) {
-        return customerSummaryRepository.findByInvoiceId(invoiceId).stream()
-                .map(s -> new InvoiceCustomerSummaryResponse(s.getId(), s.getInvoiceId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()))
-                .collect(Collectors.toList());
+    public Optional<InvoiceCustomerSummaryResponse> findCustomerSummaryByInvoiceId(Long invoiceId) {
+        return customerSummaryRepository.findByInvoiceId(invoiceId)
+                .map(s -> new InvoiceCustomerSummaryResponse(s.getId(), s.getInvoiceId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()));
     }
 
-    public List<InvoiceOrderSummaryResponse> findOrderSummariesByInvoiceId(Long invoiceId) {
-        return orderSummaryRepository.findByInvoiceId(invoiceId).stream()
-                .map(s -> new InvoiceOrderSummaryResponse(s.getId(), s.getInvoiceId(), s.getOrderId(), s.getOrderDate(), s.getStatus(), s.getTotalAmount()))
-                .collect(Collectors.toList());
+    public Optional<InvoiceOrderSummaryResponse> findOrderSummaryByInvoiceId(Long invoiceId) {
+        return orderSummaryRepository.findByInvoiceId(invoiceId)
+                .map(s -> new InvoiceOrderSummaryResponse(s.getId(), s.getInvoiceId(), s.getOrderId(), s.getOrderDate(), s.getStatus(), s.getTotalAmount()));
     }
 
     public List<InvoicePaymentSummaryResponse> findPaymentSummariesByInvoiceId(Long invoiceId) {

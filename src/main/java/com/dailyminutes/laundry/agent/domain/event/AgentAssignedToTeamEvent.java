@@ -12,7 +12,7 @@ package com.dailyminutes.laundry.agent.domain.event;
  */
 public record AgentAssignedToTeamEvent(
         Long agentId,
-        Long teamId // Null if unassigned
+        Long teamId
 ) {
     public AgentAssignedToTeamEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");

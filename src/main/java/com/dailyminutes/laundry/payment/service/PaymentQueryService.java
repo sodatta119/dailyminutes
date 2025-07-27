@@ -36,21 +36,18 @@ public class PaymentQueryService {
                 .collect(Collectors.toList());
     }
 
-    public List<PaymentCustomerSummaryResponse> findCustomerSummaryByPaymentId(Long paymentId) {
-        return customerSummaryRepository.findByPaymentId(paymentId).stream()
-                .map(s -> new PaymentCustomerSummaryResponse(s.getId(), s.getPaymentId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()))
-                .collect(Collectors.toList());
+    public Optional<PaymentCustomerSummaryResponse> findCustomerSummaryByPaymentId(Long paymentId) {
+        return customerSummaryRepository.findByPaymentId(paymentId)
+                .map(s -> new PaymentCustomerSummaryResponse(s.getId(), s.getPaymentId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()));
     }
 
-    public List<PaymentInvoiceSummaryResponse> findInvoiceSummaryByPaymentId(Long paymentId) {
-        return invoiceSummaryRepository.findByPaymentId(paymentId).stream()
-                .map(s -> new PaymentInvoiceSummaryResponse(s.getId(), s.getPaymentId(), s.getInvoiceId(), s.getInvoiceDate(), s.getTotalPrice(), s.getTotalTax(), s.getTotalDiscount()))
-                .collect(Collectors.toList());
+    public Optional<PaymentInvoiceSummaryResponse> findInvoiceSummaryByPaymentId(Long paymentId) {
+        return invoiceSummaryRepository.findByPaymentId(paymentId)
+                .map(s -> new PaymentInvoiceSummaryResponse(s.getId(), s.getPaymentId(), s.getInvoiceId(), s.getInvoiceDate(), s.getTotalPrice(), s.getTotalTax(), s.getTotalDiscount()));
     }
 
-    public List<PaymentOrderSummaryResponse> findOrderSummaryByPaymentId(Long paymentId) {
-        return orderSummaryRepository.findByPaymentId(paymentId).stream()
-                .map(s -> new PaymentOrderSummaryResponse(s.getId(), s.getPaymentId(), s.getOrderId(), s.getOrderDate(), s.getStatus(), s.getTotalAmount(), s.getCustomerId(), s.getStoreId()))
-                .collect(Collectors.toList());
+    public Optional<PaymentOrderSummaryResponse> findOrderSummaryByPaymentId(Long paymentId) {
+        return orderSummaryRepository.findByPaymentId(paymentId)
+                .map(s -> new PaymentOrderSummaryResponse(s.getId(), s.getPaymentId(), s.getOrderId(), s.getOrderDate(), s.getStatus(), s.getTotalAmount(), s.getCustomerId(), s.getStoreId()));
     }
 }

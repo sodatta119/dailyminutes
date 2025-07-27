@@ -52,7 +52,7 @@ class ManagerControllerTest {
     @Test
     void createManager_shouldReturnCreated() throws Exception {
         when(managerService.createManager(any())).thenReturn(managerResponse);
-        mockMvc.perform(post("/managers")
+        mockMvc.perform(post("/api/managers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createManagerRequest)))
                 .andExpect(status().isCreated());
@@ -61,7 +61,7 @@ class ManagerControllerTest {
     @Test
     void getManagerById_shouldReturnManager() throws Exception {
         when(managerQueryService.findManagerById(1L)).thenReturn(Optional.of(managerResponse));
-        mockMvc.perform(get("/managers/1"))
+        mockMvc.perform(get("/api/managers/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Test Manager"));
     }
@@ -69,7 +69,7 @@ class ManagerControllerTest {
     @Test
     void updateManager_shouldReturnOk() throws Exception {
         when(managerService.updateManager(any())).thenReturn(managerResponse);
-        mockMvc.perform(put("/managers/1")
+        mockMvc.perform(put("/api/managers/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateManagerRequest)))
                 .andExpect(status().isOk());
@@ -78,7 +78,7 @@ class ManagerControllerTest {
     @Test
     void deleteManager_shouldReturnNoContent() throws Exception {
         doNothing().when(managerService).deleteManager(1L);
-        mockMvc.perform(delete("/managers/1"))
+        mockMvc.perform(delete("/api/managers/1"))
                 .andExpect(status().isNoContent());
     }
 }

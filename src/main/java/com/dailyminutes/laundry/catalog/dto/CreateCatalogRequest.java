@@ -18,7 +18,7 @@ public record CreateCatalogRequest(
         @NotBlank(message = "Catalog name cannot be blank")
         String name,
         @NotNull(message = "Unit type cannot be null")
-        UnitType unit,
+        UnitType unitType,
         @NotNull(message = "Unit price cannot be null")
         @DecimalMin(value = "0.0", inclusive = false, message = "Unit price must be positive")
         BigDecimal unitPrice

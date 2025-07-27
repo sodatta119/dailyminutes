@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.task;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule
+@ApplicationModule(id = "laundry.task")
 public class TaskModule {
 }

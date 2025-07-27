@@ -1,6 +1,5 @@
 package com.dailyminutes.laundry.invoice.api;
 
-
 import com.dailyminutes.laundry.invoice.dto.CreateInvoiceRequest;
 import com.dailyminutes.laundry.invoice.dto.InvoiceItemDto;
 import com.dailyminutes.laundry.invoice.dto.InvoiceResponse;
@@ -57,7 +56,7 @@ class InvoiceControllerTest {
     @Test
     void createInvoice_shouldReturnCreated() throws Exception {
         when(invoiceService.createInvoice(any())).thenReturn(invoiceResponse);
-        mockMvc.perform(post("/invoices")
+        mockMvc.perform(post("/api/invoices")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createInvoiceRequest)))
                 .andExpect(status().isCreated());
@@ -66,7 +65,7 @@ class InvoiceControllerTest {
     @Test
     void getInvoiceById_shouldReturnInvoice() throws Exception {
         when(invoiceQueryService.findInvoiceById(1L)).thenReturn(Optional.of(invoiceResponse));
-        mockMvc.perform(get("/invoices/1"))
+        mockMvc.perform(get("/api/invoices/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.swipeInvoiceId").value("swipe1"));
     }
@@ -74,7 +73,7 @@ class InvoiceControllerTest {
     @Test
     void updateInvoice_shouldReturnOk() throws Exception {
         when(invoiceService.updateInvoice(any())).thenReturn(invoiceResponse);
-        mockMvc.perform(put("/invoices/1")
+        mockMvc.perform(put("/api/invoices/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateInvoiceRequest)))
                 .andExpect(status().isOk());
@@ -83,7 +82,7 @@ class InvoiceControllerTest {
     @Test
     void deleteInvoice_shouldReturnNoContent() throws Exception {
         doNothing().when(invoiceService).deleteInvoice(1L);
-        mockMvc.perform(delete("/invoices/1"))
+        mockMvc.perform(delete("/api/invoices/1"))
                 .andExpect(status().isNoContent());
     }
 }

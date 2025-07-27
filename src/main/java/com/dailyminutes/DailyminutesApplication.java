@@ -11,7 +11,7 @@ import org.springframework.modulith.Modulithic;
 /**
  * The type Dailyminutes application.
  */
-@Modulithic(sharedModules = {"laundry.customer"})
+@Modulithic(sharedModules = {"laundry.common"})
 @SpringBootApplication
 public class DailyminutesApplication {
 

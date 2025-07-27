@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.team;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule
+@ApplicationModule(id = "laundry.team")
 public class TeamModule {
 }

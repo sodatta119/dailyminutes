@@ -52,7 +52,7 @@ class GeofenceControllerTest {
     @Test
     void createGeofence_shouldReturnCreated() throws Exception {
         when(geofenceService.createGeofence(any())).thenReturn(geofenceResponse);
-        mockMvc.perform(post("/geofences")
+        mockMvc.perform(post("/api/geofences")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createGeofenceRequest)))
                 .andExpect(status().isCreated());
@@ -61,7 +61,7 @@ class GeofenceControllerTest {
     @Test
     void getGeofenceById_shouldReturnGeofence() throws Exception {
         when(geofenceQueryService.findGeofenceById(1L)).thenReturn(Optional.of(geofenceResponse));
-        mockMvc.perform(get("/geofences/1"))
+        mockMvc.perform(get("/api/geofences/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("name"));
     }
@@ -69,7 +69,7 @@ class GeofenceControllerTest {
     @Test
     void updateGeofence_shouldReturnOk() throws Exception {
         when(geofenceService.updateGeofence(any())).thenReturn(geofenceResponse);
-        mockMvc.perform(put("/geofences/1")
+        mockMvc.perform(put("/api/geofences/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateGeofenceRequest)))
                 .andExpect(status().isOk());
@@ -78,7 +78,7 @@ class GeofenceControllerTest {
     @Test
     void deleteGeofence_shouldReturnNoContent() throws Exception {
         doNothing().when(geofenceService).deleteGeofence(1L);
-        mockMvc.perform(delete("/geofences/1"))
+        mockMvc.perform(delete("/api/geofences/1"))
                 .andExpect(status().isNoContent());
     }
 }

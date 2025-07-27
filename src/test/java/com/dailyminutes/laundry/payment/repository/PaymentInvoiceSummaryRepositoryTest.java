@@ -96,11 +96,10 @@ class PaymentInvoiceSummaryRepositoryTest {
         PaymentEntity payment1 = paymentRepository.save(new PaymentEntity(null, 10l, 20l, generateUniqueTransactionNumber(), new BigDecimal("110.00"), LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, ""));
         PaymentEntity payment2 = paymentRepository.save(new PaymentEntity(null, 10l, 20l, generateUniqueTransactionNumber(), new BigDecimal("110.00"), LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, ""));
         paymentInvoiceSummaryRepository.save(new PaymentInvoiceSummaryEntity(null, payment1.getId(), 10l, LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("0.00")));
-        paymentInvoiceSummaryRepository.save(new PaymentInvoiceSummaryEntity(null, payment1.getId(), 20l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("0.00")));
         paymentInvoiceSummaryRepository.save(new PaymentInvoiceSummaryEntity(null, payment2.getId(), 30l, LocalDateTime.now(), new BigDecimal("75.00"), new BigDecimal("7.50"), new BigDecimal("0.00")));
 
-        List<PaymentInvoiceSummaryEntity> summaries = paymentInvoiceSummaryRepository.findByPaymentId(payment1.getId());
-        assertThat(summaries).hasSize(2);
+        Optional<PaymentInvoiceSummaryEntity> summaries = paymentInvoiceSummaryRepository.findByPaymentId(payment1.getId());
+        assertThat(summaries).isPresent();
         assertThat(summaries.stream().allMatch(s -> s.getPaymentId().equals(payment1.getId()))).isTrue();
     }
 

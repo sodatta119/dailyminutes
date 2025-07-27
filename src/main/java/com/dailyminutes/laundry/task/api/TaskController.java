@@ -1,12 +1,13 @@
-/**
- * @author Somendra Datta <sodatta@gmail.com>
- * @version 26/07/25
- */
+// FILE: src/main/java/com/dailyminutes/laundry/task/api/TaskController.java
 package com.dailyminutes.laundry.task.api;
 
 import com.dailyminutes.laundry.task.dto.*;
 import com.dailyminutes.laundry.task.service.TaskQueryService;
 import com.dailyminutes.laundry.task.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,16 +20,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
+@Tag(name = "Task Management", description = "APIs for managing tasks")
 public class TaskController {
 
     private final TaskService taskService;
     private final TaskQueryService taskQueryService;
 
+    @Operation(summary = "Create a new task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Task created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
+    })
     @PostMapping
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody CreateTaskRequest request) {
         return new ResponseEntity<>(taskService.createTask(request), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Update an existing task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponse> updateTask(@PathVariable Long id, @Valid @RequestBody UpdateTaskRequest request) {
         if (!id.equals(request.id())) {
@@ -37,12 +50,22 @@ public class TaskController {
         return ResponseEntity.ok(taskService.updateTask(request));
     }
 
+    @Operation(summary = "Delete a task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Task deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Get a task by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the task"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
         return taskQueryService.findTaskById(id)
@@ -50,26 +73,48 @@ public class TaskController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
     }
 
+    @Operation(summary = "Get all tasks")
+    @ApiResponse(responseCode = "200", description = "List of all tasks")
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
         return ResponseEntity.ok(taskQueryService.findAllTasks());
     }
 
+    @Operation(summary = "Get agent summary for a task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found agent summary"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @GetMapping("/{id}/agent-summary")
     public ResponseEntity<List<TaskAgentSummaryResponse>> getAgentSummary(@PathVariable Long id) {
         return ResponseEntity.ok(taskQueryService.findAgentSummaryByTaskId(id));
     }
 
+    @Operation(summary = "Get geofence summary for a task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found geofence summary"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @GetMapping("/{id}/geofence-summary")
     public ResponseEntity<List<TaskGeofenceSummaryResponse>> getGeofenceSummary(@PathVariable Long id) {
         return ResponseEntity.ok(taskQueryService.findGeofenceSummaryByTaskId(id));
     }
 
+    @Operation(summary = "Get order summary for a task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found order summary"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @GetMapping("/{id}/order-summary")
     public ResponseEntity<List<TaskOrderSummaryResponse>> getOrderSummary(@PathVariable Long id) {
         return ResponseEntity.ok(taskQueryService.findOrderSummaryByTaskId(id));
     }
 
+    @Operation(summary = "Get team summary for a task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found team summary"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @GetMapping("/{id}/team-summary")
     public ResponseEntity<List<TaskTeamSummaryResponse>> getTeamSummary(@PathVariable Long id) {
         return ResponseEntity.ok(taskQueryService.findTeamSummaryByTaskId(id));

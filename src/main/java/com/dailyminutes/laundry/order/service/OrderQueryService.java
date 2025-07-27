@@ -43,22 +43,19 @@ public class OrderQueryService {
                 .collect(Collectors.toList());
     }
 
-    public List<OrderCustomerSummaryResponse> findCustomerSummaryByOrderId(Long orderId) {
-        return customerSummaryRepository.findByOrderId(orderId).stream()
-                .map(s -> new OrderCustomerSummaryResponse(s.getId(), s.getOrderId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()))
-                .collect(Collectors.toList());
+    public Optional<OrderCustomerSummaryResponse> findCustomerSummaryByOrderId(Long orderId) {
+        return customerSummaryRepository.findByOrderId(orderId)
+                .map(s -> new OrderCustomerSummaryResponse(s.getId(), s.getOrderId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()));
     }
 
-    public List<OrderStoreSummaryResponse> findStoreSummaryByOrderId(Long orderId) {
-        return storeSummaryRepository.findByOrderId(orderId).stream()
-                .map(s -> new OrderStoreSummaryResponse(s.getId(), s.getOrderId(), s.getStoreId(), s.getStoreName(), s.getStoreAddress(), s.getStoreContactNumber(), s.getStoreEmail()))
-                .collect(Collectors.toList());
+    public Optional<OrderStoreSummaryResponse> findStoreSummaryByOrderId(Long orderId) {
+        return storeSummaryRepository.findByOrderId(orderId)
+                .map(s -> new OrderStoreSummaryResponse(s.getId(), s.getOrderId(), s.getStoreId(), s.getStoreName(), s.getStoreAddress(), s.getStoreContactNumber(), s.getStoreEmail()));
     }
 
-    public List<OrderTaskSummaryResponse> findTaskSummaryByOrderId(Long orderId) {
-        return taskSummaryRepository.findByOrderId(orderId).stream()
-                .map(s -> new OrderTaskSummaryResponse(s.getId(), s.getOrderId(), s.getTaskId(), s.getTaskType(), s.getTaskStatus(), s.getTaskStartTime(), s.getAgentId(), s.getAgentName()))
-                .collect(Collectors.toList());
+    public Optional<OrderTaskSummaryResponse> findTaskSummaryByOrderId(Long orderId) {
+        return taskSummaryRepository.findByOrderId(orderId)
+                .map(s -> new OrderTaskSummaryResponse(s.getId(), s.getOrderId(), s.getTaskId(), s.getTaskType(), s.getTaskStatus(), s.getTaskStartTime(), s.getAgentId(), s.getAgentName()));
     }
 
     public List<OrderPaymentSummaryResponse> findPaymentSummaryByOrderId(Long orderId) {
@@ -67,9 +64,8 @@ public class OrderQueryService {
                 .collect(Collectors.toList());
     }
 
-    public List<OrderInvoiceSummaryResponse> findInvoiceSummaryByOrderId(Long orderId) {
-        return invoiceSummaryRepository.findByOrderId(orderId).stream()
-                .map(s -> new OrderInvoiceSummaryResponse(s.getId(), s.getOrderId(), s.getInvoiceId(), s.getInvoiceDate(), s.getTotalPrice(), s.getTotalTax(), s.getTotalDiscount()))
-                .collect(Collectors.toList());
+    public Optional<OrderInvoiceSummaryResponse> findInvoiceSummaryByOrderId(Long orderId) {
+        return invoiceSummaryRepository.findByOrderId(orderId)
+                .map(s -> new OrderInvoiceSummaryResponse(s.getId(), s.getOrderId(), s.getInvoiceId(), s.getInvoiceDate(), s.getTotalPrice(), s.getTotalTax(), s.getTotalDiscount()));
     }
 }

@@ -4,6 +4,7 @@
  */
 package com.dailyminutes.laundry.task.service;
 
+import com.dailyminutes.laundry.task.domain.event.TaskCreatedEvent;
 import com.dailyminutes.laundry.task.domain.event.*;
 import com.dailyminutes.laundry.task.domain.model.TaskEntity;
 import com.dailyminutes.laundry.task.dto.CreateTaskRequest;
@@ -26,7 +27,18 @@ public class TaskService {
     public TaskResponse createTask(CreateTaskRequest request) {
         TaskEntity task = new TaskEntity(null, request.name(), request.description(), request.type(), request.taskStartTime(), null, null, request.status(), request.teamId(), request.agentId(), request.sourceAddress(), request.sourceGeofenceId(), request.destinationAddress(), request.destinationGeofenceId(), request.taskComment(), request.orderId());
         TaskEntity savedTask = taskRepository.save(task);
-        events.publishEvent(new TaskCreatedEvent(savedTask.getId(), savedTask.getOrderId(), savedTask.getType(), savedTask.getAgentId(), savedTask.getTeamId()));
+        events.publishEvent(new TaskCreatedEvent(
+                savedTask.getId(),
+                savedTask.getOrderId(),
+                savedTask.getName(),
+                savedTask.getType(),
+                savedTask.getStatus(),
+                savedTask.getTaskStartTime(),
+                savedTask.getSourceAddress(),
+                savedTask.getDestinationAddress(),
+                savedTask.getAgentId(),
+                savedTask.getTeamId()
+        ));
         return toTaskResponse(savedTask);
     }
 

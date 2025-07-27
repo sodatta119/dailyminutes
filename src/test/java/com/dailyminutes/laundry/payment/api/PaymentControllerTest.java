@@ -55,7 +55,7 @@ class PaymentControllerTest {
     @Test
     void createPayment_shouldReturnCreated() throws Exception {
         when(paymentService.createPayment(any())).thenReturn(paymentResponse);
-        mockMvc.perform(post("/payments")
+        mockMvc.perform(post("/api/payments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createPaymentRequest)))
                 .andExpect(status().isCreated());
@@ -64,7 +64,7 @@ class PaymentControllerTest {
     @Test
     void getPaymentById_shouldReturnPayment() throws Exception {
         when(paymentQueryService.findPaymentById(1L)).thenReturn(Optional.of(paymentResponse));
-        mockMvc.perform(get("/payments/1"))
+        mockMvc.perform(get("/api/payments/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.transactionId").value("txn1"));
     }
@@ -72,7 +72,7 @@ class PaymentControllerTest {
     @Test
     void updatePayment_shouldReturnOk() throws Exception {
         when(paymentService.updatePayment(any())).thenReturn(paymentResponse);
-        mockMvc.perform(put("/payments/1")
+        mockMvc.perform(put("/api/payments/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatePaymentRequest)))
                 .andExpect(status().isOk());
@@ -81,7 +81,7 @@ class PaymentControllerTest {
     @Test
     void deletePayment_shouldReturnNoContent() throws Exception {
         doNothing().when(paymentService).deletePayment(1L);
-        mockMvc.perform(delete("/payments/1"))
+        mockMvc.perform(delete("/api/payments/1"))
                 .andExpect(status().isNoContent());
     }
 }

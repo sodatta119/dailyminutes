@@ -30,7 +30,7 @@ public class CatalogService {
                 null,
                 request.type(),
                 request.name(),
-                request.unit(),
+                request.unitType(),
                 request.unitPrice()
         );
         CatalogEntity savedCatalog = catalogRepository.save(catalog);

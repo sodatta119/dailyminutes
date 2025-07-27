@@ -52,7 +52,7 @@ class TeamControllerTest {
     @Test
     void createTeam_shouldReturnCreated() throws Exception {
         when(teamService.createTeam(any())).thenReturn(teamResponse);
-        mockMvc.perform(post("/teams")
+        mockMvc.perform(post("/api/teams")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createTeamRequest)))
                 .andExpect(status().isCreated());
@@ -61,7 +61,7 @@ class TeamControllerTest {
     @Test
     void getTeamById_shouldReturnTeam() throws Exception {
         when(teamQueryService.findTeamById(1L)).thenReturn(Optional.of(teamResponse));
-        mockMvc.perform(get("/teams/1"))
+        mockMvc.perform(get("/api/teams/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Test Team"));
     }
@@ -69,7 +69,7 @@ class TeamControllerTest {
     @Test
     void updateTeam_shouldReturnOk() throws Exception {
         when(teamService.updateTeam(any())).thenReturn(teamResponse);
-        mockMvc.perform(put("/teams/1")
+        mockMvc.perform(put("/api/teams/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateTeamRequest)))
                 .andExpect(status().isOk());
@@ -78,7 +78,7 @@ class TeamControllerTest {
     @Test
     void deleteTeam_shouldReturnNoContent() throws Exception {
         doNothing().when(teamService).deleteTeam(1L);
-        mockMvc.perform(delete("/teams/1"))
+        mockMvc.perform(delete("/api/teams/1"))
                 .andExpect(status().isNoContent());
     }
 }

@@ -22,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/catalogs")
+@RequestMapping("/api/catalogs")
 @RequiredArgsConstructor
 @Tag(name = "Catalog Management", description = "APIs for managing the service and product catalog")
 public class CatalogController {

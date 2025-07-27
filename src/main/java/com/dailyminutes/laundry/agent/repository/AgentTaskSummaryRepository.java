@@ -8,6 +8,7 @@ import com.dailyminutes.laundry.agent.domain.model.AgentTaskSummaryEntity;
 import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The interface Agent task summary repository.
@@ -28,5 +29,10 @@ public interface AgentTaskSummaryRepository extends ListCrudRepository<AgentTask
      * @return the list
      */
     List<AgentTaskSummaryEntity> findByTaskStatus(String taskStatus); // Example finder
+    // ADD this new method
+    Optional<AgentTaskSummaryEntity> findByTaskId(Long taskId);
+
+    // ADD this new method
+    void deleteByTaskId(Long taskId);
 }
 

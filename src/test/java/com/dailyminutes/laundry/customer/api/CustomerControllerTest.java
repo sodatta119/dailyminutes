@@ -59,7 +59,7 @@ class CustomerControllerTest {
         CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com");
         when(customerService.createCustomer(any())).thenReturn(customerResponse);
 
-        mockMvc.perform(post("/customers")
+        mockMvc.perform(post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -68,7 +68,7 @@ class CustomerControllerTest {
     @Test
     void getCustomerById_shouldReturnCustomer() throws Exception {
         when(customerQueryService.findCustomerById(1L)).thenReturn(Optional.of(customerResponse));
-        mockMvc.perform(get("/customers/1"))
+        mockMvc.perform(get("/api/customers/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Test"));
     }
@@ -76,7 +76,7 @@ class CustomerControllerTest {
     @Test
     void updateCustomer_shouldReturnOk() throws Exception {
         when(customerService.updateCustomer(any())).thenReturn(customerResponse);
-        mockMvc.perform(put("/customers/1")
+        mockMvc.perform(put("/api/customers/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateCustomerRequest)))
                 .andExpect(status().isOk());
@@ -85,14 +85,14 @@ class CustomerControllerTest {
     @Test
     void deleteCustomer_shouldReturnNoContent() throws Exception {
         doNothing().when(customerService).deleteCustomer(1L);
-        mockMvc.perform(delete("/customers/1"))
+        mockMvc.perform(delete("/api/customers/1"))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void addAddress_shouldReturnCreated() throws Exception {
         when(customerService.addAddress(any())).thenReturn(customerAddressResponse);
-        mockMvc.perform(post("/customers/addresses")
+        mockMvc.perform(post("/api/customers/addresses")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createCustomerAddressRequest)))
                 .andExpect(status().isCreated());
@@ -101,7 +101,7 @@ class CustomerControllerTest {
     @Test
     void updateAddress_shouldReturnOk() throws Exception {
         when(customerService.updateAddress(any())).thenReturn(customerAddressResponse);
-        mockMvc.perform(put("/customers/addresses/1")
+        mockMvc.perform(put("/api/customers/addresses/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateCustomerAddressRequest)))
                 .andExpect(status().isOk());
@@ -110,14 +110,14 @@ class CustomerControllerTest {
     @Test
     void removeAddress_shouldReturnNoContent() throws Exception {
         doNothing().when(customerService).removeAddress(1L);
-        mockMvc.perform(delete("/customers/addresses/1"))
+        mockMvc.perform(delete("/api/customers/addresses/1"))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void getAddressesByCustomerId_shouldReturnAddresses() throws Exception {
         when(customerQueryService.findAddressesByCustomerId(1L)).thenReturn(Collections.singletonList(customerAddressResponse));
-        mockMvc.perform(get("/customers/1/addresses"))
+        mockMvc.perform(get("/api/customers/1/addresses"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].addressLine").value("123 Main St"));
     }

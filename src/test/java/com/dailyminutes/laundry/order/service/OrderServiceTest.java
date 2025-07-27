@@ -1,6 +1,5 @@
 package com.dailyminutes.laundry.order.service;
 
-
 import com.dailyminutes.laundry.order.domain.event.OrderCreatedEvent;
 import com.dailyminutes.laundry.order.domain.event.OrderDeletedEvent;
 import com.dailyminutes.laundry.order.domain.event.OrderUpdatedEvent;

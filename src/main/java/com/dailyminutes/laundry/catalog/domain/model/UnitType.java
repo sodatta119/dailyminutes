@@ -8,14 +8,14 @@ package com.dailyminutes.laundry.catalog.domain.model;
 /**
  * The enum Unit type.
  */
-// Enum for the unit of measurement
+// Enum for the unitType of measurement
 public enum UnitType {
     /**
-     * Pieces unit type.
+     * Pieces unitType type.
      */
     PIECES,
     /**
-     * Kg unit type.
+     * Kg unitType type.
      */
     KG
 }

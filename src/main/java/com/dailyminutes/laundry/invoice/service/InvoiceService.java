@@ -4,7 +4,6 @@
  */
 package com.dailyminutes.laundry.invoice.service;
 
-
 import com.dailyminutes.laundry.invoice.domain.event.InvoiceCreatedEvent;
 import com.dailyminutes.laundry.invoice.domain.event.InvoiceDeletedEvent;
 import com.dailyminutes.laundry.invoice.domain.event.InvoiceUpdatedEvent;

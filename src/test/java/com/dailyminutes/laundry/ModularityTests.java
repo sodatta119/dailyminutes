@@ -14,7 +14,7 @@ public class ModularityTests {
 
     @Test
     void verifyModularity(){
-        System.out.println(modules.toString());
+        //System.out.println(modules.toString());
         modules.verify();
     }
 

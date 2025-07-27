@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PaymentInvoiceSummaryRepository extends ListCrudRepository<PaymentInvoiceSummaryEntity, Long> {
-    List<PaymentInvoiceSummaryEntity> findByPaymentId(Long paymentId);
+    Optional<PaymentInvoiceSummaryEntity> findByPaymentId(Long paymentId);
     Optional<PaymentInvoiceSummaryEntity> findByInvoiceId(Long invoiceId); // Useful for updates from Invoice events
     List<PaymentInvoiceSummaryEntity> findByInvoiceDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
