@@ -47,7 +47,7 @@ public class OrderService {
                 .collect(Collectors.toList());
 
         // Publish the enriched event
-        events.publishEvent(new OrderCreatedEvent(savedOrder.getId(), savedOrder.getCustomerId(), savedOrder.getStoreId(), savedOrder.getStatus(), savedOrder.getTotalAmount(), savedOrder.getOrderDate(), itemInfos));
+        events.publishEvent(new OrderCreatedEvent(savedOrder.getId(), savedOrder.getCustomerId(), savedOrder.getStoreId(), savedOrder.getStatus().name(), savedOrder.getTotalAmount(), savedOrder.getOrderDate(), itemInfos));
 
         return toOrderResponse(savedOrder, savedItems);
     }
@@ -71,7 +71,13 @@ public class OrderService {
                 .collect(Collectors.toList());
         orderItemRepository.saveAll(items);
 
-        events.publishEvent(new OrderUpdatedEvent(updatedOrder.getId()));
+        events.publishEvent(new OrderUpdatedEvent(
+                updatedOrder.getId(),
+                updatedOrder.getOrderDate(),
+                updatedOrder.getStatus().name(),
+                updatedOrder.getTotalAmount()
+        ));
+
         if (oldStatus != updatedOrder.getStatus()) {
             events.publishEvent(new OrderStatusChangedEvent(updatedOrder.getId(), oldStatus, updatedOrder.getStatus()));
         }

@@ -4,4 +4,12 @@
  */
 package com.dailyminutes.laundry.order.domain.event;
 
-public record OrderUpdatedEvent(Long orderId) {}
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public record OrderUpdatedEvent(
+        Long orderId,
+        LocalDateTime newOrderDate,
+        String newStatus,
+        BigDecimal newTotalAmount
+) {}

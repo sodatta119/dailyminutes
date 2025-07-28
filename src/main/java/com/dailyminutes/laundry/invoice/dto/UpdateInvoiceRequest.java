@@ -17,8 +17,8 @@ public record UpdateInvoiceRequest(
         Long id,
         @NotBlank(message = "Swipe Invoice ID cannot be blank")
         String swipeInvoiceId,
-        @NotNull(message = "Customer ID cannot be null")
-        Long customerId,
+        @NotNull(message = "Order ID cannot be null")
+        Long orderId,
         @NotNull(message = "Invoice date cannot be null")
         LocalDateTime invoiceDate,
         @NotNull(message = "Total price cannot be null")

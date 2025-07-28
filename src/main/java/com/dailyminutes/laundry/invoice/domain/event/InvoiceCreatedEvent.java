@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public record InvoiceCreatedEvent(
         Long invoiceId,
-        Long customerId,
+        Long orderId,
         LocalDateTime invoiceDate,
         BigDecimal totalPrice
-) {}
+)  {}

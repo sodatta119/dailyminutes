@@ -31,7 +31,7 @@ public class InvoiceQueryService {
             List<InvoiceItemDto> items = invoiceItemRepository.findByInvoiceId(id).stream()
                     .map(item -> new InvoiceItemDto(item.getId(), item.getCatalogId(), item.getQuantity(), item.getItemPrice(), item.getTax()))
                     .collect(Collectors.toList());
-            return new InvoiceResponse(invoice.getId(), invoice.getSwipeInvoiceId(), invoice.getCustomerId(), invoice.getInvoiceDate(), invoice.getTotalPrice(), invoice.getTotalTax(), invoice.getTotalDiscount(), items);
+            return new InvoiceResponse(invoice.getId(), invoice.getSwipeInvoiceId(), invoice.getOrderId(), invoice.getInvoiceDate(), invoice.getTotalPrice(), invoice.getTotalTax(), invoice.getTotalDiscount(), items);
         });
     }
 

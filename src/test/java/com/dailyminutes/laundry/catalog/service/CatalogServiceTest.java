@@ -76,7 +76,8 @@ class CustomerServiceTest {
     void addAddress_shouldAddAndPublishEvent() {
         CreateCustomerAddressRequest request = new CreateCustomerAddressRequest(1L, AddressType.HOME, true, null, "123 Main St", null, "Anytown", null, "12345", null, null, null, null);
         CustomerAddressEntity address = new CustomerAddressEntity(1L, 1L, AddressType.HOME, true, null, "123 Main St", null, "Anytown", null, "12345", null, null, null, null);
-        when(customerRepository.existsById(1L)).thenReturn(true);
+        CustomerEntity customer=new CustomerEntity(1L, "test", "9999", "testcustomer", "testemail");
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(addressRepository.save(any())).thenReturn(address);
 
         customerService.addAddress(request);
@@ -88,6 +89,8 @@ class CustomerServiceTest {
     void updateAddress_shouldUpdateAndPublishEvent() {
         UpdateCustomerAddressRequest request = new UpdateCustomerAddressRequest(1L, 1L, AddressType.HOME, true, null, "456 Main St", null, "Anytown", null, "12345", null, null, null, null);
         CustomerAddressEntity address = new CustomerAddressEntity(1L, 1L, AddressType.HOME, true, null, "123 Main St", null, "Anytown", null, "12345", null, null, null, null);
+        CustomerEntity customer=new CustomerEntity(1L, "test", "9999", "testcustomer", "testemail");
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(addressRepository.findById(1L)).thenReturn(Optional.of(address));
         when(addressRepository.save(any())).thenReturn(address);
 

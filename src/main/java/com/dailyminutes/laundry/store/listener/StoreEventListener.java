@@ -25,6 +25,7 @@ public class StoreEventListener {
             events.publishEvent(new StoreInfoResponseEvent(
                     store.getId(),
                     store.getName(),
+                    store.getAddress(),
                     event.originalEvent() // Pass the catalogId back for correlation
             ));
         });

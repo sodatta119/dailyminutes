@@ -41,30 +41,35 @@ public class CatalogStoreEventListener {
      */
     @ApplicationModuleListener
     public void onStoreInfoProvided(StoreInfoResponseEvent event) {
-        Long catalogId = event.originalEvent().catalogId(); // The store module passed the catalogId back for us.
-        Optional<CatalogEntity> catalogOpt = catalogRepository.findById(catalogId);
+        if(event.originalEvent() instanceof CatalogItemAddedToStoreEvent)
+        {
+            CatalogItemAddedToStoreEvent originalEvent = (CatalogItemAddedToStoreEvent) event.originalEvent();
 
-        catalogOpt.ifPresent(catalog -> {
-            // We don't have all the details from the original event here. This reveals a flaw.
-            // The original event must also be passed along or its data stored temporarily.
-            // For simplicity, let's assume default values for price/dates for now.
-            // A more robust solution would use a temporary cache or database table for pending summaries.
-            CatalogStoreOfferingSummaryEntity summary = new CatalogStoreOfferingSummaryEntity(
-                    null,
-                    catalog.getId(),
-                    catalog.getName(),
-                    catalog.getType().name(),
-                    catalog.getUnitType().name(),
-                    catalog.getUnitPrice(),
-                    event.storeId(),
-                    event.storeName(),
-                    event.originalEvent().storeSpecificPrice(), // We lost the storeSpecificPrice
-                    event.originalEvent().effectiveFrom(), // We lost effectiveFrom
-                    event.originalEvent().effectiveTo(), // We lost effectiveTo
-                    event.originalEvent().active()  // We lost the active flag
-            );
-            summaryRepository.save(summary);
-        });
+            Long catalogId = originalEvent.catalogId(); // The store module passed the catalogId back for us.
+            Optional<CatalogEntity> catalogOpt = catalogRepository.findById(catalogId);
+
+            catalogOpt.ifPresent(catalog -> {
+                // We don't have all the details from the original event here. This reveals a flaw.
+                // The original event must also be passed along or its data stored temporarily.
+                // For simplicity, let's assume default values for price/dates for now.
+                // A more robust solution would use a temporary cache or database table for pending summaries.
+                CatalogStoreOfferingSummaryEntity summary = new CatalogStoreOfferingSummaryEntity(
+                        null,
+                        catalog.getId(),
+                        catalog.getName(),
+                        catalog.getType().name(),
+                        catalog.getUnitType().name(),
+                        catalog.getUnitPrice(),
+                        event.storeId(),
+                        event.storeName(),
+                        originalEvent.storeSpecificPrice(), // We lost the storeSpecificPrice
+                        originalEvent.effectiveFrom(), // We lost effectiveFrom
+                        originalEvent.effectiveTo(), // We lost effectiveTo
+                        originalEvent.active()  // We lost the active flag
+                );
+                summaryRepository.save(summary);
+            });
+        }
     }
 
     @ApplicationModuleListener

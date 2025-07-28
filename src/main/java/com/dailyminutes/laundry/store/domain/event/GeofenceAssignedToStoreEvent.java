@@ -6,10 +6,7 @@ package com.dailyminutes.laundry.store.domain.event;
 
 import com.dailyminutes.laundry.store.spi.CallerEvent;
 
-// Event fired by the store module with the requested details
-public record StoreInfoResponseEvent(
+public record GeofenceAssignedToStoreEvent(
         Long storeId,
-        String storeName,
-        String storeAddress,
-        CallerEvent originalEvent
-) {}
+        Long geofenceId
+) implements CallerEvent {}

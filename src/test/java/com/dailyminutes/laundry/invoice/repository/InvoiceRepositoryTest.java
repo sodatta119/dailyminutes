@@ -71,7 +71,7 @@ class InvoiceRepositoryTest {
         invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", 10l, LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
         Optional<InvoiceEntity> foundInvoice = invoiceRepository.findBySwipeInvoiceId("SWIPE456");
         assertThat(foundInvoice).isPresent();
-        assertThat(foundInvoice.get().getCustomerId()).isEqualTo(10l);
+        assertThat(foundInvoice.get().getOrderId()).isEqualTo(10l);
     }
 
     /**

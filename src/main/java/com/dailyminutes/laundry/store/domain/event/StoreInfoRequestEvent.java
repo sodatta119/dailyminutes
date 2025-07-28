@@ -4,8 +4,10 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
+import com.dailyminutes.laundry.store.spi.CallerEvent;
+
 // Event fired by other modules when they need store details
 public record StoreInfoRequestEvent(
         Long storeId,
-        CatalogItemAddedToStoreEvent originalEvent
+        CallerEvent originalEvent
 ) {}

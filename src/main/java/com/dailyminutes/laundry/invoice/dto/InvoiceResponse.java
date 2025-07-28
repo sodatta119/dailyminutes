@@ -12,7 +12,7 @@ import java.util.List;
 public record InvoiceResponse(
         Long id,
         String swipeInvoiceId,
-        Long customerId,
+        Long orderId,
         LocalDateTime invoiceDate,
         BigDecimal totalPrice,
         BigDecimal totalTax,

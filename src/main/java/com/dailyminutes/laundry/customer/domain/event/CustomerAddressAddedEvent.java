@@ -9,6 +9,8 @@ import com.dailyminutes.laundry.customer.domain.model.AddressType;
 public record CustomerAddressAddedEvent(
         Long addressId,
         Long customerId,
+        String customerName,
+        String customerPhoneNumber,
         AddressType addressType,
         boolean isDefault,
         String addressLine,

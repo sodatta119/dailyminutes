@@ -64,16 +64,24 @@ public class CustomerService {
     }
 
     public CustomerAddressResponse addAddress(CreateCustomerAddressRequest request) {
-        if (!customerRepository.existsById(request.customerId())) {
+        CustomerEntity customer=customerRepository.findById(request.customerId()).orElse(null);
+        if (customer==null) {
             throw new IllegalArgumentException("Customer with ID " + request.customerId() + " not found.");
         }
         CustomerAddressEntity address = new CustomerAddressEntity(null, request.customerId(), request.addressType(), request.isDefault(), request.flatApartment(), request.addressLine(), request.street(), request.city(), request.state(), request.zipCode(), request.country(), request.longitude(), request.latitude(), request.geofenceId());
         CustomerAddressEntity savedAddress = addressRepository.save(address);
-        events.publishEvent(new CustomerAddressAddedEvent(savedAddress.getId(), savedAddress.getCustomerId(), savedAddress.getAddressType(), savedAddress.isDefault(), savedAddress.getAddressLine(), savedAddress.getCity(), savedAddress.getZipCode(), savedAddress.getGeofenceId()));
+        events.publishEvent(new CustomerAddressAddedEvent(
+                savedAddress.getId(), savedAddress.getCustomerId(),
+                customer.getName(), customer.getPhoneNumber(), // Add customer details
+                savedAddress.getAddressType(), savedAddress.isDefault(),
+                savedAddress.getAddressLine(), savedAddress.getCity(),
+                savedAddress.getZipCode(), savedAddress.getGeofenceId()
+        ));
         return toAddressResponse(savedAddress);
     }
 
     public CustomerAddressResponse updateAddress(UpdateCustomerAddressRequest request) {
+        CustomerEntity customer=customerRepository.findById(request.customerId()).orElseThrow(() -> new IllegalArgumentException("Address with Customer ID " + request.customerId() + " not found."));
         CustomerAddressEntity existingAddress = addressRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Address with ID " + request.id() + " not found."));
 
@@ -91,7 +99,13 @@ public class CustomerService {
         existingAddress.setGeofenceId(request.geofenceId());
 
         CustomerAddressEntity updatedAddress = addressRepository.save(existingAddress);
-        events.publishEvent(new CustomerAddressUpdatedEvent(updatedAddress.getId(), updatedAddress.getCustomerId(), updatedAddress.getAddressType(), updatedAddress.isDefault(), updatedAddress.getAddressLine(), updatedAddress.getCity(), updatedAddress.getZipCode(), updatedAddress.getGeofenceId()));
+        events.publishEvent(new CustomerAddressUpdatedEvent(
+                updatedAddress.getId(), updatedAddress.getCustomerId(),
+                customer.getName(), customer.getPhoneNumber(), // Add customer details
+                updatedAddress.getAddressType(), updatedAddress.isDefault(),
+                updatedAddress.getAddressLine(), updatedAddress.getCity(),
+                updatedAddress.getZipCode(), updatedAddress.getGeofenceId()
+        ));
         return toAddressResponse(updatedAddress);
     }
 

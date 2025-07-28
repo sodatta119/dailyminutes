@@ -4,8 +4,8 @@ import com.dailyminutes.laundry.catalog.domain.model.CatalogEntity;
 import com.dailyminutes.laundry.catalog.domain.model.CatalogOrderItemSummaryEntity;
 import com.dailyminutes.laundry.catalog.domain.model.CatalogType;
 import com.dailyminutes.laundry.catalog.domain.model.UnitType;
-import com.dailyminutes.laundry.catalog.repository.CatalogRepository;
 import com.dailyminutes.laundry.catalog.repository.CatalogOrderItemSummaryRepository;
+import com.dailyminutes.laundry.catalog.repository.CatalogRepository;
 import com.dailyminutes.laundry.order.domain.event.OrderCreatedEvent;
 import com.dailyminutes.laundry.order.domain.event.OrderDeletedEvent;
 import com.dailyminutes.laundry.order.domain.event.OrderItemInfo;
@@ -13,6 +13,7 @@ import com.dailyminutes.laundry.order.domain.model.OrderStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,10 +25,14 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CatalogOrderEventListenerTest {
+
+    @Captor
+    private ArgumentCaptor<List<CatalogOrderItemSummaryEntity>> captor;
 
     @Mock
     private CatalogRepository catalogRepository;
@@ -44,7 +49,7 @@ class CatalogOrderEventListenerTest {
         OrderItemInfo item1 = new OrderItemInfo(101L, 1L, new BigDecimal("2.0"), new BigDecimal("10.00"));
         OrderItemInfo item2 = new OrderItemInfo(102L, 2L, new BigDecimal("1.0"), new BigDecimal("5.50"));
         OrderCreatedEvent event = new OrderCreatedEvent(
-                50L, 1L, 1L, OrderStatus.PENDING, new BigDecimal("25.50"),
+                50L, 1L, 1L, OrderStatus.PENDING.name(), new BigDecimal("25.50"),
                 LocalDateTime.now(), List.of(item1, item2)
         );
 
@@ -54,7 +59,6 @@ class CatalogOrderEventListenerTest {
         when(catalogRepository.findById(1L)).thenReturn(Optional.of(catalog1));
         when(catalogRepository.findById(2L)).thenReturn(Optional.of(catalog2));
 
-        ArgumentCaptor<List<CatalogOrderItemSummaryEntity>> captor = ArgumentCaptor.forClass(List.class);
 
         // When: The listener handles the order creation event
         listener.onOrderCreated(event);
@@ -84,7 +88,7 @@ class CatalogOrderEventListenerTest {
     void onOrderCreated_shouldHandleOrdersWithNoItems() {
         // Given: An order is created with an empty list of items
         OrderCreatedEvent event = new OrderCreatedEvent(
-                51L, 1L, 1L, OrderStatus.PENDING, BigDecimal.ZERO,
+                51L, 1L, 1L, OrderStatus.PENDING.name(), BigDecimal.ZERO,
                 LocalDateTime.now(), Collections.emptyList()
         );
 

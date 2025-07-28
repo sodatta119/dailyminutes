@@ -4,10 +4,7 @@
  */
 package com.dailyminutes.laundry.store.service;
 
-import com.dailyminutes.laundry.store.domain.event.CatalogItemAddedToStoreEvent;
-import com.dailyminutes.laundry.store.domain.event.StoreCreatedEvent;
-import com.dailyminutes.laundry.store.domain.event.StoreDeletedEvent;
-import com.dailyminutes.laundry.store.domain.event.StoreUpdatedEvent;
+import com.dailyminutes.laundry.store.domain.event.*;
 import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity;
 import com.dailyminutes.laundry.store.domain.model.StoreEntity;
 import com.dailyminutes.laundry.store.dto.CreateStoreRequest;
@@ -74,6 +71,17 @@ public class StoreService {
 
         // Publish the event so the catalog module can create its summary
         events.publishEvent(new CatalogItemAddedToStoreEvent(storeId, catalogId, price, from, to, true));
+    }
+
+    public void addGeofenceToStore(Long storeId, Long geofenceId) {
+        if (!storeRepository.existsById(storeId)) {
+            throw new IllegalArgumentException("Store with ID " + storeId + " not found.");
+        }
+        // In a real application, you would also save this association
+        // in a table within the 'store' module, e.g., DL_STORE_GEOFENCE.
+        // For now, we will just publish the event.
+
+        events.publishEvent(new GeofenceAssignedToStoreEvent(storeId, geofenceId));
     }
 
     private StoreResponse toStoreResponse(StoreEntity entity) {

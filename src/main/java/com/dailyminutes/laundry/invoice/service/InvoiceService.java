@@ -41,7 +41,7 @@ public class InvoiceService {
                 .collect(Collectors.toList());
         invoiceItemRepository.saveAll(items);
 
-        events.publishEvent(new InvoiceCreatedEvent(savedInvoice.getId(), savedInvoice.getCustomerId(), savedInvoice.getInvoiceDate(), savedInvoice.getTotalPrice()));
+        events.publishEvent(new InvoiceCreatedEvent(savedInvoice.getId(), savedInvoice.getOrderId(), savedInvoice.getInvoiceDate(), savedInvoice.getTotalPrice()));
 
         return toInvoiceResponse(savedInvoice, items);
     }
@@ -51,7 +51,7 @@ public class InvoiceService {
                 .orElseThrow(() -> new IllegalArgumentException("Invoice with ID " + request.id() + " not found."));
 
         existingInvoice.setSwipeInvoiceId(request.swipeInvoiceId());
-        existingInvoice.setCustomerId(request.customerId());
+        existingInvoice.setOrderId(request.orderId());
         existingInvoice.setInvoiceDate(request.invoiceDate());
         existingInvoice.setTotalPrice(request.totalPrice());
         existingInvoice.setTotalTax(request.totalTax());
@@ -82,6 +82,6 @@ public class InvoiceService {
         List<InvoiceItemDto> itemDtos = items.stream()
                 .map(item -> new InvoiceItemDto(item.getId(), item.getCatalogId(), item.getQuantity(), item.getItemPrice(), item.getTax()))
                 .collect(Collectors.toList());
-        return new InvoiceResponse(invoice.getId(), invoice.getSwipeInvoiceId(), invoice.getCustomerId(), invoice.getInvoiceDate(), invoice.getTotalPrice(), invoice.getTotalTax(), invoice.getTotalDiscount(), itemDtos);
+        return new InvoiceResponse(invoice.getId(), invoice.getSwipeInvoiceId(), invoice.getOrderId(), invoice.getInvoiceDate(), invoice.getTotalPrice(), invoice.getTotalTax(), invoice.getTotalDiscount(), itemDtos);
     }
 }
