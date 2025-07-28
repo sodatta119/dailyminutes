@@ -31,8 +31,8 @@ public class TaskService {
                 savedTask.getId(),
                 savedTask.getOrderId(),
                 savedTask.getName(),
-                savedTask.getType(),
-                savedTask.getStatus(),
+                savedTask.getType().name(),
+                savedTask.getStatus().name(),
                 savedTask.getTaskStartTime(),
                 savedTask.getSourceAddress(),
                 savedTask.getDestinationAddress(),
@@ -69,7 +69,7 @@ public class TaskService {
 
         events.publishEvent(new TaskUpdatedEvent(updatedTask.getId()));
         if (oldStatus != updatedTask.getStatus()) {
-            events.publishEvent(new TaskStatusChangedEvent(updatedTask.getId(), updatedTask.getOrderId(), oldStatus, updatedTask.getStatus()));
+            events.publishEvent(new TaskStatusChangedEvent(updatedTask.getId(), updatedTask.getOrderId(), oldStatus.name(), updatedTask.getStatus().name()));
         }
         if (oldAgentId != updatedTask.getAgentId()) {
             events.publishEvent(new TaskAssignedToAgentEvent(updatedTask.getId(), updatedTask.getAgentId()));

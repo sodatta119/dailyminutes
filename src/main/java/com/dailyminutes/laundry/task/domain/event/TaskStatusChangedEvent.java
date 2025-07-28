@@ -9,6 +9,6 @@ import com.dailyminutes.laundry.task.domain.model.TaskStatus;
 public record TaskStatusChangedEvent(
         Long taskId,
         Long orderId,
-        TaskStatus oldStatus,
-        TaskStatus newStatus
+        String oldStatus,
+        String newStatus
 ) {}

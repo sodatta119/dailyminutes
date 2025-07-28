@@ -31,8 +31,8 @@ public class AgentTaskEventListener {
                 event.taskId(),
                 event.agentId(),
                 event.name(),
-                event.type().name(),
-                event.status().name(),
+                event.type(),
+                event.status(),
                 event.taskStartTime(),
                 event.sourceAddress(),
                 event.destinationAddress(),
@@ -44,7 +44,7 @@ public class AgentTaskEventListener {
     @ApplicationModuleListener
     public void onTaskStatusChanged(TaskStatusChangedEvent event) {
         agentTaskSummaryRepository.findByTaskId(event.taskId()).ifPresent(summary -> {
-            summary.setTaskStatus(event.newStatus().name());
+            summary.setTaskStatus(event.newStatus());
             agentTaskSummaryRepository.save(summary);
         });
     }
