@@ -4,18 +4,24 @@
  */
 package com.dailyminutes.laundry.store.service;
 
+import com.dailyminutes.laundry.store.domain.event.CatalogItemAddedToStoreEvent;
 import com.dailyminutes.laundry.store.domain.event.StoreCreatedEvent;
 import com.dailyminutes.laundry.store.domain.event.StoreDeletedEvent;
 import com.dailyminutes.laundry.store.domain.event.StoreUpdatedEvent;
+import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity;
 import com.dailyminutes.laundry.store.domain.model.StoreEntity;
 import com.dailyminutes.laundry.store.dto.CreateStoreRequest;
 import com.dailyminutes.laundry.store.dto.StoreResponse;
 import com.dailyminutes.laundry.store.dto.UpdateStoreRequest;
+import com.dailyminutes.laundry.store.repository.StoreCatalogRepository;
 import com.dailyminutes.laundry.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StoreService {
 
     private final StoreRepository storeRepository;
+    private final StoreCatalogRepository storeCatalogRepository;
     private final ApplicationEventPublisher events;
 
     public StoreResponse createStore(CreateStoreRequest request) {
@@ -53,6 +60,20 @@ public class StoreService {
         }
         storeRepository.deleteById(id);
         events.publishEvent(new StoreDeletedEvent(id));
+    }
+    public void addCatalogItemToStore(Long storeId, Long catalogId, BigDecimal price, LocalDate from, LocalDate to) {
+        // Verify that both the store and catalog item exist
+        if (!storeRepository.existsById(storeId)) {
+            throw new IllegalArgumentException("Store with ID " + storeId + " not found.");
+        }
+        // NOTE: In a real scenario, you'd use a CatalogQueryService/SPI to check if the catalogId exists.
+        // For now, we proceed assuming it's valid.
+
+        StoreCatalogEntity association = new StoreCatalogEntity(null, storeId, catalogId);
+        storeCatalogRepository.save(association);
+
+        // Publish the event so the catalog module can create its summary
+        events.publishEvent(new CatalogItemAddedToStoreEvent(storeId, catalogId, price, from, to, true));
     }
 
     private StoreResponse toStoreResponse(StoreEntity entity) {

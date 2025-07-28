@@ -16,7 +16,7 @@ public record AgentAssignedToTeamEvent(
 ) {
     public AgentAssignedToTeamEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
-        if (teamId == null) throw new IllegalArgumentException("Team ID cannot be null");
+        //if (teamId == null) throw new IllegalArgumentException("Team ID cannot be null");
     }
 }
 

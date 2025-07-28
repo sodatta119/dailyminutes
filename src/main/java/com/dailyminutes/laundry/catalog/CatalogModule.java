@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.catalog;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule
+@ApplicationModule(allowedDependencies = {"laundry.order::events", "laundry.store::events"})
 public class CatalogModule {
 }

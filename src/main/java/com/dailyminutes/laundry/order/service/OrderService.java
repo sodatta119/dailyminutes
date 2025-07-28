@@ -4,10 +4,7 @@
  */
 package com.dailyminutes.laundry.order.service;
 
-import com.dailyminutes.laundry.order.domain.event.OrderCreatedEvent;
-import com.dailyminutes.laundry.order.domain.event.OrderDeletedEvent;
-import com.dailyminutes.laundry.order.domain.event.OrderStatusChangedEvent;
-import com.dailyminutes.laundry.order.domain.event.OrderUpdatedEvent;
+import com.dailyminutes.laundry.order.domain.event.*;
 import com.dailyminutes.laundry.order.domain.model.OrderEntity;
 import com.dailyminutes.laundry.order.domain.model.OrderItemEntity;
 import com.dailyminutes.laundry.order.dto.CreateOrderRequest;
@@ -40,11 +37,19 @@ public class OrderService {
         List<OrderItemEntity> items = request.items().stream()
                 .map(itemDto -> new OrderItemEntity(null, savedOrder.getId(), itemDto.catalogId(), itemDto.quantity(), itemDto.itemPriceAtOrder(), itemDto.notes()))
                 .collect(Collectors.toList());
-        orderItemRepository.saveAll(items);
 
-        events.publishEvent(new OrderCreatedEvent(savedOrder.getId(), savedOrder.getCustomerId(), savedOrder.getStoreId(), savedOrder.getStatus(), savedOrder.getTotalAmount()));
+        // Use saveAll and collect the saved entities which will now have IDs
+        List<OrderItemEntity> savedItems = (List<OrderItemEntity>) orderItemRepository.saveAll(items);
 
-        return toOrderResponse(savedOrder, items);
+        // Convert the saved items to DTOs for the event
+        List<OrderItemInfo> itemInfos = savedItems.stream()
+                .map(item -> new OrderItemInfo(item.getId(), item.getCatalogId(), item.getQuantity(), item.getItemPriceAtOrder()))
+                .collect(Collectors.toList());
+
+        // Publish the enriched event
+        events.publishEvent(new OrderCreatedEvent(savedOrder.getId(), savedOrder.getCustomerId(), savedOrder.getStoreId(), savedOrder.getStatus(), savedOrder.getTotalAmount(), savedOrder.getOrderDate(), itemInfos));
+
+        return toOrderResponse(savedOrder, savedItems);
     }
 
     public OrderResponse updateOrder(UpdateOrderRequest request) {

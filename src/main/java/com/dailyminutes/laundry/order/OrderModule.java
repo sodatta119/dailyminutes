@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.order;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule
+@ApplicationModule(id = "laundry.order")
 public class OrderModule {
 }
