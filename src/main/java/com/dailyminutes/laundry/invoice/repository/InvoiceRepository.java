@@ -28,6 +28,6 @@ public interface InvoiceRepository extends ListCrudRepository<InvoiceEntity, Lon
      * @param customerId the customer id
      * @return the list
      */
-    List<InvoiceEntity> findAllByCustomerId(Long customerId);
+    List<InvoiceEntity> findAllByOrderId(Long customerId);
 }
 

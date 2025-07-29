@@ -23,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.invoice.repository"})
-// Specify repository package
 @ComponentScan(basePackages = {"com.dailyminutes.laundry.invoice.domain.model"})
 class InvoiceRepositoryTest {
 
@@ -40,15 +39,15 @@ class InvoiceRepositoryTest {
     @Test
     void testSaveAndFindInvoiceWithItems() {
         // 1. Save the parent InvoiceEntity
-        InvoiceEntity invoice = new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "SWIPE123", 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         assertThat(savedInvoice).isNotNull();
         assertThat(savedInvoice.getId()).isNotNull();
 
         // 2. Save InvoiceItemEntities, linking them to the saved Invoice's ID
-        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), 10l, 1, new BigDecimal("25.00"), new BigDecimal("2.50"));
-        InvoiceItemEntity item2 = new InvoiceItemEntity(null, savedInvoice.getId(), 20l, 2, new BigDecimal("10.00"), new BigDecimal("1.00"));
+        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), 10L, 1, new BigDecimal("25.00"), new BigDecimal("2.50"));
+        InvoiceItemEntity item2 = new InvoiceItemEntity(null, savedInvoice.getId(), 20L, 2, new BigDecimal("10.00"), new BigDecimal("1.00"));
         invoiceItemRepository.save(item1);
         invoiceItemRepository.save(item2);
 
@@ -60,7 +59,7 @@ class InvoiceRepositoryTest {
         // Verify associated invoice items
         List<InvoiceItemEntity> foundItems = invoiceItemRepository.findByInvoiceId(savedInvoice.getId());
         assertThat(foundItems).hasSize(2);
-        assertThat(foundItems.stream().map(InvoiceItemEntity::getCatalogId)).containsExactlyInAnyOrder(10l, 20l);
+        assertThat(foundItems.stream().map(InvoiceItemEntity::getCatalogId)).containsExactlyInAnyOrder(10L, 20L);
     }
 
     /**
@@ -68,10 +67,10 @@ class InvoiceRepositoryTest {
      */
     @Test
     void testFindBySwipeInvoiceId() {
-        invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", 10l, LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
+        invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", 10L, LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
         Optional<InvoiceEntity> foundInvoice = invoiceRepository.findBySwipeInvoiceId("SWIPE456");
         assertThat(foundInvoice).isPresent();
-        assertThat(foundInvoice.get().getOrderId()).isEqualTo(10l);
+        assertThat(foundInvoice.get().getOrderId()).isEqualTo(10L);
     }
 
     /**
@@ -79,7 +78,7 @@ class InvoiceRepositoryTest {
      */
     @Test
     void testUpdateInvoice() {
-        InvoiceEntity invoice = new InvoiceEntity(null, "UPDATE789", 10l, LocalDateTime.now(), new BigDecimal("70.00"), new BigDecimal("7.00"), new BigDecimal("3.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "UPDATE789", 10L, LocalDateTime.now(), new BigDecimal("70.00"), new BigDecimal("7.00"), new BigDecimal("3.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         savedInvoice.setTotalPrice(new BigDecimal("75.00"));
@@ -98,11 +97,11 @@ class InvoiceRepositoryTest {
     @Test
     void testDeleteInvoiceAndAssociatedItems() {
         // Create and save Invoice
-        InvoiceEntity invoice = new InvoiceEntity(null, "DELETE000", 10l, LocalDateTime.now(), new BigDecimal("20.00"), new BigDecimal("2.00"), new BigDecimal("1.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "DELETE000", 10L, LocalDateTime.now(), new BigDecimal("20.00"), new BigDecimal("2.00"), new BigDecimal("1.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         // Create and save InvoiceItem
-        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), 10l, 1, new BigDecimal("20.00"), new BigDecimal("2.00"));
+        InvoiceItemEntity item1 = new InvoiceItemEntity(null, savedInvoice.getId(), 10L, 1, new BigDecimal("20.00"), new BigDecimal("2.00"));
         invoiceItemRepository.save(item1);
 
         // Verify they exist
