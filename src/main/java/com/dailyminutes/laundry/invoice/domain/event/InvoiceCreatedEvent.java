@@ -4,12 +4,15 @@
  */
 package com.dailyminutes.laundry.invoice.domain.event;
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record InvoiceCreatedEvent(
         Long invoiceId,
+        Long customerId,
         Long orderId,
         LocalDateTime invoiceDate,
         BigDecimal totalPrice
-)  {}
+)  implements CallerEvent {}

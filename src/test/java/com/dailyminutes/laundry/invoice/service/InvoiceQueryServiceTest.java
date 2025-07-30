@@ -30,7 +30,7 @@ class InvoiceQueryServiceTest {
 
     @Test
     void findInvoiceById_shouldReturnInvoice() {
-        InvoiceEntity invoice = new InvoiceEntity(1L, "swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO);
+        InvoiceEntity invoice = new InvoiceEntity(1L, "swipe1", 2L, 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO);
         InvoiceItemEntity invoiceItem = new InvoiceItemEntity();
         when(invoiceRepository.findById(1L)).thenReturn(Optional.of(invoice));
         when(invoiceItemRepository.findByInvoiceId(1L)).thenReturn(List.of(invoiceItem));

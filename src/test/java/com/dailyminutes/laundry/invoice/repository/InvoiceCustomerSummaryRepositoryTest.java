@@ -48,7 +48,7 @@ class InvoiceCustomerSummaryRepositoryTest {
     @Test
     void testSaveAndFindInvoiceCustomerSummary() {
         // Build entity locally
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceCustomerSummaryEntity summary = new InvoiceCustomerSummaryEntity(
                 null, invoice.getId(), 10L, "John Doe", generateUniquePhoneNumber(), generateUniqueEmail());
         InvoiceCustomerSummaryEntity savedSummary = invoiceCustomerSummaryRepository.save(summary);
@@ -67,7 +67,7 @@ class InvoiceCustomerSummaryRepositoryTest {
     @Test
     void testUpdateInvoiceCustomerSummary() {
         // Build entity locally
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceCustomerSummaryEntity summary = new InvoiceCustomerSummaryEntity(
                 null, invoice.getId(), 11L, "Jane Smith", generateUniquePhoneNumber(), generateUniqueEmail());
         InvoiceCustomerSummaryEntity savedSummary = invoiceCustomerSummaryRepository.save(summary);
@@ -85,7 +85,7 @@ class InvoiceCustomerSummaryRepositoryTest {
     @Test
     void testDeleteInvoiceCustomerSummary() {
         // Build entity locally
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceCustomerSummaryEntity summary = new InvoiceCustomerSummaryEntity(
                 null, invoice.getId(), 12L, "Customer to Delete", generateUniquePhoneNumber(), generateUniqueEmail());
         InvoiceCustomerSummaryEntity savedSummary = invoiceCustomerSummaryRepository.save(summary);
@@ -98,8 +98,8 @@ class InvoiceCustomerSummaryRepositoryTest {
     @Test
     void testFindByInvoiceId() {
         // Build entities locally
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceCustomerSummaryEntity summary1 = new InvoiceCustomerSummaryEntity(null, invoice1.getId(), 20L, "Inv Cust A", generateUniquePhoneNumber(), generateUniqueEmail());
         InvoiceCustomerSummaryEntity summary2 = new InvoiceCustomerSummaryEntity(null, invoice2.getId(), 21L, "Inv Cust B", generateUniquePhoneNumber(), generateUniqueEmail());
         invoiceCustomerSummaryRepository.save(summary1);
@@ -114,9 +114,9 @@ class InvoiceCustomerSummaryRepositoryTest {
     @Test
     void testFindByCustomerId() {
         // Build entities locally
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceCustomerSummaryEntity summary3 = new InvoiceCustomerSummaryEntity(null, invoice1.getId(), 30L, "Cust C", generateUniquePhoneNumber(), generateUniqueEmail());
         InvoiceCustomerSummaryEntity summary4 = new InvoiceCustomerSummaryEntity(null, invoice2.getId(), 30L, "Cust D", generateUniquePhoneNumber(), generateUniqueEmail()); // Same customer, different invoice
         InvoiceCustomerSummaryEntity summary5 = new InvoiceCustomerSummaryEntity(null, invoice3.getId(), 31L, "Cust E", generateUniquePhoneNumber(), generateUniqueEmail());
@@ -132,7 +132,7 @@ class InvoiceCustomerSummaryRepositoryTest {
     @Test
     void testFindByCustomerPhoneNumber() {
         // Build entity locally
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         String phoneNumber = generateUniquePhoneNumber();
         InvoiceCustomerSummaryEntity summary6 = new InvoiceCustomerSummaryEntity(null, invoice.getId(), 40L, "Cust F", phoneNumber, generateUniqueEmail());
         invoiceCustomerSummaryRepository.save(summary6);

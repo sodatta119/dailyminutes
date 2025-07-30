@@ -4,7 +4,8 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
-import com.dailyminutes.laundry.store.spi.CallerEvent;
+
+import com.dailyminutes.laundry.common.events.CallerEvent;
 
 // Event fired by the store module with the requested details
 public record StoreInfoResponseEvent(

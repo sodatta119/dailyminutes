@@ -4,7 +4,8 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
-import com.dailyminutes.laundry.store.spi.CallerEvent;
+
+import com.dailyminutes.laundry.common.events.CallerEvent;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.store;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule(id = "laundry.store")
+@ApplicationModule(id = "laundry.store", allowedDependencies = {"laundry.common::events"})
 public class StoreModule {
 }

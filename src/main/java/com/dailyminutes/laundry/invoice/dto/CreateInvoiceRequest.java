@@ -15,6 +15,8 @@ import java.util.List;
 public record CreateInvoiceRequest(
         @NotBlank(message = "Swipe Invoice ID cannot be blank")
         String swipeInvoiceId,
+        @NotNull(message = "Order ID cannot be null")
+        Long orderId,
         @NotNull(message = "Customer ID cannot be null")
         Long customerId,
         @NotNull(message = "Invoice date cannot be null")

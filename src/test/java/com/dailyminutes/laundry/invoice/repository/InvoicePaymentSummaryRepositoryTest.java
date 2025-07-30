@@ -42,7 +42,7 @@ class InvoicePaymentSummaryRepositoryTest {
 
     @Test
     void testSaveAndFindInvoicePaymentSummary() {
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         String transactionId = generateUniqueTransactionId();
         InvoicePaymentSummaryEntity summary = new InvoicePaymentSummaryEntity(
                 null, invoice.getId(), 10l, LocalDateTime.now(), new BigDecimal("150.00"),
@@ -63,7 +63,7 @@ class InvoicePaymentSummaryRepositoryTest {
 
     @Test
     void testUpdateInvoicePaymentSummary() {
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         String transactionId = generateUniqueTransactionId();
         InvoicePaymentSummaryEntity summary = new InvoicePaymentSummaryEntity(
                 null, invoice.getId(), 10l, LocalDateTime.now(), new BigDecimal("200.00"),
@@ -82,7 +82,7 @@ class InvoicePaymentSummaryRepositoryTest {
 
     @Test
     void testDeleteInvoicePaymentSummary() {
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         String transactionId = generateUniqueTransactionId();
         InvoicePaymentSummaryEntity summary = new InvoicePaymentSummaryEntity(
                 null, invoice.getId(), 10l, LocalDateTime.now(), new BigDecimal("50.00"),
@@ -96,8 +96,8 @@ class InvoicePaymentSummaryRepositoryTest {
 
     @Test
     void testFindByInvoiceId() {
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice1.getId(), 10l, LocalDateTime.now(), new BigDecimal("100.00"), "COMPLETED", "CREDIT_CARD", generateUniqueTransactionId()));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice1.getId(), 20l, LocalDateTime.now(), new BigDecimal("50.00"), "COMPLETED", "UPI", generateUniqueTransactionId()));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice2.getId(), 30l, LocalDateTime.now(), new BigDecimal("75.00"), "PENDING", "NET_BANKING", generateUniqueTransactionId()));
@@ -109,8 +109,8 @@ class InvoicePaymentSummaryRepositoryTest {
 
     @Test
     void testFindByPaymentId() {
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice1.getId(), 10l, LocalDateTime.now(), new BigDecimal("80.00"), "COMPLETED", "DEBIT_CARD", generateUniqueTransactionId()));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice2.getId(), 20l, LocalDateTime.now(), new BigDecimal("90.00"), "PENDING", "WALLET", generateUniqueTransactionId()));
 
@@ -121,9 +121,9 @@ class InvoicePaymentSummaryRepositoryTest {
 
     @Test
     void testFindByStatus() {
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice1.getId(), 10l, LocalDateTime.now(), new BigDecimal("25.00"), "COMPLETED", "CASH", generateUniqueTransactionId()));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice2.getId(), 20l, LocalDateTime.now(), new BigDecimal("35.00"), "COMPLETED", "CREDIT_CARD", generateUniqueTransactionId()));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice3.getId(), 30l, LocalDateTime.now(), new BigDecimal("45.00"), "PENDING", "UPI", generateUniqueTransactionId()));
@@ -135,9 +135,9 @@ class InvoicePaymentSummaryRepositoryTest {
 
     @Test
     void testFindByMethod() {
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
 
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice1.getId(), 10l, LocalDateTime.now(), new BigDecimal("55.00"), "COMPLETED", "NET_BANKING", generateUniqueTransactionId()));
         invoicePaymentSummaryRepository.save(new InvoicePaymentSummaryEntity(null, invoice2.getId(), 20l, LocalDateTime.now(), new BigDecimal("65.00"), "PENDING", "NET_BANKING", generateUniqueTransactionId()));

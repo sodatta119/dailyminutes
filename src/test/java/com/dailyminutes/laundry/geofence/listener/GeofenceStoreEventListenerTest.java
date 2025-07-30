@@ -1,5 +1,6 @@
 package com.dailyminutes.laundry.geofence.listener;
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
 import com.dailyminutes.laundry.geofence.domain.model.GeofenceEntity;
 import com.dailyminutes.laundry.geofence.domain.model.GeofenceStoreSummaryEntity;
 import com.dailyminutes.laundry.geofence.repository.GeofenceRepository;
@@ -8,7 +9,6 @@ import com.dailyminutes.laundry.store.domain.event.GeofenceAssignedToStoreEvent;
 import com.dailyminutes.laundry.store.domain.event.StoreDeletedEvent;
 import com.dailyminutes.laundry.store.domain.event.StoreInfoRequestEvent;
 import com.dailyminutes.laundry.store.domain.event.StoreInfoResponseEvent;
-import com.dailyminutes.laundry.store.spi.CallerEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

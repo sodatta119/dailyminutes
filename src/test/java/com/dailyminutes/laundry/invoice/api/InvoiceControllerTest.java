@@ -49,8 +49,8 @@ class InvoiceControllerTest {
     void setUp() {
         InvoiceItemDto item = new InvoiceItemDto(1L, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);
         invoiceResponse = new InvoiceResponse(1L, "swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
-        createInvoiceRequest = new CreateInvoiceRequest("swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
-        updateInvoiceRequest = new UpdateInvoiceRequest(1L, "swipe2", 2L, LocalDateTime.now(), BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, Collections.emptyList());
+        createInvoiceRequest = new CreateInvoiceRequest("swipe1", 1L, 2L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
+        updateInvoiceRequest = new UpdateInvoiceRequest(1L, "swipe2", 2L, 1L, LocalDateTime.now(), BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, Collections.emptyList());
     }
 
     @Test

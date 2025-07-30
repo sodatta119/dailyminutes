@@ -40,8 +40,8 @@ class InvoiceServiceTest {
     @Test
     void createInvoice_shouldCreateAndPublishEvent() {
         InvoiceItemDto item = new InvoiceItemDto(null, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);
-        CreateInvoiceRequest request = new CreateInvoiceRequest("swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
-        InvoiceEntity invoice = new InvoiceEntity(1L, "swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO);
+        CreateInvoiceRequest request = new CreateInvoiceRequest("swipe1", 2L,1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
+        InvoiceEntity invoice = new InvoiceEntity(1L, "swipe1", 2L, 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO);
         when(invoiceRepository.save(any())).thenReturn(invoice);
 
         invoiceService.createInvoice(request);
@@ -52,8 +52,8 @@ class InvoiceServiceTest {
     @Test
     void updateInvoice_shouldUpdateAndPublishEvent() {
         InvoiceItemDto item = new InvoiceItemDto(null, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);
-        UpdateInvoiceRequest request = new UpdateInvoiceRequest(1L, "swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
-        InvoiceEntity invoice = new InvoiceEntity(1L, "swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO);
+        UpdateInvoiceRequest request = new UpdateInvoiceRequest(1L, "swipe1", 1L,2L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
+        InvoiceEntity invoice = new InvoiceEntity(1L, "swipe1", 2L, 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO);
         when(invoiceRepository.findById(1L)).thenReturn(Optional.of(invoice));
         when(invoiceRepository.save(any())).thenReturn(invoice);
 
@@ -75,7 +75,7 @@ class InvoiceServiceTest {
     @Test
     void updateInvoice_shouldThrowException_whenInvoiceNotFound() {
         InvoiceItemDto item = new InvoiceItemDto(null, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);
-        UpdateInvoiceRequest request = new UpdateInvoiceRequest(1L, "swipe1", 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
+        UpdateInvoiceRequest request = new UpdateInvoiceRequest(1L, "swipe1", 1L,2L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO, Collections.singletonList(item));
         when(invoiceRepository.findById(1L)).thenReturn(Optional.empty());
         assertThrows(IllegalArgumentException.class, () -> invoiceService.updateInvoice(request));
     }

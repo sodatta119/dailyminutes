@@ -4,7 +4,8 @@
  */
 package com.dailyminutes.laundry.customer.domain.event;
 
-import com.dailyminutes.laundry.customer.spi.CallerEvent;
+
+import com.dailyminutes.laundry.common.events.CallerEvent;
 
 public record CustomerInfoResponseEvent(
         Long customerId,
@@ -12,4 +13,4 @@ public record CustomerInfoResponseEvent(
         String customerPhoneNumber,
         String customerEmail,
         CallerEvent originalEvent // The original invoiceId
-) {}
+) implements CallerEvent{}

@@ -27,7 +27,9 @@ public class InvoiceEntity {
 
     private String swipeInvoiceId; // ID from the external Swipe system
 
-    private Long orderId; // Logical link to the Customer module
+    private Long orderId;
+
+    private Long customerId;
 
     private LocalDateTime invoiceDate;
 

@@ -1,8 +1,8 @@
 /**
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 29/07/25
+ * @version 31/07/25
  */
-package com.dailyminutes.laundry.order.spi;
+package com.dailyminutes.laundry.common.events;
 
 public interface CallerEvent {
 }

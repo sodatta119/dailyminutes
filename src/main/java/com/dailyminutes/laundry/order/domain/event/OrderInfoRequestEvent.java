@@ -5,7 +5,7 @@
 package com.dailyminutes.laundry.order.domain.event;
 
 
-import com.dailyminutes.laundry.order.spi.CallerEvent;
+import com.dailyminutes.laundry.common.events.CallerEvent;
 
 public record OrderInfoRequestEvent(
         Long orderId,

@@ -38,7 +38,7 @@ class InvoiceOrderSummaryRepositoryTest {
 
     @Test
     void testSaveAndFindInvoiceOrderSummary() {
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceOrderSummaryEntity summary = new InvoiceOrderSummaryEntity(
                 null, invoice.getId(), 10l, LocalDateTime.now(), "COMPLETED", new BigDecimal("120.50"));
         InvoiceOrderSummaryEntity savedSummary = invoiceOrderSummaryRepository.save(summary);
@@ -56,7 +56,7 @@ class InvoiceOrderSummaryRepositoryTest {
 
     @Test
     void testUpdateInvoiceOrderSummary() {
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceOrderSummaryEntity summary = new InvoiceOrderSummaryEntity(
                 null, invoice.getId(), 10l, LocalDateTime.now(), "PENDING", new BigDecimal("80.00"));
         InvoiceOrderSummaryEntity savedSummary = invoiceOrderSummaryRepository.save(summary);
@@ -73,7 +73,7 @@ class InvoiceOrderSummaryRepositoryTest {
 
     @Test
     void testDeleteInvoiceOrderSummary() {
-        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         InvoiceOrderSummaryEntity summary = new InvoiceOrderSummaryEntity(
                 null, invoice.getId(), 10l, LocalDateTime.now(), "CANCELLED", new BigDecimal("30.00"));
         InvoiceOrderSummaryEntity savedSummary = invoiceOrderSummaryRepository.save(summary);
@@ -85,8 +85,8 @@ class InvoiceOrderSummaryRepositoryTest {
 
     @Test
     void testFindByInvoiceId() {
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         invoiceOrderSummaryRepository.save(new InvoiceOrderSummaryEntity(null, invoice1.getId(), 10l, LocalDateTime.now(), "COMPLETED", new BigDecimal("100.00")));
         invoiceOrderSummaryRepository.save(new InvoiceOrderSummaryEntity(null, invoice2.getId(), 20l, LocalDateTime.now(), "PENDING", new BigDecimal("50.00")));
 
@@ -97,8 +97,8 @@ class InvoiceOrderSummaryRepositoryTest {
 
     @Test
     void testFindByOrderId() {
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         invoiceOrderSummaryRepository.save(new InvoiceOrderSummaryEntity(null, invoice1.getId(), 10l, LocalDateTime.now(), "ACCEPTED", new BigDecimal("70.00")));
         invoiceOrderSummaryRepository.save(new InvoiceOrderSummaryEntity(null, invoice2.getId(), 20l, LocalDateTime.now(), "DELIVERED", new BigDecimal("90.00")));
 
@@ -109,9 +109,9 @@ class InvoiceOrderSummaryRepositoryTest {
 
     @Test
     void testFindByStatus() {
-        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
-        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 10l, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice2 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE124", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
+        InvoiceEntity invoice3 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE125", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
         invoiceOrderSummaryRepository.save(new InvoiceOrderSummaryEntity(null, invoice1.getId(), 10l, LocalDateTime.now(), "PENDING", new BigDecimal("25.00")));
         invoiceOrderSummaryRepository.save(new InvoiceOrderSummaryEntity(null, invoice2.getId(), 20l, LocalDateTime.now(), "PENDING", new BigDecimal("35.00")));
         invoiceOrderSummaryRepository.save(new InvoiceOrderSummaryEntity(null, invoice3.getId(), 30l, LocalDateTime.now(), "DELIVERED", new BigDecimal("45.00")));

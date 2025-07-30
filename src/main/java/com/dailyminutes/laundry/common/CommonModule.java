@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.common;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule
+@ApplicationModule(id = "laundry.common")
 public class CommonModule {
 }

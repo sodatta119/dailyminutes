@@ -33,7 +33,7 @@ public class InvoiceService {
     private final ApplicationEventPublisher events;
 
     public InvoiceResponse createInvoice(CreateInvoiceRequest request) {
-        InvoiceEntity invoice = new InvoiceEntity(null, request.swipeInvoiceId(), request.customerId(), request.invoiceDate(), request.totalPrice(), request.totalTax(), request.totalDiscount());
+        InvoiceEntity invoice = new InvoiceEntity(null, request.swipeInvoiceId(), request.orderId(), request.customerId(), request.invoiceDate(), request.totalPrice(), request.totalTax(), request.totalDiscount());
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         List<InvoiceItemEntity> items = request.items().stream()
@@ -41,7 +41,7 @@ public class InvoiceService {
                 .collect(Collectors.toList());
         invoiceItemRepository.saveAll(items);
 
-        events.publishEvent(new InvoiceCreatedEvent(savedInvoice.getId(), savedInvoice.getOrderId(), savedInvoice.getInvoiceDate(), savedInvoice.getTotalPrice()));
+        events.publishEvent(new InvoiceCreatedEvent(savedInvoice.getId(),savedInvoice.getCustomerId(), savedInvoice.getOrderId(), savedInvoice.getInvoiceDate(), savedInvoice.getTotalPrice()));
 
         return toInvoiceResponse(savedInvoice, items);
     }
@@ -52,6 +52,7 @@ public class InvoiceService {
 
         existingInvoice.setSwipeInvoiceId(request.swipeInvoiceId());
         existingInvoice.setOrderId(request.orderId());
+        existingInvoice.setCustomerId(request.customerId());
         existingInvoice.setInvoiceDate(request.invoiceDate());
         existingInvoice.setTotalPrice(request.totalPrice());
         existingInvoice.setTotalTax(request.totalTax());
