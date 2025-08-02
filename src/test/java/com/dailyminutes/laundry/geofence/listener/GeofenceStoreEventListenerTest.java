@@ -59,7 +59,7 @@ class GeofenceStoreEventListenerTest {
     void onStoreInfoProvided_shouldCreateSummary_whenOriginalEventIsGeofenceAssignment() {
         // Given: The response event from the store module
         GeofenceAssignedToStoreEvent originalEvent = new GeofenceAssignedToStoreEvent(10L, 100L);
-        StoreInfoResponseEvent event = new StoreInfoResponseEvent(10L, "Downtown Store", "123 Main St", originalEvent);
+        StoreInfoResponseEvent event = new StoreInfoResponseEvent(10L, "Downtown Store", "123 Main St","test-contact","test-email", originalEvent);
 
         // And the corresponding geofence entity exists
         GeofenceEntity geofenceEntity = new GeofenceEntity(100L, "POLYGON(...)", "DELIVERY_ZONE", "Downtown Zone", true);
@@ -85,7 +85,7 @@ class GeofenceStoreEventListenerTest {
     void onStoreInfoProvided_shouldDoNothing_whenOriginalEventIsDifferentType() {
         // Given: A mock event that implements CallerEvent but is NOT a GeofenceAssignedToStoreEvent
         CallerEvent otherEvent = mock(CallerEvent.class);
-        StoreInfoResponseEvent event = new StoreInfoResponseEvent(10L, "Downtown Store", "123 Main St", otherEvent);
+        StoreInfoResponseEvent event = new StoreInfoResponseEvent(10L, "Downtown Store", "123 Main St","test-contact","test-email", otherEvent);
 
         // When: The listener handles the response event
         listener.onStoreInfoProvided(event);

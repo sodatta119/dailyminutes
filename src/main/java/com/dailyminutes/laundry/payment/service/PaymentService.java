@@ -71,7 +71,15 @@ public class PaymentService {
 
         switch (payment.getStatus()) {
             case COMPLETED:
-                events.publishEvent(new PaymentMadeEvent(payment.getId(), payment.getOrderId(), payment.getCustomerId(), payment.getAmount(), payment.getMethod()));
+                events.publishEvent(new PaymentMadeEvent(
+                        payment.getId(),
+                        payment.getOrderId(),
+                        payment.getCustomerId(),
+                        payment.getAmount(),
+                        payment.getMethod().name(),
+                        payment.getTransactionId(),
+                        payment.getPaymentDateTime()
+                ));
                 break;
             case FAILED:
                 events.publishEvent(new PaymentFailedEvent(payment.getId(), payment.getOrderId(), "Payment failed"));

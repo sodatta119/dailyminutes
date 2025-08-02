@@ -128,14 +128,4 @@ public class CustomerController {
     public ResponseEntity<List<CustomerAddressResponse>> getAddressesByCustomerId(@PathVariable Long id) {
         return ResponseEntity.ok(customerQueryService.findAddressesByCustomerId(id));
     }
-
-    @Operation(summary = "Get order history for a customer")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found order history"),
-            @ApiResponse(responseCode = "404", description = "Customer not found")
-    })
-    @GetMapping("/{id}/orders")
-    public ResponseEntity<List<CustomerOrderSummaryResponse>> getOrderSummariesByCustomerId(@PathVariable Long id) {
-        return ResponseEntity.ok(customerQueryService.findOrderSummariesByCustomerId(id));
-    }
 }

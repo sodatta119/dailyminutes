@@ -26,6 +26,8 @@ public class StoreEventListener {
                     store.getId(),
                     store.getName(),
                     store.getAddress(),
+                    store.getContactNumber(),
+                    store.getEmail(),
                     event.originalEvent() // Pass the catalogId back for correlation
             ));
         });

@@ -5,13 +5,15 @@
 package com.dailyminutes.laundry.payment.domain.event;
 
 
-import com.dailyminutes.laundry.payment.domain.model.PaymentMethod;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public record PaymentMadeEvent(
         Long paymentId,
         Long orderId,
         Long customerId,
         BigDecimal amount,
-        PaymentMethod method
+        String method,
+        String transactionId,
+        LocalDateTime paymentDateTime
 ) {}

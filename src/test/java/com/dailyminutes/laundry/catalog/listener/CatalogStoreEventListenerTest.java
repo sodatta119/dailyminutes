@@ -70,7 +70,7 @@ class CatalogStoreEventListenerTest {
                 10L, 100L, new BigDecimal("12.50"),
                 LocalDate.now(), LocalDate.now().plusYears(1), true
         );
-        StoreInfoResponseEvent event = new StoreInfoResponseEvent(10L, "Downtown Store", "test-address", originalEvent);
+        StoreInfoResponseEvent event = new StoreInfoResponseEvent(10L, "Downtown Store", "test-address", "test-contact","test-email",originalEvent);
 
         // And the corresponding catalog item exists
         CatalogEntity catalogEntity = new CatalogEntity(100L, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("15.00"));

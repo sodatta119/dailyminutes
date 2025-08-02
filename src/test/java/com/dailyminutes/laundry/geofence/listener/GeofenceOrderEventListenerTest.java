@@ -1,7 +1,7 @@
 package com.dailyminutes.laundry.geofence.listener;
 
-import com.dailyminutes.laundry.customer.domain.event.CustomerGeofenceInfoRequestEvent;
-import com.dailyminutes.laundry.customer.domain.event.CustomerGeofenceInfoResponseEvent;
+import com.dailyminutes.laundry.customer.domain.event.CustomerAddressInfoRequestEvent;
+import com.dailyminutes.laundry.customer.domain.event.CustomerAddressInfoResponseEvent;
 import com.dailyminutes.laundry.geofence.domain.model.GeofenceOrderSummaryEntity;
 import com.dailyminutes.laundry.geofence.repository.GeofenceOrderSummaryRepository;
 import com.dailyminutes.laundry.order.domain.event.OrderCreatedEvent;
@@ -38,29 +38,35 @@ class GeofenceOrderEventListenerTest {
     @Test
     void onOrderCreated_shouldRequestCustomerGeofenceInfo() {
         // Given: An order creation event
-        OrderCreatedEvent event = new OrderCreatedEvent(101L, 201L, 301L, "PENDING", new BigDecimal("50.00"), LocalDateTime.now(), Collections.emptyList());
-        ArgumentCaptor<CustomerGeofenceInfoRequestEvent> requestCaptor = ArgumentCaptor.forClass(CustomerGeofenceInfoRequestEvent.class);
+        OrderCreatedEvent event = new OrderCreatedEvent(
+                101L, 201L, 301L, "PENDING",
+                new BigDecimal("50.00"), LocalDateTime.now(), Collections.emptyList()
+        );
+        ArgumentCaptor<CustomerAddressInfoRequestEvent> requestCaptor = ArgumentCaptor.forClass(CustomerAddressInfoRequestEvent.class);
 
         // When: The listener handles the order creation
-        listener.onOrderCreated(event);
+        listener.onOrderPlacedInGeofence(event);
 
         // Then: It should publish a new event to request the customer's geofence info
         verify(events).publishEvent(requestCaptor.capture());
-        CustomerGeofenceInfoRequestEvent request = requestCaptor.getValue();
+        CustomerAddressInfoRequestEvent request = requestCaptor.getValue();
 
         assertThat(request.customerId()).isEqualTo(201L);
-        assertThat(request.originalOrderEvent()).isEqualTo(event);
+        assertThat(request.originalEvent()).isEqualTo(event);
     }
 
     @Test
-    void onGeofenceInfoProvided_shouldCreateOrderSummary() {
+    void onCustomerAddressReceived_shouldCreateOrderSummary() {
         // Given: A response event from the customer module with a valid geofenceId
-        OrderCreatedEvent originalEvent = new OrderCreatedEvent(101L, 201L, 301L, "PENDING", new BigDecimal("50.00"), LocalDateTime.now(), Collections.emptyList());
-        CustomerGeofenceInfoResponseEvent event = new CustomerGeofenceInfoResponseEvent(999L, originalEvent);
+        OrderCreatedEvent originalEvent = new OrderCreatedEvent(
+                101L, 201L, 301L, "PENDING",
+                new BigDecimal("50.00"), LocalDateTime.now(), Collections.emptyList()
+        );
+        CustomerAddressInfoResponseEvent event = new CustomerAddressInfoResponseEvent(201L,"test-address","test-lat","testLong",999L, originalEvent);
         ArgumentCaptor<GeofenceOrderSummaryEntity> summaryCaptor = ArgumentCaptor.forClass(GeofenceOrderSummaryEntity.class);
 
         // When: The listener handles the response
-        listener.onGeofenceInfoProvided(event);
+        listener.onCustomerAddressReceived(event);
 
         // Then: It should save a new summary entity with all the combined data
         verify(summaryRepository).save(summaryCaptor.capture());

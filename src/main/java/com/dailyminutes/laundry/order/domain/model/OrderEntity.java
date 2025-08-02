@@ -6,10 +6,10 @@ package com.dailyminutes.laundry.order.domain.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * The type Order entity.

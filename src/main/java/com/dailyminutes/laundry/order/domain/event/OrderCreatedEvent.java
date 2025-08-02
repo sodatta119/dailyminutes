@@ -4,6 +4,8 @@
  */
 package com.dailyminutes.laundry.order.domain.event;
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,4 +18,4 @@ public record OrderCreatedEvent(
         BigDecimal totalAmount,
         LocalDateTime orderDate, // Added orderDate
         List<OrderItemInfo> items // Add the list of items
-) {}
+) implements CallerEvent {}

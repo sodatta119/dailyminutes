@@ -47,7 +47,7 @@ class OrderRepositoryTest {
     @Test
     void testSaveAndFindOrderWithItemsAndMetadata() {
 
-        OrderEntity order = new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50"));
+        OrderEntity order = new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50"));
         OrderEntity savedOrder = orderRepository.save(order);
 
         assertThat(savedOrder).isNotNull();
@@ -86,7 +86,7 @@ class OrderRepositoryTest {
      */
     @Test
     void testFindByCustomerId() { // Updated test method name
-        orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00")));
+        orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00")));
         orderRepository.save(new OrderEntity(null, 20l, 10l, LocalDateTime.now(), OrderStatus.DELIVERED, new BigDecimal("20.00")));
         orderRepository.save(new OrderEntity(null, 30l, 30l, LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("15.00")));
 

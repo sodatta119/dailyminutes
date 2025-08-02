@@ -25,6 +25,9 @@ public class OrderInvoiceEventListener {
             events.publishEvent(new OrderInfoResponseEvent(
                     order.getId(),
                     order.getCustomerId(),
+                    order.getOrderDate(),
+                    order.getStatus().name(),
+                    order.getTotalAmount(),
                     event.originalEvent()
             ));
         });

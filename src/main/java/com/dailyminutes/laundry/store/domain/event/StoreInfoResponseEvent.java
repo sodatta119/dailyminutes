@@ -12,5 +12,7 @@ public record StoreInfoResponseEvent(
         Long storeId,
         String storeName,
         String storeAddress,
+        String storeContactNumber,
+        String storeEmail,
         CallerEvent originalEvent
 ) {}

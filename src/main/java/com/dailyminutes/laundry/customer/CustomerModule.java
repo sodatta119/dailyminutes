@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.customer;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule(id = "laundry.customer",allowedDependencies = {"laundry.order::events", "laundry.common::events"})
+@ApplicationModule(id = "laundry.customer",allowedDependencies = {"laundry.common::events"})
 public class CustomerModule {
 }

@@ -31,7 +31,7 @@ public class OrderService {
     private final ApplicationEventPublisher events;
 
     public OrderResponse createOrder(CreateOrderRequest request) {
-        OrderEntity order = new OrderEntity(null, request.storeId(), request.customerId(), request.orderDate(), request.status(), request.totalAmount());
+        OrderEntity order = new OrderEntity(null, request.storeId(), request.customerId(),request.orderDate(), request.status(), request.totalAmount());
         OrderEntity savedOrder = orderRepository.save(order);
 
         List<OrderItemEntity> items = request.items().stream()
