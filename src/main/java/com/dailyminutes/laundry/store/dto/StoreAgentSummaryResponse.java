@@ -12,4 +12,5 @@ public record StoreAgentSummaryResponse(
         String agentPhoneNumber,
         String agentDesignation,
         String agentStatus
-) {}
+) {
+}

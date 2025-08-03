@@ -14,4 +14,5 @@ public record UpdateManagerRequest(
         String name,
         @NotBlank(message = "Contact information cannot be blank")
         String contact
-) {}
+) {
+}

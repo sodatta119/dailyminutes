@@ -7,6 +7,7 @@ package com.dailyminutes.laundry.invoice.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+
 import java.math.BigDecimal;
 
 public record InvoiceItemDto(
@@ -20,4 +21,5 @@ public record InvoiceItemDto(
         BigDecimal itemPrice,
         @NotNull(message = "Tax cannot be null")
         BigDecimal tax
-) {}
+) {
+}

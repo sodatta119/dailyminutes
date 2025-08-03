@@ -39,7 +39,7 @@ class InvoiceRepositoryTest {
     @Test
     void testSaveAndFindInvoiceWithItems() {
         // 1. Save the parent InvoiceEntity
-        InvoiceEntity invoice = new InvoiceEntity(null, "SWIPE123", 20L,10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         assertThat(savedInvoice).isNotNull();
@@ -67,7 +67,7 @@ class InvoiceRepositoryTest {
      */
     @Test
     void testFindBySwipeInvoiceId() {
-        invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", 20L,10L, LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
+        invoiceRepository.save(new InvoiceEntity(null, "SWIPE456", 20L, 10L, LocalDateTime.now(), new BigDecimal("100.00"), new BigDecimal("10.00"), new BigDecimal("5.00")));
         Optional<InvoiceEntity> foundInvoice = invoiceRepository.findBySwipeInvoiceId("SWIPE456");
         assertThat(foundInvoice).isPresent();
         assertThat(foundInvoice.get().getOrderId()).isEqualTo(20L);
@@ -78,7 +78,7 @@ class InvoiceRepositoryTest {
      */
     @Test
     void testUpdateInvoice() {
-        InvoiceEntity invoice = new InvoiceEntity(null, "UPDATE789", 20L,10L, LocalDateTime.now(), new BigDecimal("70.00"), new BigDecimal("7.00"), new BigDecimal("3.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "UPDATE789", 20L, 10L, LocalDateTime.now(), new BigDecimal("70.00"), new BigDecimal("7.00"), new BigDecimal("3.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         savedInvoice.setTotalPrice(new BigDecimal("75.00"));
@@ -97,7 +97,7 @@ class InvoiceRepositoryTest {
     @Test
     void testDeleteInvoiceAndAssociatedItems() {
         // Create and save Invoice
-        InvoiceEntity invoice = new InvoiceEntity(null, "DELETE000", 20L,10L, LocalDateTime.now(), new BigDecimal("20.00"), new BigDecimal("2.00"), new BigDecimal("1.00"));
+        InvoiceEntity invoice = new InvoiceEntity(null, "DELETE000", 20L, 10L, LocalDateTime.now(), new BigDecimal("20.00"), new BigDecimal("2.00"), new BigDecimal("1.00"));
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
 
         // Create and save InvoiceItem

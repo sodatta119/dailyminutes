@@ -21,4 +21,5 @@ public record CatalogStoreOfferingSummaryResponse(
         LocalDate effectiveFrom,
         LocalDate effectiveTo,
         boolean active
-) {}
+) {
+}

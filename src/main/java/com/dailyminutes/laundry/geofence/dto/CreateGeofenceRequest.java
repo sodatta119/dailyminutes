@@ -15,4 +15,5 @@ public record CreateGeofenceRequest(
         @NotBlank(message = "Geofence name cannot be blank")
         String name,
         boolean active
-) {}
+) {
+}

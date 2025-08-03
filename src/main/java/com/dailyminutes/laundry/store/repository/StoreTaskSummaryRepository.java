@@ -13,9 +13,14 @@ import java.util.Optional;
 
 public interface StoreTaskSummaryRepository extends ListCrudRepository<StoreTaskSummaryEntity, Long> {
     List<StoreTaskSummaryEntity> findByStoreId(Long storeId);
+
     Optional<StoreTaskSummaryEntity> findByTaskId(Long taskId); // Useful for updates from Task events
+
     List<StoreTaskSummaryEntity> findByAgentId(Long agentId);
+
     List<StoreTaskSummaryEntity> findByTaskStatus(String taskStatus);
+
     List<StoreTaskSummaryEntity> findByTaskType(String taskType);
+
     List<StoreTaskSummaryEntity> findByOrderId(Long orderId);
 }

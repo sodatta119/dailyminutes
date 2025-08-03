@@ -11,4 +11,5 @@ public record CustomerCreatedEvent(
         String phoneNumber,
         String name,
         String email
-) {}
+) {
+}

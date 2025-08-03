@@ -16,4 +16,5 @@ public record CreateStoreRequest(
         @Email(message = "Email should be valid")
         String email,
         Long managerId
-) {}
+) {
+}

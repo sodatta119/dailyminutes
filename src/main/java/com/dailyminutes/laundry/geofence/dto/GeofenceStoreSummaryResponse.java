@@ -11,4 +11,5 @@ public record GeofenceStoreSummaryResponse(
         Long geofenceId,
         String storeName,
         String storeAddress
-) {}
+) {
+}

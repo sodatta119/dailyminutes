@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface OrderInvoiceSummaryRepository extends ListCrudRepository<OrderInvoiceSummaryEntity, Long> {
     Optional<OrderInvoiceSummaryEntity> findByOrderId(Long orderId); // Useful for updates from Order events
+
     Optional<OrderInvoiceSummaryEntity> findByInvoiceId(Long invoiceId); // Useful for updates from Invoice events
+
     List<OrderInvoiceSummaryEntity> findByInvoiceDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

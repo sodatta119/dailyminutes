@@ -7,4 +7,5 @@ package com.dailyminutes.laundry.task.domain.event;
 public record TaskAssignedToAgentEvent(
         Long taskId,
         Long agentId
-) {}
+) {
+}

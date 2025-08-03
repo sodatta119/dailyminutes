@@ -58,6 +58,7 @@ public class StoreService {
         storeRepository.deleteById(id);
         events.publishEvent(new StoreDeletedEvent(id));
     }
+
     public void addCatalogItemToStore(Long storeId, Long catalogId, BigDecimal price, LocalDate from, LocalDate to) {
         // Verify that both the store and catalog item exist
         if (!storeRepository.existsById(storeId)) {

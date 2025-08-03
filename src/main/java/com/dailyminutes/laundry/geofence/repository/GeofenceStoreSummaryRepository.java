@@ -12,7 +12,10 @@ import java.util.Optional;
 
 public interface GeofenceStoreSummaryRepository extends ListCrudRepository<GeofenceStoreSummaryEntity, Long> {
     Optional<GeofenceStoreSummaryEntity> findByStoreId(Long storeId); // Useful for updates from Store events
+
     List<GeofenceStoreSummaryEntity> findByGeofenceId(Long geofenceId); // Added: Find summaries by Geofence ID
+
     Optional<GeofenceStoreSummaryEntity> findByStoreName(String storeName); // Example finder
+
     List<GeofenceStoreSummaryEntity> findByStoreAddressContaining(String addressPart); // Example finder
 }

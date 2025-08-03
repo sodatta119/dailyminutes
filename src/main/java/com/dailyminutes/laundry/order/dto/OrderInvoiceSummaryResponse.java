@@ -15,4 +15,5 @@ public record OrderInvoiceSummaryResponse(
         BigDecimal totalPrice,
         BigDecimal totalTax,
         BigDecimal totalDiscount
-) {}
+) {
+}

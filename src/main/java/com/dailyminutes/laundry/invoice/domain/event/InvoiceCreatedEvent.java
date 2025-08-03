@@ -17,4 +17,5 @@ public record InvoiceCreatedEvent(
         BigDecimal totalPrice,
         BigDecimal totalTax,
         BigDecimal totalDiscount
-)  implements CallerEvent {}
+) implements CallerEvent {
+}

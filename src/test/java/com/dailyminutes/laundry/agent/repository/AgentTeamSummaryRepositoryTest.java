@@ -35,7 +35,6 @@ class AgentTeamSummaryRepositoryTest {
     private AgentRepository agentRepository;
 
 
-
     /**
      * Test save and find agent team summary.
      */

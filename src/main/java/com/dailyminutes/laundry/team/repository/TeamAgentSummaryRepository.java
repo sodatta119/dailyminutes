@@ -12,7 +12,10 @@ import java.util.Optional;
 
 public interface TeamAgentSummaryRepository extends ListCrudRepository<TeamAgentSummaryEntity, Long> {
     List<TeamAgentSummaryEntity> findByTeamId(Long teamId);
+
     Optional<TeamAgentSummaryEntity> findByAgentId(Long agentId); // Useful for updates from Agent events
+
     List<TeamAgentSummaryEntity> findByAgentDesignation(String agentDesignation);
+
     List<TeamAgentSummaryEntity> findByAgentState(String agentState);
 }

@@ -10,4 +10,5 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 public record OrderInfoRequestEvent(
         Long orderId,
         CallerEvent originalEvent
-) {}
+) {
+}

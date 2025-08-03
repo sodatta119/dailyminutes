@@ -12,8 +12,11 @@ import java.util.Optional;
 
 public interface OrderPaymentSummaryRepository extends ListCrudRepository<OrderPaymentSummaryEntity, Long> {
     List<OrderPaymentSummaryEntity> findByOrderId(Long orderId); // Useful for updates from Order events
+
     Optional<OrderPaymentSummaryEntity> findByPaymentId(Long paymentId); // Useful for updates from Payment events
+
     List<OrderPaymentSummaryEntity> findByStatus(String status);
+
     List<OrderPaymentSummaryEntity> findByMethod(String method);
 }
 

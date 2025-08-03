@@ -17,4 +17,5 @@ public record GeofenceOrderSummaryResponse(
         BigDecimal totalAmount,
         Long customerId,
         Long storeId
-) {}
+) {
+}

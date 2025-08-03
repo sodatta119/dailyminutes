@@ -12,8 +12,12 @@ import java.util.Optional;
 
 public interface TaskOrderSummaryRepository extends ListCrudRepository<TaskOrderSummaryEntity, Long> {
     Optional<TaskOrderSummaryEntity> findByTaskId(Long taskId); // Useful for updates from Task events
+
     Optional<TaskOrderSummaryEntity> findByOrderId(Long orderId); // Useful for updates from Order events
+
     List<TaskOrderSummaryEntity> findByCustomerId(Long customerId);
+
     List<TaskOrderSummaryEntity> findByStoreId(Long storeId);
+
     List<TaskOrderSummaryEntity> findByStatus(String status);
 }

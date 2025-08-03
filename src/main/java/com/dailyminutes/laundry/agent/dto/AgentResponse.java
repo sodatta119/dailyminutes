@@ -19,4 +19,5 @@ public record AgentResponse(
         LocalDate joiningDate,
         LocalDate terminationDate,
         AgentDesignation designation
-) {}
+) {
+}

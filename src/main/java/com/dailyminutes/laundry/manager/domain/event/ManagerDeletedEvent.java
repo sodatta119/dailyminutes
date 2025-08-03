@@ -5,4 +5,5 @@
 package com.dailyminutes.laundry.manager.domain.event;
 
 
-public record ManagerDeletedEvent(Long managerId) {}
+public record ManagerDeletedEvent(Long managerId) {
+}

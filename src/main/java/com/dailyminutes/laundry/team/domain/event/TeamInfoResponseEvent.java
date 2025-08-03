@@ -9,4 +9,5 @@ public record TeamInfoResponseEvent(
         Long teamId,
         String teamName,
         String teamDescription
-) {}
+) {
+}

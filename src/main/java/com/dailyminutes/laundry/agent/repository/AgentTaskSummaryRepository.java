@@ -29,6 +29,7 @@ public interface AgentTaskSummaryRepository extends ListCrudRepository<AgentTask
      * @return the list
      */
     List<AgentTaskSummaryEntity> findByTaskStatus(String taskStatus); // Example finder
+
     // ADD this new method
     Optional<AgentTaskSummaryEntity> findByTaskId(Long taskId);
 

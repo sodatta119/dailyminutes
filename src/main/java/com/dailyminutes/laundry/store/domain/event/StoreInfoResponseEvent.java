@@ -15,4 +15,5 @@ public record StoreInfoResponseEvent(
         String storeContactNumber,
         String storeEmail,
         CallerEvent originalEvent
-) {}
+) {
+}

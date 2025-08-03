@@ -17,4 +17,5 @@ public record OrderInfoResponseEvent(
         String status,
         BigDecimal totalAmount,
         CallerEvent originalEvent
-) {}
+) {
+}

@@ -11,4 +11,5 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 public record StoreInfoRequestEvent(
         Long storeId,
         CallerEvent originalEvent
-) {}
+) {
+}

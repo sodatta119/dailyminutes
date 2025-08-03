@@ -19,4 +19,5 @@ public record CatalogOrderItemSummaryResponse(
         Integer quantity,
         BigDecimal itemPriceAtOrder,
         LocalDateTime orderDate
-) {}
+) {
+}

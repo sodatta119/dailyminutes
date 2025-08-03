@@ -19,4 +19,5 @@ public record UpdateStoreRequest(
         @Email(message = "Email should be valid")
         String email,
         Long managerId
-) {}
+) {
+}

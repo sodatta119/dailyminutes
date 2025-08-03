@@ -10,4 +10,5 @@ import java.math.BigDecimal;
 public record InvoiceUpdatedEvent(
         Long invoiceId,
         BigDecimal newTotalPrice
-) {}
+) {
+}

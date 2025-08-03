@@ -12,4 +12,5 @@ public record TaskAgentSummaryResponse(
         String agentPhoneNumber,
         String agentDesignation,
         String agentState
-) {}
+) {
+}

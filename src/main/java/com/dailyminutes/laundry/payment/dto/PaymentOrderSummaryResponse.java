@@ -16,4 +16,5 @@ public record PaymentOrderSummaryResponse(
         BigDecimal totalAmount,
         Long customerId,
         Long storeId
-) {}
+) {
+}

@@ -8,4 +8,5 @@ public record PaymentFailedEvent(
         Long paymentId,
         Long orderId,
         String reason
-) {}
+) {
+}

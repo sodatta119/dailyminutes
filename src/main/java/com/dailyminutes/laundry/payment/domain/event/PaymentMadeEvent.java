@@ -18,4 +18,5 @@ public record PaymentMadeEvent(
         String method,
         String transactionId,
         LocalDateTime paymentDateTime
-) implements CallerEvent {}
+) implements CallerEvent {
+}

@@ -19,4 +19,5 @@ public record CreateCustomerRequest(
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Email should be valid")
         String email
-) {}
+) {
+}

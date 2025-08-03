@@ -17,4 +17,5 @@ public record InvoicePaymentSummaryResponse(
         String status,
         String method,
         String transactionId
-) {}
+) {
+}

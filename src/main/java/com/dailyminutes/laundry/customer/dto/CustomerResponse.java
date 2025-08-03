@@ -11,4 +11,5 @@ public record CustomerResponse(
         String phoneNumber,
         String name,
         String email
-) {}
+) {
+}

@@ -16,4 +16,5 @@ public record TaskOrderSummaryResponse(
         BigDecimal totalAmount,
         Long customerId,
         Long storeId
-) {}
+) {
+}

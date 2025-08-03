@@ -38,9 +38,8 @@ public class GeofenceStoreEventListener {
      */
     @ApplicationModuleListener
     public void onStoreInfoProvided(StoreInfoResponseEvent event) {
-        if(event.originalEvent() instanceof  GeofenceAssignedToStoreEvent)
-        {
-            GeofenceAssignedToStoreEvent originalEvent = (GeofenceAssignedToStoreEvent)event.originalEvent();
+        if (event.originalEvent() instanceof GeofenceAssignedToStoreEvent) {
+            GeofenceAssignedToStoreEvent originalEvent = (GeofenceAssignedToStoreEvent) event.originalEvent();
 
             geofenceRepository.findById(originalEvent.geofenceId()).ifPresent(geofence -> {
                 GeofenceStoreSummaryEntity summary = new GeofenceStoreSummaryEntity(

@@ -13,7 +13,7 @@ public class ModularityTests {
     ApplicationModules modules = ApplicationModules.of(DailyminutesApplication.class);
 
     @Test
-    void verifyModularity(){
+    void verifyModularity() {
         //System.out.println(modules.toString());
         modules.verify();
     }

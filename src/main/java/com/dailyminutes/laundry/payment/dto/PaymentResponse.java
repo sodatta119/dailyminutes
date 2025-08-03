@@ -6,6 +6,7 @@ package com.dailyminutes.laundry.payment.dto;
 
 import com.dailyminutes.laundry.payment.domain.model.PaymentMethod;
 import com.dailyminutes.laundry.payment.domain.model.PaymentStatus;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -19,4 +20,5 @@ public record PaymentResponse(
         PaymentStatus status,
         PaymentMethod method,
         String remarks
-) {}
+) {
+}

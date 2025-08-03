@@ -4,4 +4,5 @@
  */
 package com.dailyminutes.laundry.customer.domain.event;
 
-public record CustomerAddressRemovedEvent(Long addressId, Long customerId) {}
+public record CustomerAddressRemovedEvent(Long addressId, Long customerId) {
+}

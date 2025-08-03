@@ -14,8 +14,12 @@ import java.util.Optional;
 
 public interface PaymentRepository extends ListCrudRepository<PaymentEntity, Long> {
     List<PaymentEntity> findByOrderId(Long orderId);
+
     List<PaymentEntity> findByCustomerId(Long customerId);
+
     Optional<PaymentEntity> findByTransactionId(String transactionId);
+
     List<PaymentEntity> findByStatus(PaymentStatus status);
+
     List<PaymentEntity> findByMethod(PaymentMethod method);
 }

@@ -6,6 +6,7 @@ package com.dailyminutes.laundry.task.dto;
 
 import com.dailyminutes.laundry.task.domain.model.TaskStatus;
 import com.dailyminutes.laundry.task.domain.model.TaskType;
+
 import java.time.LocalDateTime;
 
 public record TaskResponse(
@@ -25,4 +26,5 @@ public record TaskResponse(
         Long destinationGeofenceId,
         String taskComment,
         Long orderId
-) {}
+) {
+}

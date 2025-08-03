@@ -8,6 +8,7 @@ import com.dailyminutes.laundry.task.domain.model.TaskStatus;
 import com.dailyminutes.laundry.task.domain.model.TaskType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public record CreateTaskRequest(
@@ -24,4 +25,5 @@ public record CreateTaskRequest(
         Long destinationGeofenceId,
         String taskComment,
         @NotNull Long orderId
-) {}
+) {
+}

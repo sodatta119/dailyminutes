@@ -47,7 +47,7 @@ class OrderCustomerSummaryRepositoryTest {
 
     @Test
     void testSaveAndFindOrderCustomerSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null,  10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String phoneNumber = generateUniquePhoneNumber();
         String email = generateUniqueEmail();
 
@@ -70,7 +70,7 @@ class OrderCustomerSummaryRepositoryTest {
 
     @Test
     void testUpdateOrderCustomerSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L,10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String phoneNumber = generateUniquePhoneNumber();
         String email = generateUniqueEmail();
 
@@ -90,7 +90,7 @@ class OrderCustomerSummaryRepositoryTest {
 
     @Test
     void testDeleteOrderCustomerSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null,  10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String phoneNumber = generateUniquePhoneNumber();
         String email = generateUniqueEmail();
 

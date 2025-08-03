@@ -38,9 +38,8 @@ public class InvoiceCustomerEventListener {
      */
     @ApplicationModuleListener
     public void onCustomerInfoProvided(CustomerInfoResponseEvent event) {
-        if(event.originalEvent() instanceof InvoiceCreatedEvent)
-        {
-            InvoiceCreatedEvent originalEvent= (InvoiceCreatedEvent) event.originalEvent();
+        if (event.originalEvent() instanceof InvoiceCreatedEvent) {
+            InvoiceCreatedEvent originalEvent = (InvoiceCreatedEvent) event.originalEvent();
             InvoiceCustomerSummaryEntity summary = new InvoiceCustomerSummaryEntity(
                     null,
                     originalEvent.invoiceId(), // This is the invoiceId

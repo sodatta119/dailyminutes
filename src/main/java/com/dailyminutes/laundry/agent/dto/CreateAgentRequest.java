@@ -28,4 +28,5 @@ public record CreateAgentRequest(
         LocalDate joiningDate,
         @NotNull(message = "Designation cannot be null")
         AgentDesignation designation
-) {}
+) {
+}

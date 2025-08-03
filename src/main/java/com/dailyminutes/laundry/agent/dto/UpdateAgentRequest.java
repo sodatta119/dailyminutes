@@ -30,4 +30,5 @@ public record UpdateAgentRequest(
         LocalDate terminationDate,
         @NotNull(message = "Designation cannot be null")
         AgentDesignation designation
-) {}
+) {
+}

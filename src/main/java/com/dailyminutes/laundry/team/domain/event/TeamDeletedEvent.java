@@ -4,4 +4,5 @@
  */
 package com.dailyminutes.laundry.team.domain.event;
 
-public record TeamDeletedEvent(Long teamId) {}
+public record TeamDeletedEvent(Long teamId) {
+}

@@ -11,4 +11,5 @@ public record CustomerUpdatedEvent(
         String phoneNumber,
         String name,
         String email
-) {}
+) {
+}

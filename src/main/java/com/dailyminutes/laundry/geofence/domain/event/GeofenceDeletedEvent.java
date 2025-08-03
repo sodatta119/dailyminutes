@@ -4,4 +4,5 @@
  */
 package com.dailyminutes.laundry.geofence.domain.event;
 
-public record GeofenceDeletedEvent(Long geofenceId) {}
+public record GeofenceDeletedEvent(Long geofenceId) {
+}

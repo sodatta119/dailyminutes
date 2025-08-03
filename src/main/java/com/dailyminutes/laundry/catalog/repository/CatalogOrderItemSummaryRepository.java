@@ -13,8 +13,12 @@ import java.util.Optional;
 
 public interface CatalogOrderItemSummaryRepository extends ListCrudRepository<CatalogOrderItemSummaryEntity, Long> {
     List<CatalogOrderItemSummaryEntity> findByCatalogId(Long catalogId);
+
     List<CatalogOrderItemSummaryEntity> findByOrderId(Long orderId);
+
     Optional<CatalogOrderItemSummaryEntity> findByOrderItemId(Long orderItemId); // Useful for updates from OrderItem events
+
     List<CatalogOrderItemSummaryEntity> findByCatalogType(String catalogType);
+
     List<CatalogOrderItemSummaryEntity> findByOrderDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }

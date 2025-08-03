@@ -10,4 +10,5 @@ public record AgentTeamSummaryResponse(
         Long agentId,
         String teamName,
         String teamDescription
-) {}
+) {
+}

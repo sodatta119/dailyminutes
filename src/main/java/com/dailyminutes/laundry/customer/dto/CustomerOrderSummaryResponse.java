@@ -16,4 +16,5 @@ public record CustomerOrderSummaryResponse(
         String status,
         BigDecimal totalAmount,
         Long storeId
-) {}
+) {
+}

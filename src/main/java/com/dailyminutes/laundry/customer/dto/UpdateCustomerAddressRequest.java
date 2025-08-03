@@ -26,4 +26,5 @@ public record UpdateCustomerAddressRequest(
         String longitude,
         String latitude,
         Long geofenceId
-) {}
+) {
+}

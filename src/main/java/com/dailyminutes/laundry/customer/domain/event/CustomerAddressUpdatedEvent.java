@@ -18,4 +18,5 @@ public record CustomerAddressUpdatedEvent(
         String city,
         String zipCode,
         Long geofenceId
-) {}
+) {
+}

@@ -12,4 +12,5 @@ public record TeamAgentSummaryResponse(
         String agentPhoneNumber,
         String agentDesignation,
         String agentState
-) {}
+) {
+}

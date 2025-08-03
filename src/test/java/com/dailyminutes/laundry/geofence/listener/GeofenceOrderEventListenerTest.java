@@ -62,7 +62,7 @@ class GeofenceOrderEventListenerTest {
                 101L, 201L, 301L, "PENDING",
                 new BigDecimal("50.00"), LocalDateTime.now(), Collections.emptyList()
         );
-        CustomerAddressInfoResponseEvent event = new CustomerAddressInfoResponseEvent(201L,"test-address","test-lat","testLong",999L, originalEvent);
+        CustomerAddressInfoResponseEvent event = new CustomerAddressInfoResponseEvent(201L, "test-address", "test-lat", "testLong", 999L, originalEvent);
         ArgumentCaptor<GeofenceOrderSummaryEntity> summaryCaptor = ArgumentCaptor.forClass(GeofenceOrderSummaryEntity.class);
 
         // When: The listener handles the response

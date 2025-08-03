@@ -10,4 +10,5 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 public record GeofenceAssignedToStoreEvent(
         Long storeId,
         Long geofenceId
-) implements CallerEvent {}
+) implements CallerEvent {
+}

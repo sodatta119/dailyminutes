@@ -64,8 +64,8 @@ public class CustomerService {
     }
 
     public CustomerAddressResponse addAddress(CreateCustomerAddressRequest request) {
-        CustomerEntity customer=customerRepository.findById(request.customerId()).orElse(null);
-        if (customer==null) {
+        CustomerEntity customer = customerRepository.findById(request.customerId()).orElse(null);
+        if (customer == null) {
             throw new IllegalArgumentException("Customer with ID " + request.customerId() + " not found.");
         }
         CustomerAddressEntity address = new CustomerAddressEntity(null, request.customerId(), request.addressType(), request.isDefault(), request.flatApartment(), request.addressLine(), request.street(), request.city(), request.state(), request.zipCode(), request.country(), request.longitude(), request.latitude(), request.geofenceId());
@@ -81,7 +81,7 @@ public class CustomerService {
     }
 
     public CustomerAddressResponse updateAddress(UpdateCustomerAddressRequest request) {
-        CustomerEntity customer=customerRepository.findById(request.customerId()).orElseThrow(() -> new IllegalArgumentException("Address with Customer ID " + request.customerId() + " not found."));
+        CustomerEntity customer = customerRepository.findById(request.customerId()).orElseThrow(() -> new IllegalArgumentException("Address with Customer ID " + request.customerId() + " not found."));
         CustomerAddressEntity existingAddress = addressRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Address with ID " + request.id() + " not found."));
 

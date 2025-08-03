@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface GeofenceCustomerSummaryRepository extends ListCrudRepository<GeofenceCustomerSummaryEntity, Long> {
     List<GeofenceCustomerSummaryEntity> findByGeofenceId(Long geofenceId);
+
     Optional<GeofenceCustomerSummaryEntity> findByCustomerId(Long customerId); // Useful for updates from Customer events
+
     Optional<GeofenceCustomerSummaryEntity> findByCustomerPhoneNumber(String customerPhoneNumber); // Example finder
 }

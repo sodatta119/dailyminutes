@@ -12,4 +12,5 @@ public record OrderStoreSummaryResponse(
         String storeAddress,
         String storeContactNumber,
         String storeEmail
-) {}
+) {
+}

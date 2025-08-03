@@ -36,14 +36,13 @@ public class GeofenceOrderEventListener {
      */
     @ApplicationModuleListener
     public void onOrderPlacedInGeofence(OrderCreatedEvent orderEvent) {
-        events.publishEvent(new CustomerAddressInfoRequestEvent(orderEvent.customerId(),orderEvent));
+        events.publishEvent(new CustomerAddressInfoRequestEvent(orderEvent.customerId(), orderEvent));
     }
 
     @ApplicationModuleListener
     public void onCustomerAddressReceived(CustomerAddressInfoResponseEvent event) {
-        if(event.originalEvent() instanceof  OrderCreatedEvent)
-        {
-            OrderCreatedEvent orderEvent= (OrderCreatedEvent) event.originalEvent();
+        if (event.originalEvent() instanceof OrderCreatedEvent) {
+            OrderCreatedEvent orderEvent = (OrderCreatedEvent) event.originalEvent();
             GeofenceOrderSummaryEntity summary = new GeofenceOrderSummaryEntity(
                     null,
                     orderEvent.orderId(),

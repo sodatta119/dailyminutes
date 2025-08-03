@@ -11,4 +11,5 @@ public record TaskStatusChangedEvent(
         Long orderId,
         String oldStatus,
         String newStatus
-) {}
+) {
+}

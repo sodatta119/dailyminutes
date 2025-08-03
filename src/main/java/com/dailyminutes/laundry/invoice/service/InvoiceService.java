@@ -41,7 +41,7 @@ public class InvoiceService {
                 .collect(Collectors.toList());
         invoiceItemRepository.saveAll(items);
 
-        events.publishEvent(new InvoiceCreatedEvent(savedInvoice.getId(),savedInvoice.getCustomerId(), savedInvoice.getOrderId(), savedInvoice.getInvoiceDate(), savedInvoice.getTotalPrice(), savedInvoice.getTotalTax(), savedInvoice.getTotalDiscount()));
+        events.publishEvent(new InvoiceCreatedEvent(savedInvoice.getId(), savedInvoice.getCustomerId(), savedInvoice.getOrderId(), savedInvoice.getInvoiceDate(), savedInvoice.getTotalPrice(), savedInvoice.getTotalTax(), savedInvoice.getTotalDiscount()));
 
         return toInvoiceResponse(savedInvoice, items);
     }

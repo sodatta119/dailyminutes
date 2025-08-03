@@ -8,4 +8,5 @@ public record StoreUpdatedEvent(
         Long storeId,
         String newName,
         Long newManagerId
-) {}
+) {
+}

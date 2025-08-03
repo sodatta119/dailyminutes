@@ -24,4 +24,5 @@ public record CreateCustomerAddressRequest(
         String longitude,
         String latitude,
         Long geofenceId
-) {}
+) {
+}

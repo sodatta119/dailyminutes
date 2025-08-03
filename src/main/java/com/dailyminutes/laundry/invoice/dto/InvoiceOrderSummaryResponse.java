@@ -15,4 +15,5 @@ public record InvoiceOrderSummaryResponse(
         LocalDateTime orderDate,
         String status,
         BigDecimal totalAmount
-) {}
+) {
+}

@@ -6,6 +6,7 @@ package com.dailyminutes.laundry.order.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+
 import java.math.BigDecimal;
 
 public record OrderItemDto(
@@ -14,4 +15,5 @@ public record OrderItemDto(
         @NotNull @Positive BigDecimal quantity,
         @NotNull BigDecimal itemPriceAtOrder,
         String notes
-) {}
+) {
+}

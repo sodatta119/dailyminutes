@@ -11,4 +11,5 @@ public record StoreGeofenceSummaryResponse(
         String geofenceName,
         String geofenceType,
         boolean active
-) {}
+) {
+}

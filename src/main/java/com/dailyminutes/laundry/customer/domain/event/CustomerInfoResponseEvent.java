@@ -13,4 +13,5 @@ public record CustomerInfoResponseEvent(
         String customerPhoneNumber,
         String customerEmail,
         CallerEvent originalEvent // The original invoiceId
-) implements CallerEvent{}
+) implements CallerEvent {
+}

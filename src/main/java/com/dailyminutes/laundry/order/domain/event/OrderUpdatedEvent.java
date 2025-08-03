@@ -12,4 +12,5 @@ public record OrderUpdatedEvent(
         LocalDateTime newOrderDate,
         String newStatus,
         BigDecimal newTotalAmount
-) {}
+) {
+}

@@ -4,4 +4,5 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
-public record StoreDeletedEvent(Long storeId) {}
+public record StoreDeletedEvent(Long storeId) {
+}

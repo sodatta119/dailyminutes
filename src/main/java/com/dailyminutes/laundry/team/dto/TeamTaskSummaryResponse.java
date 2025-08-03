@@ -16,4 +16,5 @@ public record TeamTaskSummaryResponse(
         Long agentId,
         String agentName,
         Long orderId
-) {}
+) {
+}

@@ -12,4 +12,5 @@ public record OrderItemInfo(
         Long catalogId,
         BigDecimal quantity,
         BigDecimal itemPriceAtOrder
-) {}
+) {
+}

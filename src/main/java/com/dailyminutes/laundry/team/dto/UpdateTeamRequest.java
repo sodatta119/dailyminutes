@@ -16,4 +16,5 @@ public record UpdateTeamRequest(
         String description,
         @NotNull(message = "Team role cannot be null")
         TeamRole role
-) {}
+) {
+}

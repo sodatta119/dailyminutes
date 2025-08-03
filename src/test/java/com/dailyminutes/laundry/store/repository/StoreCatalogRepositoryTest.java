@@ -67,7 +67,7 @@ class StoreCatalogRepositoryTest { // Updated class name
         Optional<StoreCatalogEntity> foundUpdatedSupport = storeCatalogRepository.findById(savedStoreCatalog.getId());
 
         foundUpdatedSupport.get().setCatalogId(10l);
-        savedStoreCatalog=foundUpdatedSupport.get();
+        savedStoreCatalog = foundUpdatedSupport.get();
         StoreCatalogEntity updatedSupport = storeCatalogRepository.save(savedStoreCatalog);
 
         foundUpdatedSupport = storeCatalogRepository.findById(savedStoreCatalog.getId());

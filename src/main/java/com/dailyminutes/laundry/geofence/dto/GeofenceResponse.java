@@ -11,4 +11,5 @@ public record GeofenceResponse(
         String geofenceType,
         String name,
         boolean active
-) {}
+) {
+}

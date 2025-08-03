@@ -7,4 +7,5 @@ package com.dailyminutes.laundry.manager.domain.event;
 public record ManagerCreatedEvent(
         Long managerId,
         String name
-) {}
+) {
+}

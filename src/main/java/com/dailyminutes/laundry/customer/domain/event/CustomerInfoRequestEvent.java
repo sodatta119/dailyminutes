@@ -10,4 +10,5 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 public record CustomerInfoRequestEvent(
         Long customerId,
         CallerEvent originalEvent // The invoiceId
-) {}
+) {
+}

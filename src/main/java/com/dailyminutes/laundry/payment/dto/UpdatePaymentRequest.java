@@ -8,6 +8,7 @@ import com.dailyminutes.laundry.payment.domain.model.PaymentMethod;
 import com.dailyminutes.laundry.payment.domain.model.PaymentStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -21,4 +22,5 @@ public record UpdatePaymentRequest(
         @NotNull PaymentStatus status,
         @NotNull PaymentMethod method,
         String remarks
-) {}
+) {
+}

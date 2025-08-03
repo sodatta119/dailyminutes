@@ -22,4 +22,5 @@ public record UpdateCustomerRequest(
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Email should be valid")
         String email
-) {}
+) {
+}

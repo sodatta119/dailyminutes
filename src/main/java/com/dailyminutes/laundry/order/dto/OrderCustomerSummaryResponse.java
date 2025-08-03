@@ -11,4 +11,5 @@ public record OrderCustomerSummaryResponse(
         String customerName,
         String customerPhoneNumber,
         String customerEmail
-) {}
+) {
+}

@@ -11,4 +11,5 @@ public record TeamResponse(
         String name,
         String description,
         TeamRole role
-) {}
+) {
+}

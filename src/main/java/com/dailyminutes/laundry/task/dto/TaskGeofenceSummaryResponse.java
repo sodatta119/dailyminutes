@@ -13,4 +13,5 @@ public record TaskGeofenceSummaryResponse(
         String polygonCoordinates,
         boolean isSource,
         boolean isDestination
-) {}
+) {
+}

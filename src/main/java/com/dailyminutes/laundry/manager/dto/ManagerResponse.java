@@ -8,4 +8,5 @@ public record ManagerResponse(
         Long id,
         String name,
         String contact
-) {}
+) {
+}

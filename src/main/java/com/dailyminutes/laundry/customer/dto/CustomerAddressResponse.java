@@ -22,4 +22,5 @@ public record CustomerAddressResponse(
         String longitude,
         String latitude,
         Long geofenceId
-) {}
+) {
+}

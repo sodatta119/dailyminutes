@@ -8,4 +8,5 @@ public record StoreCreatedEvent(
         Long storeId,
         String name,
         Long managerId
-) {}
+) {
+}

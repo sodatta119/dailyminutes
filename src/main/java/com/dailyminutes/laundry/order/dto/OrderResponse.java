@@ -5,6 +5,7 @@
 package com.dailyminutes.laundry.order.dto;
 
 import com.dailyminutes.laundry.order.domain.model.OrderStatus;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,4 +18,5 @@ public record OrderResponse(
         OrderStatus status,
         BigDecimal totalAmount,
         List<OrderItemDto> items
-) {}
+) {
+}

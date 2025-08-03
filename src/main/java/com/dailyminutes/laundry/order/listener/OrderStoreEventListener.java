@@ -25,7 +25,6 @@ public class OrderStoreEventListener {
 
     @ApplicationModuleListener
     public void onOrderCreated(OrderCreatedEvent event) {
-        // Ask the store module for details
         events.publishEvent(new StoreInfoRequestEvent(event.storeId(), event));
     }
 

@@ -15,4 +15,5 @@ public record CatalogResponse(
         String name,
         UnitType unit,
         BigDecimal unitPrice
-) {}
+) {
+}

@@ -11,4 +11,5 @@ public record StoreResponse(
         String contactNumber,
         String email,
         Long managerId
-) {}
+) {
+}

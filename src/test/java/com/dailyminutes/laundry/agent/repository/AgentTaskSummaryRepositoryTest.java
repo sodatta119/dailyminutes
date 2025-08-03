@@ -40,7 +40,6 @@ class AgentTaskSummaryRepositoryTest {
     private AgentRepository agentRepository;
 
 
-
     /**
      * Test save and find agent task summary.
      */
@@ -93,7 +92,7 @@ class AgentTaskSummaryRepositoryTest {
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, 10l, // taskId
                 agent1.getId(), // agentId
                 "Delivery Order 789", "DELIVERY", "ASSIGNED", LocalDateTime.now(), "Store C", "Customer D", 10l);
-        summary=agentTaskSummaryRepository.save(summary);
+        summary = agentTaskSummaryRepository.save(summary);
 
         agentTaskSummaryRepository.deleteById(summary.getId());
         Optional<AgentTaskSummaryEntity> deletedSummary = agentTaskSummaryRepository.findById(summary.getId());
@@ -126,7 +125,6 @@ class AgentTaskSummaryRepositoryTest {
         AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
         AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, 10l, "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
         AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, 10l, "9878768766", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-
 
 
         agentTaskSummaryRepository.save(new AgentTaskSummaryEntity(null, 10l, agent1.getId(), "Task New 1", "PICKUP", "NEW", LocalDateTime.now(), "Addr K", "Dest L", 10l));

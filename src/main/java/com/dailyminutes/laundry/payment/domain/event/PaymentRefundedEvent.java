@@ -10,4 +10,5 @@ public record PaymentRefundedEvent(
         Long paymentId,
         Long orderId,
         BigDecimal amount
-) {}
+) {
+}

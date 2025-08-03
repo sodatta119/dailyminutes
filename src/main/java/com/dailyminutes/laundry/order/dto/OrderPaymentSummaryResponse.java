@@ -16,4 +16,5 @@ public record OrderPaymentSummaryResponse(
         String status,
         String method,
         String transactionId
-) {}
+) {
+}

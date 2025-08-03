@@ -10,11 +10,12 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record CatalogItemAddedToStoreEvent (
+public record CatalogItemAddedToStoreEvent(
         Long storeId,
         Long catalogId,
         BigDecimal storeSpecificPrice,
         LocalDate effectiveFrom,
         LocalDate effectiveTo,
         boolean active
-) implements CallerEvent {}
+) implements CallerEvent {
+}

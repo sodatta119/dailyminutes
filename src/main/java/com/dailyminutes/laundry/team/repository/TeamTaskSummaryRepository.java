@@ -12,9 +12,14 @@ import java.util.Optional;
 
 public interface TeamTaskSummaryRepository extends ListCrudRepository<TeamTaskSummaryEntity, Long> {
     List<TeamTaskSummaryEntity> findByTeamId(Long teamId);
+
     Optional<TeamTaskSummaryEntity> findByTaskId(Long taskId); // Useful for updates from Task events
+
     List<TeamTaskSummaryEntity> findByAgentId(Long agentId);
+
     List<TeamTaskSummaryEntity> findByTaskStatus(String taskStatus);
+
     List<TeamTaskSummaryEntity> findByTaskType(String taskType);
+
     List<TeamTaskSummaryEntity> findByOrderId(Long orderId);
 }

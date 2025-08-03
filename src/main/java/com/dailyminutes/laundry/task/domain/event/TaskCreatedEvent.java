@@ -17,4 +17,5 @@ public record TaskCreatedEvent(
         String destinationAddress,
         Long agentId,
         Long teamId
-) {}
+) {
+}

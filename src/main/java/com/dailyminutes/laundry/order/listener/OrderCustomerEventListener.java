@@ -36,9 +36,8 @@ public class OrderCustomerEventListener {
     @ApplicationModuleListener
     public void onCustomerInfoProvided(CustomerInfoResponseEvent event) {
         // The correlationId is the orderId
-        if(event.originalEvent() instanceof OrderCreatedEvent)
-        {
-            OrderCreatedEvent orderEvent= (OrderCreatedEvent) event.originalEvent();
+        if (event.originalEvent() instanceof OrderCreatedEvent) {
+            OrderCreatedEvent orderEvent = (OrderCreatedEvent) event.originalEvent();
             Long orderId = orderEvent.orderId();
             OrderCustomerSummaryEntity summary = summaryRepository.findByOrderId(orderId)
                     .orElse(new OrderCustomerSummaryEntity());

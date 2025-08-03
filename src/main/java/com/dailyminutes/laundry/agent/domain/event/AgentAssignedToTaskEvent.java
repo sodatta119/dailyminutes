@@ -17,7 +17,7 @@ public record AgentAssignedToTaskEvent(
 ) {
     public AgentAssignedToTaskEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
-        if (fromTaskId == null && toTaskId==null) throw new IllegalArgumentException("Task ID cannot be null");
+        if (fromTaskId == null && toTaskId == null) throw new IllegalArgumentException("Task ID cannot be null");
     }
 }
 

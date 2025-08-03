@@ -12,7 +12,10 @@ import java.util.Optional;
 
 public interface InvoicePaymentSummaryRepository extends ListCrudRepository<InvoicePaymentSummaryEntity, Long> {
     List<InvoicePaymentSummaryEntity> findByInvoiceId(Long invoiceId);
+
     Optional<InvoicePaymentSummaryEntity> findByPaymentId(Long paymentId); // Useful for updates from Payment events
+
     List<InvoicePaymentSummaryEntity> findByStatus(String status);
+
     List<InvoicePaymentSummaryEntity> findByMethod(String method);
 }

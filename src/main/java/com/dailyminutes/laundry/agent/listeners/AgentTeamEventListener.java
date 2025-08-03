@@ -37,6 +37,7 @@ public class AgentTeamEventListener {
             events.publishEvent(new TeamInfoRequestEvent(event.agentId(), event.teamId()));
         }
     }
+
     /**
      * Step 1: Reacts to the local agent event and requests more info.
      */

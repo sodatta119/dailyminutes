@@ -11,4 +11,5 @@ public record TaskTeamSummaryResponse(
         String teamName,
         String teamDescription,
         String teamRole
-) {}
+) {
+}

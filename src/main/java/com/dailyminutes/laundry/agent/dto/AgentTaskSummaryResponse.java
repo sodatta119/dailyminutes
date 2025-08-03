@@ -16,4 +16,5 @@ public record AgentTaskSummaryResponse(
         String sourceAddress,
         String destinationAddress,
         Long orderId
-) {}
+) {
+}

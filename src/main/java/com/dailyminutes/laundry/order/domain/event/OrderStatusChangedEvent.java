@@ -10,4 +10,5 @@ public record OrderStatusChangedEvent(
         Long orderId,
         OrderStatus oldStatus,
         OrderStatus newStatus
-) {}
+) {
+}

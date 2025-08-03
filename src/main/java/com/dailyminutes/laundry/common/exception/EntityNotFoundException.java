@@ -4,21 +4,21 @@
  */
 package com.dailyminutes.laundry.common.exception;
 
-public class EntityNotFoundException extends RuntimeException{
+public class EntityNotFoundException extends RuntimeException {
 
-    public EntityNotFoundException(){
+    public EntityNotFoundException() {
         super();
     }
 
-    public EntityNotFoundException(String message){
+    public EntityNotFoundException(String message) {
         super(message);
     }
 
-    public EntityNotFoundException(Exception ex){
+    public EntityNotFoundException(Exception ex) {
         super(ex);
     }
 
-    public EntityNotFoundException(String message, Exception ex){
+    public EntityNotFoundException(String message, Exception ex) {
         super(message, ex);
     }
 }

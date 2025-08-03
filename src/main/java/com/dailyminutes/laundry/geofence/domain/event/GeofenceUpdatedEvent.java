@@ -9,4 +9,5 @@ public record GeofenceUpdatedEvent(
         String name,
         String geofenceType,
         boolean active
-) {}
+) {
+}

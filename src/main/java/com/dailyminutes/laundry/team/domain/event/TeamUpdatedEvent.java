@@ -7,4 +7,5 @@ package com.dailyminutes.laundry.team.domain.event;
 public record TeamUpdatedEvent(
         Long teamId,
         String newName
-) {}
+) {
+}

@@ -18,4 +18,5 @@ public record InvoiceResponse(
         BigDecimal totalTax,
         BigDecimal totalDiscount,
         List<InvoiceItemDto> items
-) {}
+) {
+}

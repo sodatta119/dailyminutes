@@ -41,8 +41,7 @@ public class CatalogStoreEventListener {
      */
     @ApplicationModuleListener
     public void onStoreInfoProvided(StoreInfoResponseEvent event) {
-        if(event.originalEvent() instanceof CatalogItemAddedToStoreEvent)
-        {
+        if (event.originalEvent() instanceof CatalogItemAddedToStoreEvent) {
             CatalogItemAddedToStoreEvent originalEvent = (CatalogItemAddedToStoreEvent) event.originalEvent();
 
             Long catalogId = originalEvent.catalogId(); // The store module passed the catalogId back for us.

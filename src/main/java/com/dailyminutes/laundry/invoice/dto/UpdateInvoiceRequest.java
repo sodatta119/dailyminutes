@@ -8,6 +8,7 @@ package com.dailyminutes.laundry.invoice.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,4 +32,5 @@ public record UpdateInvoiceRequest(
         BigDecimal totalDiscount,
         @Valid
         List<InvoiceItemDto> items
-) {}
+) {
+}

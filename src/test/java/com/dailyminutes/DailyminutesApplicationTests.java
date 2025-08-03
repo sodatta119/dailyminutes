@@ -18,13 +18,13 @@ class DailyminutesApplicationTests {
      * Context loads.
      */
     @Test
-	void contextLoads() {
+    void contextLoads() {
 //        try {
 //            ApplicationModules modules=ApplicationModules.of(DailyminutesApplication.class).verify();
 //        }catch (Throwable ex) {
 //            ex.printStackTrace(); // Should show the dependency trace
 //            throw ex;
 //        }
-	}
+    }
 
 }

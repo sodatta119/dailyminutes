@@ -14,4 +14,5 @@ public record CustomerAddressInfoResponseEvent(
         String longitude,
         Long geofenceId,
         CallerEvent originalEvent // The original invoiceId
-) implements CallerEvent{}
+) implements CallerEvent {
+}

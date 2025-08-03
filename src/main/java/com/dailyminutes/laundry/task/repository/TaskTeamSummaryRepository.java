@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public interface TaskTeamSummaryRepository extends ListCrudRepository<TaskTeamSummaryEntity, Long> {
     Optional<TaskTeamSummaryEntity> findByTaskId(Long taskId); // Useful for updates from Task events
+
     List<TaskTeamSummaryEntity> findByTeamId(Long teamId); // Useful for updates from Team events
+
     List<TaskTeamSummaryEntity> findByTeamRole(String teamRole);
 }

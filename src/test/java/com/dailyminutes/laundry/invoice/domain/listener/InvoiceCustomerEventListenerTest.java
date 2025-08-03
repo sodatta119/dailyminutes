@@ -53,7 +53,7 @@ class InvoiceCustomerEventListenerTest {
 
         // The request should use the invoiceId as the correlationId
         assertThat(request.customerId()).isEqualTo(101L);
-        InvoiceCreatedEvent invoiceCreatedEvent= (InvoiceCreatedEvent) request.originalEvent();
+        InvoiceCreatedEvent invoiceCreatedEvent = (InvoiceCreatedEvent) request.originalEvent();
         assertThat(invoiceCreatedEvent.invoiceId()).isEqualTo(501L);
     }
 

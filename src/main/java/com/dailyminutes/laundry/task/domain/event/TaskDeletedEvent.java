@@ -4,4 +4,5 @@
  */
 package com.dailyminutes.laundry.task.domain.event;
 
-public record TaskDeletedEvent(Long taskId) {}
+public record TaskDeletedEvent(Long taskId) {
+}

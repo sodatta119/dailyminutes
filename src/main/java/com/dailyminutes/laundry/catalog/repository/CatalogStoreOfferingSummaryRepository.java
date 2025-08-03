@@ -13,9 +13,14 @@ import java.util.Optional;
 
 public interface CatalogStoreOfferingSummaryRepository extends ListCrudRepository<CatalogStoreOfferingSummaryEntity, Long> {
     List<CatalogStoreOfferingSummaryEntity> findByCatalogId(Long catalogId);
+
     List<CatalogStoreOfferingSummaryEntity> findByStoreId(Long storeId);
+
     Optional<CatalogStoreOfferingSummaryEntity> findByCatalogIdAndStoreId(Long catalogId, Long storeId); // For unique offering per store
+
     List<CatalogStoreOfferingSummaryEntity> findByCatalogType(String catalogType);
+
     List<CatalogStoreOfferingSummaryEntity> findByActive(boolean active);
+
     List<CatalogStoreOfferingSummaryEntity> findByEffectiveToAfter(LocalDate date);
 }

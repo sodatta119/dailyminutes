@@ -8,4 +8,5 @@ public record ManagerUpdatedEvent(
         Long managerId,
         String newName,
         String newContact
-) {}
+) {
+}

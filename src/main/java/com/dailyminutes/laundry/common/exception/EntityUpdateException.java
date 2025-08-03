@@ -4,21 +4,21 @@
  */
 package com.dailyminutes.laundry.common.exception;
 
-public class EntityUpdateException extends RuntimeException{
+public class EntityUpdateException extends RuntimeException {
 
-    public EntityUpdateException(){
+    public EntityUpdateException() {
         super();
     }
 
-    public EntityUpdateException(String message){
+    public EntityUpdateException(String message) {
         super(message);
     }
 
-    public EntityUpdateException(Exception ex){
+    public EntityUpdateException(Exception ex) {
         super(ex);
     }
 
-    public EntityUpdateException(String message, Exception ex){
+    public EntityUpdateException(String message, Exception ex) {
         super(message, ex);
     }
 }

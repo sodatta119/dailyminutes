@@ -13,7 +13,9 @@ import java.util.Optional;
 
 public interface OrderCustomerSummaryRepository extends ListCrudRepository<OrderCustomerSummaryEntity, Long> {
     Optional<OrderCustomerSummaryEntity> findByOrderId(Long orderId); // Useful for updates from Order events
+
     List<OrderCustomerSummaryEntity> findByCustomerId(Long customerId);
+
     Optional<OrderCustomerSummaryEntity> findByCustomerPhoneNumber(String customerPhoneNumber);
 }
 

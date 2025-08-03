@@ -11,4 +11,5 @@ public record GeofenceCustomerSummaryResponse(
         Long geofenceId,
         String customerName,
         String customerPhoneNumber
-) {}
+) {
+}

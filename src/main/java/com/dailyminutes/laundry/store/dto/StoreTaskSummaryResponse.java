@@ -16,4 +16,5 @@ public record StoreTaskSummaryResponse(
         Long agentId,
         String agentName,
         Long orderId
-) {}
+) {
+}

@@ -7,6 +7,7 @@ package com.dailyminutes.laundry.order.dto;
 import com.dailyminutes.laundry.order.domain.model.OrderStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,4 +20,5 @@ public record UpdateOrderRequest(
         @NotNull OrderStatus status,
         @NotNull BigDecimal totalAmount,
         @Valid List<OrderItemDto> items
-) {}
+) {
+}

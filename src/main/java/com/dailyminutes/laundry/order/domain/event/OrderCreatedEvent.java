@@ -18,4 +18,5 @@ public record OrderCreatedEvent(
         BigDecimal totalAmount,
         LocalDateTime orderDate, // Added orderDate
         List<OrderItemInfo> items // Add the list of items
-) implements CallerEvent {}
+) implements CallerEvent {
+}
