@@ -23,7 +23,6 @@ public class PaymentQueryService {
     private final PaymentRepository paymentRepository;
     private final PaymentCustomerSummaryRepository customerSummaryRepository;
     private final PaymentInvoiceSummaryRepository invoiceSummaryRepository;
-    private final PaymentOrderSummaryRepository orderSummaryRepository;
 
     public Optional<PaymentResponse> findPaymentById(Long id) {
         return paymentRepository.findById(id)
@@ -44,10 +43,5 @@ public class PaymentQueryService {
     public Optional<PaymentInvoiceSummaryResponse> findInvoiceSummaryByPaymentId(Long paymentId) {
         return invoiceSummaryRepository.findByPaymentId(paymentId)
                 .map(s -> new PaymentInvoiceSummaryResponse(s.getId(), s.getPaymentId(), s.getInvoiceId(), s.getInvoiceDate(), s.getTotalPrice(), s.getTotalTax(), s.getTotalDiscount()));
-    }
-
-    public Optional<PaymentOrderSummaryResponse> findOrderSummaryByPaymentId(Long paymentId) {
-        return orderSummaryRepository.findByPaymentId(paymentId)
-                .map(s -> new PaymentOrderSummaryResponse(s.getId(), s.getPaymentId(), s.getOrderId(), s.getOrderDate(), s.getStatus(), s.getTotalAmount(), s.getCustomerId(), s.getStoreId()));
     }
 }

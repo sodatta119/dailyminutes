@@ -106,16 +106,4 @@ public class PaymentController {
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice summary not found for payment"));
     }
-
-    @Operation(summary = "Get order summary for a payment")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found order summary"),
-            @ApiResponse(responseCode = "404", description = "Payment not found")
-    })
-    @GetMapping("/{id}/order-summary")
-    public ResponseEntity<PaymentOrderSummaryResponse> getOrderSummary(@PathVariable Long id) {
-        return paymentQueryService.findOrderSummaryByPaymentId(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order summary not found for payment"));
-    }
 }
