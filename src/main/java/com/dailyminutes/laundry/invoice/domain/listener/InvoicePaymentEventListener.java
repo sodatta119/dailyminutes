@@ -5,8 +5,8 @@
 package com.dailyminutes.laundry.invoice.domain.listener;
 
 import com.dailyminutes.laundry.invoice.domain.model.InvoicePaymentSummaryEntity;
-import com.dailyminutes.laundry.invoice.repository.InvoiceOrderSummaryRepository;
 import com.dailyminutes.laundry.invoice.repository.InvoicePaymentSummaryRepository;
+import com.dailyminutes.laundry.invoice.repository.InvoiceRepository;
 import com.dailyminutes.laundry.payment.domain.event.PaymentFailedEvent;
 import com.dailyminutes.laundry.payment.domain.event.PaymentMadeEvent;
 import com.dailyminutes.laundry.payment.domain.event.PaymentRefundedEvent;
@@ -19,15 +19,15 @@ import org.springframework.stereotype.Component;
 public class InvoicePaymentEventListener {
 
     private final InvoicePaymentSummaryRepository paymentSummaryRepository;
-    private final InvoiceOrderSummaryRepository orderSummaryRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @ApplicationModuleListener
     public void onPaymentMade(PaymentMadeEvent event) {
-        // Use an existing summary within this module to find the invoiceId
-        orderSummaryRepository.findByOrderId(event.orderId()).ifPresent(orderSummary -> {
+        // Use the local repository to find the invoiceId from the orderId
+        invoiceRepository.findByOrderId(event.orderId()).ifPresent(invoice -> {
             InvoicePaymentSummaryEntity summary = new InvoicePaymentSummaryEntity(
                     null,
-                    orderSummary.getInvoiceId(),
+                    invoice.getId(), // Use the found invoiceId
                     event.paymentId(),
                     event.paymentDateTime(),
                     event.amount(),
@@ -41,7 +41,6 @@ public class InvoicePaymentEventListener {
 
     @ApplicationModuleListener
     public void onPaymentRefunded(PaymentRefundedEvent event) {
-        // Find the summary by paymentId and update its status
         paymentSummaryRepository.findByPaymentId(event.paymentId()).ifPresent(summary -> {
             summary.setStatus("REFUNDED");
             paymentSummaryRepository.save(summary);
@@ -50,7 +49,6 @@ public class InvoicePaymentEventListener {
 
     @ApplicationModuleListener
     public void onPaymentFailed(PaymentFailedEvent event) {
-        // Find the summary by paymentId and update its status
         paymentSummaryRepository.findByPaymentId(event.paymentId()).ifPresent(summary -> {
             summary.setStatus("FAILED");
             paymentSummaryRepository.save(summary);

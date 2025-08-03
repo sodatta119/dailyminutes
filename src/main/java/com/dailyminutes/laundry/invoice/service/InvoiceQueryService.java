@@ -23,7 +23,6 @@ public class InvoiceQueryService {
     private final InvoiceRepository invoiceRepository;
     private final InvoiceItemRepository invoiceItemRepository;
     private final InvoiceCustomerSummaryRepository customerSummaryRepository;
-    private final InvoiceOrderSummaryRepository orderSummaryRepository;
     private final InvoicePaymentSummaryRepository paymentSummaryRepository;
 
     public Optional<InvoiceResponse> findInvoiceById(Long id) {
@@ -44,11 +43,6 @@ public class InvoiceQueryService {
     public Optional<InvoiceCustomerSummaryResponse> findCustomerSummaryByInvoiceId(Long invoiceId) {
         return customerSummaryRepository.findByInvoiceId(invoiceId)
                 .map(s -> new InvoiceCustomerSummaryResponse(s.getId(), s.getInvoiceId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()));
-    }
-
-    public Optional<InvoiceOrderSummaryResponse> findOrderSummaryByInvoiceId(Long invoiceId) {
-        return orderSummaryRepository.findByInvoiceId(invoiceId)
-                .map(s -> new InvoiceOrderSummaryResponse(s.getId(), s.getInvoiceId(), s.getOrderId(), s.getOrderDate(), s.getStatus(), s.getTotalAmount()));
     }
 
     public List<InvoicePaymentSummaryResponse> findPaymentSummariesByInvoiceId(Long invoiceId) {

@@ -21,8 +21,6 @@ import java.util.stream.StreamSupport;
 public class PaymentQueryService {
 
     private final PaymentRepository paymentRepository;
-    private final PaymentCustomerSummaryRepository customerSummaryRepository;
-    private final PaymentInvoiceSummaryRepository invoiceSummaryRepository;
 
     public Optional<PaymentResponse> findPaymentById(Long id) {
         return paymentRepository.findById(id)
@@ -33,15 +31,5 @@ public class PaymentQueryService {
         return StreamSupport.stream(paymentRepository.findAll().spliterator(), false)
                 .map(p -> new PaymentResponse(p.getId(), p.getOrderId(), p.getCustomerId(), p.getTransactionId(), p.getAmount(), p.getPaymentDateTime(), p.getStatus(), p.getMethod(), p.getRemarks()))
                 .collect(Collectors.toList());
-    }
-
-    public Optional<PaymentCustomerSummaryResponse> findCustomerSummaryByPaymentId(Long paymentId) {
-        return customerSummaryRepository.findByPaymentId(paymentId)
-                .map(s -> new PaymentCustomerSummaryResponse(s.getId(), s.getPaymentId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()));
-    }
-
-    public Optional<PaymentInvoiceSummaryResponse> findInvoiceSummaryByPaymentId(Long paymentId) {
-        return invoiceSummaryRepository.findByPaymentId(paymentId)
-                .map(s -> new PaymentInvoiceSummaryResponse(s.getId(), s.getPaymentId(), s.getInvoiceId(), s.getInvoiceDate(), s.getTotalPrice(), s.getTotalTax(), s.getTotalDiscount()));
     }
 }

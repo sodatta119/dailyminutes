@@ -40,7 +40,7 @@ class InvoiceCustomerEventListenerTest {
     void onInvoiceCreated_shouldRequestCustomerInfo() {
         // Given: An event for a newly created invoice
         InvoiceCreatedEvent event = new InvoiceCreatedEvent(
-                501L, 101L, 1001L, LocalDateTime.now(), new BigDecimal("150.00")
+                501L, 101L, 1001L, LocalDateTime.now(), new BigDecimal("150.00"), new BigDecimal("15.00"), new BigDecimal("5.00")
         );
         ArgumentCaptor<CustomerInfoRequestEvent> requestCaptor = ArgumentCaptor.forClass(CustomerInfoRequestEvent.class);
 
@@ -61,7 +61,7 @@ class InvoiceCustomerEventListenerTest {
     void onCustomerInfoProvided_shouldCreateSummary() {
         // Given: A response event from the customer module with the customer's details
         CustomerInfoResponseEvent event = new CustomerInfoResponseEvent(
-                101L, "Jane Doe", "555-1234", "jane.doe@example.com", new InvoiceCreatedEvent(501L, 10L, 20L, LocalDateTime.now(), new BigDecimal(10.20)) // correlationId is the invoiceId
+                101L, "Jane Doe", "555-1234", "jane.doe@example.com", new InvoiceCreatedEvent(501L, 10L, 20L, LocalDateTime.now(), new BigDecimal(10.20), new BigDecimal(1.20), new BigDecimal(0.20)) // correlationId is the invoiceId
         );
         ArgumentCaptor<InvoiceCustomerSummaryEntity> summaryCaptor = ArgumentCaptor.forClass(InvoiceCustomerSummaryEntity.class);
 

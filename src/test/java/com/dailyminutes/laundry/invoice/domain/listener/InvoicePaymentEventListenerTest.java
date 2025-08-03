@@ -1,12 +1,12 @@
 package com.dailyminutes.laundry.invoice.domain.listener;
 
-import com.dailyminutes.laundry.invoice.domain.model.InvoiceOrderSummaryEntity;
+import com.dailyminutes.laundry.invoice.domain.model.InvoiceEntity;
 import com.dailyminutes.laundry.invoice.domain.model.InvoicePaymentSummaryEntity;
-import com.dailyminutes.laundry.invoice.repository.InvoiceOrderSummaryRepository;
 import com.dailyminutes.laundry.invoice.repository.InvoicePaymentSummaryRepository;
+import com.dailyminutes.laundry.invoice.repository.InvoiceRepository;
+import com.dailyminutes.laundry.payment.domain.event.PaymentFailedEvent;
 import com.dailyminutes.laundry.payment.domain.event.PaymentMadeEvent;
 import com.dailyminutes.laundry.payment.domain.event.PaymentRefundedEvent;
-import com.dailyminutes.laundry.payment.domain.model.PaymentMethod;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -19,8 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class InvoicePaymentEventListenerTest {
@@ -29,7 +28,7 @@ class InvoicePaymentEventListenerTest {
     private InvoicePaymentSummaryRepository paymentSummaryRepository;
 
     @Mock
-    private InvoiceOrderSummaryRepository orderSummaryRepository;
+    private InvoiceRepository invoiceRepository;
 
     @InjectMocks
     private InvoicePaymentEventListener listener;
@@ -39,14 +38,12 @@ class InvoicePaymentEventListenerTest {
         // Given: A payment was made for order 1001L
         PaymentMadeEvent event = new PaymentMadeEvent(
                 901L, 1001L, 201L, new BigDecimal("150.00"),
-                PaymentMethod.CREDIT_CARD.name(), "txn_123", LocalDateTime.now()
+                "CREDIT_CARD", "txn_123", LocalDateTime.now()
         );
 
-        // And an order summary exists linking order 1001L to invoice 501L
-        InvoiceOrderSummaryEntity orderSummary = new InvoiceOrderSummaryEntity(
-                1L, 501L, 1001L, LocalDateTime.now(), "DELIVERED", new BigDecimal("150.00")
-        );
-        when(orderSummaryRepository.findByOrderId(1001L)).thenReturn(Optional.of(orderSummary));
+        // And an invoice exists for that order
+        InvoiceEntity invoice = new InvoiceEntity(501L, "swipe-1", 1001L, 201L, LocalDateTime.now(), null, null, null);
+        when(invoiceRepository.findByOrderId(1001L)).thenReturn(Optional.of(invoice));
 
         ArgumentCaptor<InvoicePaymentSummaryEntity> captor = ArgumentCaptor.forClass(InvoicePaymentSummaryEntity.class);
 
@@ -62,6 +59,22 @@ class InvoicePaymentEventListenerTest {
         assertThat(savedSummary.getPaymentId()).isEqualTo(901L);
         assertThat(savedSummary.getStatus()).isEqualTo("COMPLETED");
         assertThat(savedSummary.getTransactionId()).isEqualTo("txn_123");
+    }
+
+    @Test
+    void onPaymentMade_shouldDoNothingIfInvoiceNotFound() {
+        // Given: A payment was made for an order that has no corresponding invoice
+        PaymentMadeEvent event = new PaymentMadeEvent(
+                901L, 1001L, 201L, new BigDecimal("150.00"),
+                "CREDIT_CARD", "txn_123", LocalDateTime.now()
+        );
+        when(invoiceRepository.findByOrderId(1001L)).thenReturn(Optional.empty());
+
+        // When: The listener handles the event
+        listener.onPaymentMade(event);
+
+        // Then: No summary should be created
+        verify(paymentSummaryRepository, never()).save(any());
     }
 
     @Test
@@ -86,5 +99,29 @@ class InvoicePaymentEventListenerTest {
         InvoicePaymentSummaryEntity updatedSummary = captor.getValue();
         assertThat(updatedSummary.getId()).isEqualTo(1L);
         assertThat(updatedSummary.getStatus()).isEqualTo("REFUNDED");
+    }
+
+    @Test
+    void onPaymentFailed_shouldUpdateSummaryStatus() {
+        // Given: A payment fails
+        PaymentFailedEvent event = new PaymentFailedEvent(901L, 1001L, "Insufficient funds");
+
+        // And a payment summary already exists for that payment
+        InvoicePaymentSummaryEntity existingSummary = new InvoicePaymentSummaryEntity(
+                1L, 501L, 901L, LocalDateTime.now(), new BigDecimal("150.00"),
+                "PENDING", "CREDIT_CARD", "txn_123"
+        );
+        when(paymentSummaryRepository.findByPaymentId(901L)).thenReturn(Optional.of(existingSummary));
+
+        ArgumentCaptor<InvoicePaymentSummaryEntity> captor = ArgumentCaptor.forClass(InvoicePaymentSummaryEntity.class);
+
+        // When: The listener handles the failed event
+        listener.onPaymentFailed(event);
+
+        // Then: The existing summary's status is updated to FAILED
+        verify(paymentSummaryRepository).save(captor.capture());
+        InvoicePaymentSummaryEntity updatedSummary = captor.getValue();
+        assertThat(updatedSummary.getId()).isEqualTo(1L);
+        assertThat(updatedSummary.getStatus()).isEqualTo("FAILED");
     }
 }

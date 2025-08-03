@@ -14,5 +14,7 @@ public record InvoiceCreatedEvent(
         Long customerId,
         Long orderId,
         LocalDateTime invoiceDate,
-        BigDecimal totalPrice
+        BigDecimal totalPrice,
+        BigDecimal totalTax,
+        BigDecimal totalDiscount
 )  implements CallerEvent {}

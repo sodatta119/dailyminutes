@@ -26,6 +26,10 @@ public class OrderCustomerEventListener {
     @ApplicationModuleListener
     public void onOrderCreated(OrderCreatedEvent event) {
         // Ask the customer module for details, using orderId as the correlationId
+        OrderCustomerSummaryEntity summary = new OrderCustomerSummaryEntity(
+                null, event.orderId(), event.customerId(), "...", "...", "..."
+        );
+        summaryRepository.save(summary);
         events.publishEvent(new CustomerInfoRequestEvent(event.customerId(), event));
     }
 
@@ -36,14 +40,17 @@ public class OrderCustomerEventListener {
         {
             OrderCreatedEvent orderEvent= (OrderCreatedEvent) event.originalEvent();
             Long orderId = orderEvent.orderId();
-            OrderCustomerSummaryEntity summary = new OrderCustomerSummaryEntity(
-                    null,
-                    orderId,
-                    event.customerId(),
-                    event.customerName(),
-                    event.customerPhoneNumber(),
-                    event.customerEmail()
-            );
+            OrderCustomerSummaryEntity summary = summaryRepository.findByOrderId(orderId)
+                    .orElse(new OrderCustomerSummaryEntity());
+
+            // Populate or update all the fields with the latest data.
+            summary.setOrderId(orderId);
+            summary.setCustomerId(event.customerId());
+            summary.setCustomerName(event.customerName());
+            summary.setCustomerPhoneNumber(event.customerPhoneNumber());
+            summary.setCustomerEmail(event.customerEmail());
+
+            // Save the result. This single call handles both inserts and updates.
             summaryRepository.save(summary);
         }
     }

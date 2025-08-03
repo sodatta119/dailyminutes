@@ -95,18 +95,6 @@ public class InvoiceController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer summary not found for invoice"));
     }
 
-    @Operation(summary = "Get order summary for an invoice")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found order summary"),
-            @ApiResponse(responseCode = "404", description = "Invoice not found")
-    })
-    @GetMapping("/{id}/order-summary")
-    public ResponseEntity<InvoiceOrderSummaryResponse> getOrderSummary(@PathVariable Long id) {
-        return invoiceQueryService.findOrderSummaryByInvoiceId(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order summary not found for invoice"));
-    }
-
     @Operation(summary = "Get payment history for an invoice")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found payment history"),
