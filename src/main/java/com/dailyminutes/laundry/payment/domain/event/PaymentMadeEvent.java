@@ -5,6 +5,8 @@
 package com.dailyminutes.laundry.payment.domain.event;
 
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -16,4 +18,4 @@ public record PaymentMadeEvent(
         String method,
         String transactionId,
         LocalDateTime paymentDateTime
-) {}
+) implements CallerEvent {}
