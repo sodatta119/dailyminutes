@@ -95,18 +95,6 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer summary not found for order"));
     }
 
-    @Operation(summary = "Get store summary for an order")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found store summary"),
-            @ApiResponse(responseCode = "404", description = "Order not found")
-    })
-    @GetMapping("/{id}/store-summary")
-    public ResponseEntity<OrderStoreSummaryResponse> getStoreSummary(@PathVariable Long id) {
-        return orderQueryService.findStoreSummaryByOrderId(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store summary not found for order"));
-    }
-
     @Operation(summary = "Get task summary for an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found task summary"),

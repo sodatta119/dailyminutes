@@ -23,7 +23,6 @@ public class OrderQueryService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final OrderCustomerSummaryRepository customerSummaryRepository;
-    private final OrderStoreSummaryRepository storeSummaryRepository;
     private final OrderTaskSummaryRepository taskSummaryRepository;
     private final OrderPaymentSummaryRepository paymentSummaryRepository;
     private final OrderInvoiceSummaryRepository invoiceSummaryRepository;
@@ -46,11 +45,6 @@ public class OrderQueryService {
     public Optional<OrderCustomerSummaryResponse> findCustomerSummaryByOrderId(Long orderId) {
         return customerSummaryRepository.findByOrderId(orderId)
                 .map(s -> new OrderCustomerSummaryResponse(s.getId(), s.getOrderId(), s.getCustomerId(), s.getCustomerName(), s.getCustomerPhoneNumber(), s.getCustomerEmail()));
-    }
-
-    public Optional<OrderStoreSummaryResponse> findStoreSummaryByOrderId(Long orderId) {
-        return storeSummaryRepository.findByOrderId(orderId)
-                .map(s -> new OrderStoreSummaryResponse(s.getId(), s.getOrderId(), s.getStoreId(), s.getStoreName(), s.getStoreAddress(), s.getStoreContactNumber(), s.getStoreEmail()));
     }
 
     public Optional<OrderTaskSummaryResponse> findTaskSummaryByOrderId(Long orderId) {

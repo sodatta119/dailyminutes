@@ -73,6 +73,8 @@ public class OrderService {
 
         events.publishEvent(new OrderUpdatedEvent(
                 updatedOrder.getId(),
+                updatedOrder.getCustomerId(),
+                updatedOrder.getStoreId(),
                 updatedOrder.getOrderDate(),
                 updatedOrder.getStatus().name(),
                 updatedOrder.getTotalAmount()

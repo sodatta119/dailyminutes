@@ -84,16 +84,6 @@ public class GeofenceController {
         return ResponseEntity.ok(geofenceQueryService.findAllGeofences());
     }
 
-    @Operation(summary = "Get store summaries for a geofence")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found store summaries"),
-            @ApiResponse(responseCode = "404", description = "Geofence not found")
-    })
-    @GetMapping("/{id}/stores")
-    public ResponseEntity<List<GeofenceStoreSummaryResponse>> getStoreSummaries(@PathVariable Long id) {
-        return ResponseEntity.ok(geofenceQueryService.findStoreSummariesByGeofenceId(id));
-    }
-
     @Operation(summary = "Get customer summaries for a geofence")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found customer summaries"),

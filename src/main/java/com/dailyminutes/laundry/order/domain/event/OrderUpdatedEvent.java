@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 
 public record OrderUpdatedEvent(
         Long orderId,
+        Long customerId, // Add customerId
+        Long storeId,    // Add storeId
         LocalDateTime newOrderDate,
         String newStatus,
         BigDecimal newTotalAmount
