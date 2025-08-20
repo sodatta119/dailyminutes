@@ -37,7 +37,7 @@ public class AgentService {
         AgentEntity agent = new AgentEntity(null, request.name(), request.state(), request.teamId(), request.phoneNumber(), request.uniqueId(), request.joiningDate(), null, request.designation());
         AgentEntity savedAgent = agentRepository.save(agent);
 
-        events.publishEvent(new AgentCreatedEvent(savedAgent.getId(), savedAgent.getName(), savedAgent.getState(), savedAgent.getTeamId(), savedAgent.getPhoneNumber(), savedAgent.getUniqueId(), savedAgent.getJoiningDate(), savedAgent.getDesignation()));
+        events.publishEvent(new AgentCreatedEvent(savedAgent.getId(), savedAgent.getName(), savedAgent.getState().name(), savedAgent.getTeamId(), savedAgent.getPhoneNumber(), savedAgent.getUniqueId(), savedAgent.getJoiningDate(), savedAgent.getDesignation().name()));
 
         return toAgentResponse(savedAgent);
     }
@@ -59,7 +59,7 @@ public class AgentService {
 
         AgentEntity updatedAgent = agentRepository.save(existingAgent);
 
-        events.publishEvent(new AgentUpdatedEvent(updatedAgent.getId(), updatedAgent.getName(), updatedAgent.getState(), updatedAgent.getTeamId(), updatedAgent.getPhoneNumber(), updatedAgent.getUniqueId(), updatedAgent.getJoiningDate(), updatedAgent.getTerminationDate(), updatedAgent.getDesignation()));
+        events.publishEvent(new AgentUpdatedEvent(updatedAgent.getId(), updatedAgent.getName(), updatedAgent.getState().name(), updatedAgent.getTeamId(), updatedAgent.getPhoneNumber(), updatedAgent.getUniqueId(), updatedAgent.getJoiningDate(), updatedAgent.getTerminationDate(), updatedAgent.getDesignation().name()));
 
         if (!java.util.Objects.equals(oldTeamId, updatedAgent.getTeamId())) {
             events.publishEvent(new AgentAssignedToTeamEvent(updatedAgent.getId(), updatedAgent.getTeamId()));

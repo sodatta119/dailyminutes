@@ -7,8 +7,6 @@ package com.dailyminutes.laundry.agent.listeners;
 import com.dailyminutes.laundry.agent.domain.event.AgentInfoRequestEvent;
 import com.dailyminutes.laundry.agent.domain.event.AgentInfoResponseEvent;
 import com.dailyminutes.laundry.agent.repository.AgentRepository;
-import com.dailyminutes.laundry.team.domain.event.TeamAgentInfoRequestEvent;
-import com.dailyminutes.laundry.team.domain.event.TeamAgentInfoResponseEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
@@ -38,15 +36,15 @@ public class AgentInfoEventListener {
         });
     }
 
-    @ApplicationModuleListener
-    public void onTeamAgentInfoRequested(TeamAgentInfoRequestEvent event) {
-        agentRepository.findById(event.agentId()).ifPresent(agent -> {
-            events.publishEvent(new TeamAgentInfoResponseEvent(
-                    agent.getId(),
-                    event.taskId(),
-                    agent.getName(),
-                    agent.getUniqueId()
-            ));
-        });
-    }
+//    @ApplicationModuleListener
+//    public void onTeamAgentInfoRequested(TeamAgentInfoRequestEvent event) {
+//        agentRepository.findById(event.agentId()).ifPresent(agent -> {
+//            events.publishEvent(new TeamAgentInfoResponseEvent(
+//                    agent.getId(),
+//                    event.taskId(),
+//                    agent.getName(),
+//                    agent.getUniqueId()
+//            ));
+//        });
+//    }
 }

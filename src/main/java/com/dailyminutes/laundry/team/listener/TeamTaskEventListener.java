@@ -4,12 +4,12 @@
  */
 package com.dailyminutes.laundry.team.listener;
 
+import com.dailyminutes.laundry.agent.domain.event.AgentInfoRequestEvent;
+import com.dailyminutes.laundry.agent.domain.event.AgentInfoResponseEvent;
 import com.dailyminutes.laundry.task.domain.event.TaskAssignedToAgentEvent;
 import com.dailyminutes.laundry.task.domain.event.TaskCreatedEvent;
 import com.dailyminutes.laundry.task.domain.event.TaskDeletedEvent;
 import com.dailyminutes.laundry.task.domain.event.TaskStatusChangedEvent;
-import com.dailyminutes.laundry.team.domain.event.TeamAgentInfoRequestEvent;
-import com.dailyminutes.laundry.team.domain.event.TeamAgentInfoResponseEvent;
 import com.dailyminutes.laundry.team.domain.model.TeamTaskSummaryEntity;
 import com.dailyminutes.laundry.team.repository.TeamTaskSummaryRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,7 @@ public class TeamTaskEventListener {
 
         // If an agent is assigned at creation, ask for their name
         if (event.agentId() != null) {
-            events.publishEvent(new TeamAgentInfoRequestEvent(event.agentId(), event.taskId()));
+            events.publishEvent(new AgentInfoRequestEvent(event.agentId(), event));
         }
     }
 
@@ -54,16 +54,28 @@ public class TeamTaskEventListener {
             summary.setAgentId(event.agentId());
             summaryRepository.save(summary);
             // Ask for the new agent's name
-            events.publishEvent(new TeamAgentInfoRequestEvent(event.agentId(), event.taskId()));
+            events.publishEvent(new AgentInfoRequestEvent(event.agentId(), event));
         });
     }
 
     @ApplicationModuleListener
-    public void onTeamAgentInfoProvided(TeamAgentInfoResponseEvent event) {
-            summaryRepository.findByTaskId(event.taskId()).ifPresent(summary -> {
-                summary.setAgentName(event.agentName());
+    public void onTeamAgentInfoProvided(AgentInfoResponseEvent event) {
+        if(event.originalEvent() instanceof  TaskAssignedToAgentEvent)
+        {
+            TaskAssignedToAgentEvent taskAssignedEvent= (TaskAssignedToAgentEvent) event.originalEvent();
+            summaryRepository.findByTaskId(taskAssignedEvent.taskId()).ifPresent(summary -> {
+                summary.setAgentName(event.name());
                 summaryRepository.save(summary);
             });
+        }
+        else if(event.originalEvent() instanceof  TaskCreatedEvent)
+        {
+            TaskCreatedEvent taskAssignedEvent= (TaskCreatedEvent) event.originalEvent();
+            summaryRepository.findByTaskId(taskAssignedEvent.taskId()).ifPresent(summary -> {
+                summary.setAgentName(event.name());
+                summaryRepository.save(summary);
+            });
+        }
     }
 
     @ApplicationModuleListener

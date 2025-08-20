@@ -18,4 +18,6 @@ public interface TeamAgentSummaryRepository extends ListCrudRepository<TeamAgent
     List<TeamAgentSummaryEntity> findByAgentDesignation(String agentDesignation);
 
     List<TeamAgentSummaryEntity> findByAgentState(String agentState);
+
+    void deleteByAgentId(Long aLong);
 }

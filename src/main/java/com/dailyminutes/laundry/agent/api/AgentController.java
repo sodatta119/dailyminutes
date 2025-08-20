@@ -103,20 +103,6 @@ public class AgentController {
         return ResponseEntity.ok(agentService.assignTeam(id, teamId));
     }
 
-//    @PutMapping("/{id}/unassign-team")
-//    public ResponseEntity<AgentResponse> unassignTeam(@PathVariable Long id) {
-//        return ResponseEntity.ok(agentService.unassignTeam(id));
-//    }
-
-    @Operation(summary = "Get team summary for an agent")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found team summary"),
-            @ApiResponse(responseCode = "404", description = "Agent not found")
-    })
-    @GetMapping("/{id}/team-summary")
-    public ResponseEntity<List<AgentTeamSummaryResponse>> getTeamSummary(@PathVariable Long id) {
-        return ResponseEntity.ok(agentQueryService.findAgentTeamSummariesByAgentId(id));
-    }
 
     @Operation(summary = "Get task summary for an agent")
     @ApiResponses(value = {

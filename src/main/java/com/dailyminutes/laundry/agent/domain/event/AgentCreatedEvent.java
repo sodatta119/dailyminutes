@@ -4,20 +4,17 @@
  */
 package com.dailyminutes.laundry.agent.domain.event;
 
-import com.dailyminutes.laundry.agent.domain.model.AgentDesignation;
-import com.dailyminutes.laundry.agent.domain.model.AgentState;
-
 import java.time.LocalDate;
 
 public record AgentCreatedEvent(
         Long agentId,
         String name,
-        AgentState state,
+        String state,
         Long teamId,
         String phoneNumber,
         String uniqueId,
         LocalDate dateOfJoining,
-        AgentDesignation designation
+        String designation
 ) {
     public AgentCreatedEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");

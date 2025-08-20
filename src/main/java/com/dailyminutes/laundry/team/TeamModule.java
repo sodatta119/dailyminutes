@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.team;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule(id = "laundry.team")
+@ApplicationModule(id = "laundry.team", allowedDependencies = {"laundry.agent::events","laundry.task::events"})
 public class TeamModule {
 }

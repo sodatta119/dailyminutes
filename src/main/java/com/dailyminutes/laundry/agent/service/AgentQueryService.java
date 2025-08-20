@@ -6,10 +6,8 @@ package com.dailyminutes.laundry.agent.service;
 
 import com.dailyminutes.laundry.agent.dto.AgentResponse;
 import com.dailyminutes.laundry.agent.dto.AgentTaskSummaryResponse;
-import com.dailyminutes.laundry.agent.dto.AgentTeamSummaryResponse;
 import com.dailyminutes.laundry.agent.repository.AgentRepository;
 import com.dailyminutes.laundry.agent.repository.AgentTaskSummaryRepository;
-import com.dailyminutes.laundry.agent.repository.AgentTeamSummaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +23,6 @@ import java.util.stream.StreamSupport;
 public class AgentQueryService {
 
     private final AgentRepository agentRepository;
-    private final AgentTeamSummaryRepository agentTeamSummaryRepository;
     private final AgentTaskSummaryRepository agentTaskSummaryRepository;
 
     public Optional<AgentResponse> findAgentById(Long id) {
@@ -42,12 +39,6 @@ public class AgentQueryService {
     public List<AgentResponse> findAgentsByTeamId(Long teamId) {
         return agentRepository.findByTeamId(teamId).stream()
                 .map(a -> new AgentResponse(a.getId(), a.getName(), a.getState(), a.getTeamId(), a.getPhoneNumber(), a.getUniqueId(), a.getJoiningDate(), a.getTerminationDate(), a.getDesignation()))
-                .collect(Collectors.toList());
-    }
-
-    public List<AgentTeamSummaryResponse> findAgentTeamSummariesByAgentId(Long agentId) {
-        return agentTeamSummaryRepository.findByAgentId(agentId).stream()
-                .map(s -> new AgentTeamSummaryResponse(s.getId(), s.getTeamId(), s.getAgentId(), s.getTeamName(), s.getTeamDescription()))
                 .collect(Collectors.toList());
     }
 
