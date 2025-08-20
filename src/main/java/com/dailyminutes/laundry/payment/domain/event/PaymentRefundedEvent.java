@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.payment.domain.event;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Payment refunded event.
+ */
 public record PaymentRefundedEvent(
         Long paymentId,
         Long orderId,

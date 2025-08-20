@@ -9,6 +9,9 @@ import com.dailyminutes.laundry.agent.domain.model.AgentState;
 
 import java.time.LocalDate;
 
+/**
+ * The type Agent response.
+ */
 public record AgentResponse(
         Long id,
         String name,

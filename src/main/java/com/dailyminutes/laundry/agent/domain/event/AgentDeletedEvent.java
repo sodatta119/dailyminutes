@@ -11,6 +11,11 @@ package com.dailyminutes.laundry.agent.domain.event;
 public record AgentDeletedEvent(
         Long agentId
 ) {
+    /**
+     * Instantiates a new Agent deleted event.
+     *
+     * @param agentId the agent id
+     */
     public AgentDeletedEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
     }

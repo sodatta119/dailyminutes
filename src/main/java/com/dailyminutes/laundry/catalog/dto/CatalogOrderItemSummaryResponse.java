@@ -8,6 +8,9 @@ package com.dailyminutes.laundry.catalog.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Catalog order item summary response.
+ */
 public record CatalogOrderItemSummaryResponse(
         Long id,
         Long catalogId,

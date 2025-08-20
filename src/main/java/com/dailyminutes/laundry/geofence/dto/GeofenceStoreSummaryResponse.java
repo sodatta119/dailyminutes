@@ -5,6 +5,9 @@
 package com.dailyminutes.laundry.geofence.dto;
 
 
+/**
+ * The type Geofence store summary response.
+ */
 public record GeofenceStoreSummaryResponse(
         Long id,
         Long storeId,

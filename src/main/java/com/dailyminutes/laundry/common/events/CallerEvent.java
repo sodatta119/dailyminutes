@@ -4,5 +4,8 @@
  */
 package com.dailyminutes.laundry.common.events;
 
+/**
+ * The interface Caller event.
+ */
 public interface CallerEvent {
 }

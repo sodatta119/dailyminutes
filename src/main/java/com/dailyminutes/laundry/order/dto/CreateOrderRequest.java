@@ -12,6 +12,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Create order request.
+ */
 public record CreateOrderRequest(
         @NotNull Long storeId,
         @NotNull Long customerId,

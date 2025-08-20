@@ -15,6 +15,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Store geofence event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class StoreGeofenceEventListener {
@@ -22,12 +25,22 @@ public class StoreGeofenceEventListener {
     private final StoreGeofenceSummaryRepository summaryRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On geofence assigned to store.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onGeofenceAssignedToStore(GeofenceAssignedToStoreEvent event) {
         // Step 1: Ask the geofence module for details about the geofence.
         events.publishEvent(new GeofenceInfoRequestEvent(event.geofenceId(), event));
     }
 
+    /**
+     * On geofence info provided.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onGeofenceInfoProvided(GeofenceInfoResponseEvent event) {
         // Step 2: Receive the details and create the summary.
@@ -48,6 +61,11 @@ public class StoreGeofenceEventListener {
         }
     }
 
+    /**
+     * On geofence deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onGeofenceDeleted(GeofenceDeletedEvent event) {
         // Clean up summaries if a geofence is deleted.

@@ -12,6 +12,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Customer info event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class CustomerInfoEventListener {
@@ -19,6 +22,11 @@ public class CustomerInfoEventListener {
     private final CustomerRepository customerRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On customer info requested.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerInfoRequested(CustomerInfoRequestEvent event) {
         customerRepository.findById(event.customerId()).ifPresent(customer -> {

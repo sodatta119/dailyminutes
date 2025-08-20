@@ -12,6 +12,9 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+/**
+ * The type Payment customer summary entity.
+ */
 @Table("DL_PAYMENT_CUSTOMER_SUMMARY")
 @Getter
 @Setter

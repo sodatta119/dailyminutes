@@ -13,12 +13,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Agent task event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class AgentTaskEventListener {
 
     private final AgentTaskSummaryRepository agentTaskSummaryRepository;
 
+    /**
+     * On task created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskCreated(TaskCreatedEvent event) {
         if (event.agentId() == null) {
@@ -41,6 +49,11 @@ public class AgentTaskEventListener {
         agentTaskSummaryRepository.save(summary);
     }
 
+    /**
+     * On task status changed.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskStatusChanged(TaskStatusChangedEvent event) {
         agentTaskSummaryRepository.findByTaskId(event.taskId()).ifPresent(summary -> {
@@ -49,6 +62,11 @@ public class AgentTaskEventListener {
         });
     }
 
+    /**
+     * On task deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskDeleted(TaskDeletedEvent event) {
         // Use the new repository method for a clean delete

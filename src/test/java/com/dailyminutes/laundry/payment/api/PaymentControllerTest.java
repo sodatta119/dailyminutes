@@ -28,6 +28,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Payment controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(PaymentController.class)
 class PaymentControllerTest {
@@ -45,6 +48,9 @@ class PaymentControllerTest {
     private CreatePaymentRequest createPaymentRequest;
     private UpdatePaymentRequest updatePaymentRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         paymentResponse = new PaymentResponse(1L, 1L, 1L, "txn1", BigDecimal.TEN, LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, "");
@@ -52,6 +58,11 @@ class PaymentControllerTest {
         updatePaymentRequest = new UpdatePaymentRequest(1L, 2L, 2L, "txn2", BigDecimal.ONE, LocalDateTime.now(), PaymentStatus.REFUNDED, PaymentMethod.UPI, "refund");
     }
 
+    /**
+     * Create payment should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createPayment_shouldReturnCreated() throws Exception {
         when(paymentService.createPayment(any())).thenReturn(paymentResponse);
@@ -61,6 +72,11 @@ class PaymentControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets payment by id should return payment.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getPaymentById_shouldReturnPayment() throws Exception {
         when(paymentQueryService.findPaymentById(1L)).thenReturn(Optional.of(paymentResponse));
@@ -69,6 +85,11 @@ class PaymentControllerTest {
                 .andExpect(jsonPath("$.transactionId").value("txn1"));
     }
 
+    /**
+     * Update payment should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updatePayment_shouldReturnOk() throws Exception {
         when(paymentService.updatePayment(any())).thenReturn(paymentResponse);
@@ -78,6 +99,11 @@ class PaymentControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete payment should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deletePayment_shouldReturnNoContent() throws Exception {
         doNothing().when(paymentService).deletePayment(1L);

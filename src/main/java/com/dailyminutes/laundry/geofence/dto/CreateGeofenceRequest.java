@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.geofence.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * The type Create geofence request.
+ */
 public record CreateGeofenceRequest(
         @NotBlank(message = "Polygon coordinates cannot be blank")
         String polygonCoordinates,

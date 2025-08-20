@@ -12,6 +12,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Agent info event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class AgentInfoEventListener {
@@ -19,6 +22,11 @@ public class AgentInfoEventListener {
     private final AgentRepository agentRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On agent info requested.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onAgentInfoRequested(AgentInfoRequestEvent event) {
         agentRepository.findById(event.agentId()).ifPresent(agent -> {

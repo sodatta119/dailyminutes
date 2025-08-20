@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.payment;
 
 import org.springframework.modulith.ApplicationModule;
 
+/**
+ * The type Payment module.
+ */
 @ApplicationModule(id = "laundry.payment")
 public class PaymentModule {
 }

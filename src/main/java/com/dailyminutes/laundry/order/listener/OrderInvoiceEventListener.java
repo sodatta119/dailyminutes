@@ -12,12 +12,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Order invoice event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class OrderInvoiceEventListener {
 
     private final OrderInvoiceSummaryRepository summaryRepository;
 
+    /**
+     * On invoice created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onInvoiceCreated(InvoiceCreatedEvent event) {
         // The event from the invoice module contains all the necessary data.
@@ -33,6 +41,11 @@ public class OrderInvoiceEventListener {
         summaryRepository.save(summary);
     }
 
+    /**
+     * On invoice deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onInvoiceDeleted(InvoiceDeletedEvent event) {
         // The InvoiceDeletedEvent only has invoiceId. We need to find the summary by that.

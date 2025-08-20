@@ -25,6 +25,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Team task event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TeamTaskEventListenerTest {
 
@@ -37,6 +40,9 @@ class TeamTaskEventListenerTest {
     @InjectMocks
     private TeamTaskEventListener listener;
 
+    /**
+     * On task created should create summary and request agent name when agent is assigned.
+     */
     @Test
     void onTaskCreated_shouldCreateSummaryAndRequestAgentName_whenAgentIsAssigned() {
         // Given
@@ -63,6 +69,9 @@ class TeamTaskEventListenerTest {
         assertThat(tEvent.taskId()).isEqualTo(1L);
     }
 
+    /**
+     * On task created should create summary but not request agent name when agent is null.
+     */
     @Test
     void onTaskCreated_shouldCreateSummaryButNotRequestAgentName_whenAgentIsNull() {
         // Given
@@ -80,6 +89,9 @@ class TeamTaskEventListenerTest {
         verify(events, never()).publishEvent(any(AgentInfoRequestEvent.class));
     }
 
+    /**
+     * On task created should do nothing when team id is null.
+     */
     @Test
     void onTaskCreated_shouldDoNothing_whenTeamIdIsNull() {
         // Given
@@ -94,6 +106,9 @@ class TeamTaskEventListenerTest {
         verify(events, never()).publishEvent(any());
     }
 
+    /**
+     * On task assigned to agent should update summary and request agent name.
+     */
     @Test
     void onTaskAssignedToAgent_shouldUpdateSummaryAndRequestAgentName() {
         // Given
@@ -116,6 +131,9 @@ class TeamTaskEventListenerTest {
         assertThat(tEvent.taskId()).isEqualTo(1L);
     }
 
+    /**
+     * On team agent info provided should update agent name in summary.
+     */
     @Test
     void onTeamAgentInfoProvided_shouldUpdateAgentNameInSummary() {
         // Given
@@ -131,6 +149,9 @@ class TeamTaskEventListenerTest {
         assertThat(existingSummary.getAgentName()).isEqualTo("agentx");
     }
 
+    /**
+     * On task status changed should update status in summary.
+     */
     @Test
     void onTaskStatusChanged_shouldUpdateStatusInSummary() {
         // Given
@@ -146,6 +167,9 @@ class TeamTaskEventListenerTest {
         assertThat(existingSummary.getTaskStatus()).isEqualTo("STARTED");
     }
 
+    /**
+     * On task deleted should delete summary.
+     */
     @Test
     void onTaskDeleted_shouldDeleteSummary() {
         // Given

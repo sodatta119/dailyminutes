@@ -5,6 +5,9 @@
 package com.dailyminutes.laundry.customer.dto;
 
 
+/**
+ * The type Customer response.
+ */
 public record CustomerResponse(
         Long id,
         String subscriberId,

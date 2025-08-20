@@ -21,6 +21,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Catalog controller.
+ */
 @RestController
 @RequestMapping("/api/catalogs")
 @RequiredArgsConstructor
@@ -30,6 +33,12 @@ public class CatalogController {
     private final CatalogService catalogService;
     private final CatalogQueryService catalogQueryService;
 
+    /**
+     * Create catalog response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new catalog item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Catalog item created successfully"),
@@ -41,6 +50,13 @@ public class CatalogController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    /**
+     * Update catalog response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing catalog item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Catalog item updated successfully"),
@@ -60,6 +76,12 @@ public class CatalogController {
         }
     }
 
+    /**
+     * Delete catalog response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete a catalog item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Catalog item deleted successfully"),
@@ -75,6 +97,12 @@ public class CatalogController {
         }
     }
 
+    /**
+     * Gets catalog by id.
+     *
+     * @param id the id
+     * @return the catalog by id
+     */
     @Operation(summary = "Get a catalog item by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the catalog item"),
@@ -87,6 +115,11 @@ public class CatalogController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Catalog with ID " + id + " not found."));
     }
 
+    /**
+     * Gets all catalogs.
+     *
+     * @return the all catalogs
+     */
     @Operation(summary = "Get all catalog items")
     @ApiResponse(responseCode = "200", description = "List of all catalog items")
     @GetMapping
@@ -95,6 +128,12 @@ public class CatalogController {
         return ResponseEntity.ok(catalogs);
     }
 
+    /**
+     * Gets order item summaries by catalog id.
+     *
+     * @param id the id
+     * @return the order item summaries by catalog id
+     */
     @Operation(summary = "Get order item history for a specific catalog item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found order item history"),

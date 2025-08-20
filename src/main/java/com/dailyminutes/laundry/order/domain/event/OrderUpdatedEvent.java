@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.order.domain.event;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Order updated event.
+ */
 public record OrderUpdatedEvent(
         Long orderId,
         Long customerId, // Add customerId

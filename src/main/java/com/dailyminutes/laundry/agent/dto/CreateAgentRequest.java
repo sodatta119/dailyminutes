@@ -12,6 +12,9 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
+/**
+ * The type Create agent request.
+ */
 public record CreateAgentRequest(
         @NotBlank(message = "Agent name cannot be blank")
         String name,

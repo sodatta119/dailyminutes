@@ -25,6 +25,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Manager controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(ManagerController.class)
 class ManagerControllerTest {
@@ -42,6 +45,9 @@ class ManagerControllerTest {
     private CreateManagerRequest createManagerRequest;
     private UpdateManagerRequest updateManagerRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         managerResponse = new ManagerResponse(1L, "Test Manager", "test@contact.com");
@@ -49,6 +55,11 @@ class ManagerControllerTest {
         updateManagerRequest = new UpdateManagerRequest(1L, "Updated Manager", "updated@contact.com");
     }
 
+    /**
+     * Create manager should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createManager_shouldReturnCreated() throws Exception {
         when(managerService.createManager(any())).thenReturn(managerResponse);
@@ -58,6 +69,11 @@ class ManagerControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets manager by id should return manager.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getManagerById_shouldReturnManager() throws Exception {
         when(managerQueryService.findManagerById(1L)).thenReturn(Optional.of(managerResponse));
@@ -66,6 +82,11 @@ class ManagerControllerTest {
                 .andExpect(jsonPath("$.name").value("Test Manager"));
     }
 
+    /**
+     * Update manager should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateManager_shouldReturnOk() throws Exception {
         when(managerService.updateManager(any())).thenReturn(managerResponse);
@@ -75,6 +96,11 @@ class ManagerControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete manager should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteManager_shouldReturnNoContent() throws Exception {
         doNothing().when(managerService).deleteManager(1L);

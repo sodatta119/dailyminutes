@@ -12,8 +12,17 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
+/**
+ * The type Agent exception handler.
+ */
 @RestControllerAdvice
 public class AgentExceptionHandler {
+    /**
+     * Handle illegal argument response entity.
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND) // or BAD_REQUEST depending on use case
@@ -38,6 +47,12 @@ public class AgentExceptionHandler {
 //                .body(Map.of("message", ex.getMessage()));
 //    }
 
+    /**
+     * Handle entity not found response entity.
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, String>> handleEntityNotFound(ResponseStatusException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)

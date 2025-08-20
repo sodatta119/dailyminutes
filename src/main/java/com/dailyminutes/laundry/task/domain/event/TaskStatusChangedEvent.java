@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.task.domain.event;
 
 import com.dailyminutes.laundry.task.domain.model.TaskStatus;
 
+/**
+ * The type Task status changed event.
+ */
 public record TaskStatusChangedEvent(
         Long taskId,
         Long orderId,

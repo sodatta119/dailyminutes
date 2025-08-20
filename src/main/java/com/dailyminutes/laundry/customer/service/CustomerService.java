@@ -16,6 +16,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Customer service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -25,6 +28,12 @@ public class CustomerService {
     private final CustomerAddressRepository addressRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create customer customer response.
+     *
+     * @param request the request
+     * @return the customer response
+     */
     public CustomerResponse createCustomer(CreateCustomerRequest request) {
         customerRepository.findByPhoneNumber(request.phoneNumber()).ifPresent(c -> {
             throw new IllegalArgumentException("Customer with phone number " + request.phoneNumber() + " already exists.");
@@ -41,6 +50,12 @@ public class CustomerService {
         return toCustomerResponse(savedCustomer);
     }
 
+    /**
+     * Update customer customer response.
+     *
+     * @param request the request
+     * @return the customer response
+     */
     public CustomerResponse updateCustomer(UpdateCustomerRequest request) {
         CustomerEntity existingCustomer = customerRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Customer with ID " + request.id() + " not found."));
@@ -55,6 +70,11 @@ public class CustomerService {
         return toCustomerResponse(updatedCustomer);
     }
 
+    /**
+     * Delete customer.
+     *
+     * @param id the id
+     */
     public void deleteCustomer(Long id) {
         if (!customerRepository.existsById(id)) {
             throw new IllegalArgumentException("Customer with ID " + id + " not found.");
@@ -63,6 +83,12 @@ public class CustomerService {
         events.publishEvent(new CustomerDeletedEvent(id));
     }
 
+    /**
+     * Add address customer address response.
+     *
+     * @param request the request
+     * @return the customer address response
+     */
     public CustomerAddressResponse addAddress(CreateCustomerAddressRequest request) {
         CustomerEntity customer = customerRepository.findById(request.customerId()).orElse(null);
         if (customer == null) {
@@ -80,6 +106,12 @@ public class CustomerService {
         return toAddressResponse(savedAddress);
     }
 
+    /**
+     * Update address customer address response.
+     *
+     * @param request the request
+     * @return the customer address response
+     */
     public CustomerAddressResponse updateAddress(UpdateCustomerAddressRequest request) {
         CustomerEntity customer = customerRepository.findById(request.customerId()).orElseThrow(() -> new IllegalArgumentException("Address with Customer ID " + request.customerId() + " not found."));
         CustomerAddressEntity existingAddress = addressRepository.findById(request.id())
@@ -109,6 +141,11 @@ public class CustomerService {
         return toAddressResponse(updatedAddress);
     }
 
+    /**
+     * Remove address.
+     *
+     * @param addressId the address id
+     */
     public void removeAddress(Long addressId) {
         CustomerAddressEntity address = addressRepository.findById(addressId)
                 .orElseThrow(() -> new IllegalArgumentException("Address with ID " + addressId + " not found."));

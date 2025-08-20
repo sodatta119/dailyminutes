@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.payment.domain.event;
 
+/**
+ * The type Payment failed event.
+ */
 public record PaymentFailedEvent(
         Long paymentId,
         Long orderId,

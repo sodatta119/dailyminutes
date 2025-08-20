@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.store.dto;
 
+/**
+ * The type Store response.
+ */
 public record StoreResponse(
         Long id,
         String name,

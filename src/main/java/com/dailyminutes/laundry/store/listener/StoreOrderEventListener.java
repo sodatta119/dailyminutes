@@ -13,12 +13,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Store order event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class StoreOrderEventListener {
 
     private final StoreOrderSummaryRepository summaryRepository;
 
+    /**
+     * On order created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderCreated(OrderCreatedEvent event) {
         StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(
@@ -33,6 +41,11 @@ public class StoreOrderEventListener {
         summaryRepository.save(summary);
     }
 
+    /**
+     * On order updated.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderUpdated(OrderUpdatedEvent event) {
         summaryRepository.findByOrderId(event.orderId()).ifPresent(summary -> {
@@ -44,6 +57,11 @@ public class StoreOrderEventListener {
         });
     }
 
+    /**
+     * On order deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderDeleted(OrderDeletedEvent event) {
         summaryRepository.findByOrderId(event.orderId()).ifPresent(summary ->

@@ -24,6 +24,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Catalog controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(CatalogController.class)
 class CatalogControllerTest {
@@ -43,12 +46,20 @@ class CatalogControllerTest {
     private CreateCatalogRequest createRequest;
     private CatalogResponse catalogResponse;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         createRequest = new CreateCatalogRequest(CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("12.50"));
         catalogResponse = new CatalogResponse(1L, CatalogType.SERVICE, "Dry Cleaning");
     }
 
+    /**
+     * Create catalog should return created catalog.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createCatalog_shouldReturnCreatedCatalog() throws Exception {
         when(catalogService.createCatalog(any(CreateCatalogRequest.class))).thenReturn(catalogResponse);

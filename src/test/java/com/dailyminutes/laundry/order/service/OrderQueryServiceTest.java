@@ -20,6 +20,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Order query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class OrderQueryServiceTest {
 
@@ -30,6 +33,9 @@ class OrderQueryServiceTest {
     @InjectMocks
     private OrderQueryService orderQueryService;
 
+    /**
+     * Find order by id should return order.
+     */
     @Test
     void findOrderById_shouldReturnOrder() {
         OrderEntity order = new OrderEntity(1L, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN);

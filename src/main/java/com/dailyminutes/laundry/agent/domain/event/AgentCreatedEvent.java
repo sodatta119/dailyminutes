@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.agent.domain.event;
 
 import java.time.LocalDate;
 
+/**
+ * The type Agent created event.
+ */
 public record AgentCreatedEvent(
         Long agentId,
         String name,
@@ -16,6 +19,18 @@ public record AgentCreatedEvent(
         LocalDate dateOfJoining,
         String designation
 ) {
+    /**
+     * Instantiates a new Agent created event.
+     *
+     * @param agentId       the agent id
+     * @param name          the name
+     * @param state         the state
+     * @param teamId        the team id
+     * @param phoneNumber   the phone number
+     * @param uniqueId      the unique id
+     * @param dateOfJoining the date of joining
+     * @param designation   the designation
+     */
     public AgentCreatedEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
         if (name == null || name.isBlank()) throw new IllegalArgumentException("Agent name cannot be null or blank");

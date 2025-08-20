@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.geofence.domain.event;
 
 import com.dailyminutes.laundry.common.events.CallerEvent;
 
+/**
+ * The type Geofence info response event.
+ */
 public record GeofenceInfoResponseEvent(
         Long geofenceId,
         String geofenceName,

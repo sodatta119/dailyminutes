@@ -18,6 +18,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Agent service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -26,6 +29,12 @@ public class AgentService {
     private final AgentRepository agentRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create agent agent response.
+     *
+     * @param request the request
+     * @return the agent response
+     */
     public AgentResponse createAgent(CreateAgentRequest request) {
         agentRepository.findByPhoneNumber(request.phoneNumber()).ifPresent(agent -> {
             throw new IllegalArgumentException("Agent with phone number " + request.phoneNumber() + " already exists.");
@@ -42,6 +51,12 @@ public class AgentService {
         return toAgentResponse(savedAgent);
     }
 
+    /**
+     * Update agent agent response.
+     *
+     * @param request the request
+     * @return the agent response
+     */
     public AgentResponse updateAgent(UpdateAgentRequest request) {
         AgentEntity existingAgent = agentRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Agent with ID " + request.id() + " not found."));
@@ -68,6 +83,11 @@ public class AgentService {
         return toAgentResponse(updatedAgent);
     }
 
+    /**
+     * Delete agent.
+     *
+     * @param id the id
+     */
     public void deleteAgent(Long id) {
         if (!agentRepository.existsById(id)) {
             throw new IllegalArgumentException("Agent with ID " + id + " not found.");
@@ -76,6 +96,13 @@ public class AgentService {
         events.publishEvent(new AgentDeletedEvent(id));
     }
 
+    /**
+     * Assign team agent response.
+     *
+     * @param agentId the agent id
+     * @param teamId  the team id
+     * @return the agent response
+     */
     public AgentResponse assignTeam(Long agentId, Long teamId) {
         AgentEntity agent = agentRepository.findById(agentId)
                 .orElseThrow(() -> new IllegalArgumentException("Agent with ID " + agentId + " not found."));

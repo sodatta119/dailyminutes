@@ -25,6 +25,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Customer controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(CustomerController.class)
 class CustomerControllerTest {
@@ -45,6 +48,9 @@ class CustomerControllerTest {
     private UpdateCustomerAddressRequest updateCustomerAddressRequest;
 
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         customerResponse = new CustomerResponse(1L, "sub1", "1234567890", "Test", "test@test.com");
@@ -54,6 +60,11 @@ class CustomerControllerTest {
         updateCustomerAddressRequest = new UpdateCustomerAddressRequest(1L, 1L, AddressType.HOME, true, "Apt 2", "456 Main St", "Main St", "Anytown", "Anystate", "12345", "USA", "0", "0", 1L);
     }
 
+    /**
+     * Create customer should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createCustomer_shouldReturnCreated() throws Exception {
         CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com");
@@ -65,6 +76,11 @@ class CustomerControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets customer by id should return customer.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getCustomerById_shouldReturnCustomer() throws Exception {
         when(customerQueryService.findCustomerById(1L)).thenReturn(Optional.of(customerResponse));
@@ -73,6 +89,11 @@ class CustomerControllerTest {
                 .andExpect(jsonPath("$.name").value("Test"));
     }
 
+    /**
+     * Update customer should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateCustomer_shouldReturnOk() throws Exception {
         when(customerService.updateCustomer(any())).thenReturn(customerResponse);
@@ -82,6 +103,11 @@ class CustomerControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete customer should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteCustomer_shouldReturnNoContent() throws Exception {
         doNothing().when(customerService).deleteCustomer(1L);
@@ -89,6 +115,11 @@ class CustomerControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    /**
+     * Add address should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void addAddress_shouldReturnCreated() throws Exception {
         when(customerService.addAddress(any())).thenReturn(customerAddressResponse);
@@ -98,6 +129,11 @@ class CustomerControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Update address should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateAddress_shouldReturnOk() throws Exception {
         when(customerService.updateAddress(any())).thenReturn(customerAddressResponse);
@@ -107,6 +143,11 @@ class CustomerControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Remove address should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void removeAddress_shouldReturnNoContent() throws Exception {
         doNothing().when(customerService).removeAddress(1L);
@@ -114,6 +155,11 @@ class CustomerControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    /**
+     * Gets addresses by customer id should return addresses.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getAddressesByCustomerId_shouldReturnAddresses() throws Exception {
         when(customerQueryService.findAddressesByCustomerId(1L)).thenReturn(Collections.singletonList(customerAddressResponse));

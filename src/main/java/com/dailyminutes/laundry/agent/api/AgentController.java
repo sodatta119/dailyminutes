@@ -20,6 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Agent controller.
+ */
 @RestController
 @RequestMapping("/agents")
 @RequiredArgsConstructor
@@ -29,6 +32,12 @@ public class AgentController {
     private final AgentService agentService;
     private final AgentQueryService agentQueryService;
 
+    /**
+     * Create agent response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new agent")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Agent created successfully"),
@@ -39,6 +48,13 @@ public class AgentController {
         return new ResponseEntity<>(agentService.createAgent(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update agent response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing agent")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Agent updated successfully"),
@@ -53,6 +69,12 @@ public class AgentController {
         return ResponseEntity.ok(agentService.updateAgent(request));
     }
 
+    /**
+     * Delete agent response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete an agent")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Agent deleted successfully"),
@@ -64,6 +86,12 @@ public class AgentController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets agent by id.
+     *
+     * @param id the id
+     * @return the agent by id
+     */
     @Operation(summary = "Get an agent by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the agent"),
@@ -76,6 +104,11 @@ public class AgentController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Agent not found"));
     }
 
+    /**
+     * Gets all agents.
+     *
+     * @return the all agents
+     */
     @Operation(summary = "Get all agents")
     @ApiResponse(responseCode = "200", description = "List of all agents")
     @GetMapping
@@ -83,6 +116,12 @@ public class AgentController {
         return ResponseEntity.ok(agentQueryService.findAllAgents());
     }
 
+    /**
+     * Gets agents by team id.
+     *
+     * @param teamId the team id
+     * @return the agents by team id
+     */
     @Operation(summary = "Get agents by team ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found agents for the team"),
@@ -93,6 +132,13 @@ public class AgentController {
         return ResponseEntity.ok(agentQueryService.findAgentsByTeamId(teamId));
     }
 
+    /**
+     * Assign team response entity.
+     *
+     * @param id     the id
+     * @param teamId the team id
+     * @return the response entity
+     */
     @Operation(summary = "Assign a team to an agent")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Team assigned successfully"),
@@ -104,6 +150,12 @@ public class AgentController {
     }
 
 
+    /**
+     * Gets task summary.
+     *
+     * @param id the id
+     * @return the task summary
+     */
     @Operation(summary = "Get task summary for an agent")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found task summary"),

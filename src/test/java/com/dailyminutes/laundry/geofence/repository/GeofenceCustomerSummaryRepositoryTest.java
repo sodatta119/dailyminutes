@@ -16,6 +16,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Geofence customer summary repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.geofence.repository"})
@@ -29,6 +32,9 @@ class GeofenceCustomerSummaryRepositoryTest {
     @Autowired
     private GeofenceRepository geofenceRepository;
 
+    /**
+     * Test save and find geofence customer summary.
+     */
     @Test
     void testSaveAndFindGeofenceCustomerSummary() {
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -49,6 +55,9 @@ class GeofenceCustomerSummaryRepositoryTest {
         assertThat(foundSummary.get().getCustomerName()).isEqualTo("John Doe");
     }
 
+    /**
+     * Test update geofence customer summary.
+     */
     @Test
     void testUpdateGeofenceCustomerSummary() {
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -67,6 +76,9 @@ class GeofenceCustomerSummaryRepositoryTest {
         assertThat(updatedSummary.get().getCustomerPhoneNumber()).isEqualTo("1112223333");
     }
 
+    /**
+     * Test delete geofence customer summary.
+     */
     @Test
     void testDeleteGeofenceCustomerSummary() {
         GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -80,6 +92,9 @@ class GeofenceCustomerSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by geofence id.
+     */
     @Test
     void testFindByGeofenceId() {
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -96,6 +111,9 @@ class GeofenceCustomerSummaryRepositoryTest {
                 .containsExactlyInAnyOrder("Cust A", "Cust B");
     }
 
+    /**
+     * Test find by customer id.
+     */
     @Test
     void testFindByCustomerId() {
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
@@ -110,6 +128,9 @@ class GeofenceCustomerSummaryRepositoryTest {
         assertThat(foundSummary.get().getGeofenceId()).isEqualTo(geofence1.getId());
     }
 
+    /**
+     * Test find by customer phone number.
+     */
     @Test
     void testFindByCustomerPhoneNumber() {
         GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));

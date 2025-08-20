@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.invoice.domain.event;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Invoice updated event.
+ */
 public record InvoiceUpdatedEvent(
         Long invoiceId,
         BigDecimal newTotalPrice

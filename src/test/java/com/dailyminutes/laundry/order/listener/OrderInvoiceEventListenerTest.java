@@ -19,6 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Order invoice event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class OrderInvoiceEventListenerTest {
 
@@ -28,6 +31,9 @@ class OrderInvoiceEventListenerTest {
     @InjectMocks
     private OrderInvoiceEventListener listener;
 
+    /**
+     * On invoice created should create summary.
+     */
     @Test
     void onInvoiceCreated_shouldCreateSummary() {
         // Given: An invoice is created for order 101L
@@ -53,6 +59,9 @@ class OrderInvoiceEventListenerTest {
         assertThat(savedSummary.getInvoiceDate()).isEqualTo(event.invoiceDate());
     }
 
+    /**
+     * On invoice deleted should delete summary.
+     */
     @Test
     void onInvoiceDeleted_shouldDeleteSummary() {
         // Given: An invoice deletion event

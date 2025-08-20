@@ -10,6 +10,9 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Order info response event.
+ */
 public record OrderInfoResponseEvent(
         Long orderId,
         Long customerId,

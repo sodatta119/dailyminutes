@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Invoice response.
+ */
 public record InvoiceResponse(
         Long id,
         String swipeInvoiceId,

@@ -19,6 +19,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Geofence customer event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class GeofenceCustomerEventListenerTest {
 
@@ -28,6 +31,9 @@ class GeofenceCustomerEventListenerTest {
     @InjectMocks
     private GeofenceCustomerEventListener listener;
 
+    /**
+     * On customer address added should create summary.
+     */
     @Test
     void onCustomerAddressAdded_shouldCreateSummary() {
         // Given: An event for a new customer address with a geofence
@@ -50,6 +56,9 @@ class GeofenceCustomerEventListenerTest {
         assertThat(savedSummary.getCustomerPhoneNumber()).isEqualTo("555-0001");
     }
 
+    /**
+     * On customer address updated should update summary.
+     */
     @Test
     void onCustomerAddressUpdated_shouldUpdateSummary() {
         // Given: An event for an updated customer address
@@ -77,6 +86,9 @@ class GeofenceCustomerEventListenerTest {
         assertThat(updatedSummary.getCustomerPhoneNumber()).isEqualTo("555-0002");
     }
 
+    /**
+     * On customer address removed should delete summary.
+     */
     @Test
     void onCustomerAddressRemoved_shouldDeleteSummary() {
         // Given: An event for a removed customer address
@@ -93,6 +105,9 @@ class GeofenceCustomerEventListenerTest {
         verify(summaryRepository).deleteById(5L);
     }
 
+    /**
+     * On customer deleted should delete summary.
+     */
     @Test
     void onCustomerDeleted_shouldDeleteSummary() {
         // Given: An event for a deleted customer

@@ -12,6 +12,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Update order request.
+ */
 public record UpdateOrderRequest(
         @NotNull Long id,
         @NotNull Long storeId,

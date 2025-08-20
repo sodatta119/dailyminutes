@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.task.dto;
 
+/**
+ * The type Task team summary response.
+ */
 public record TaskTeamSummaryResponse(
         Long id,
         Long taskId,

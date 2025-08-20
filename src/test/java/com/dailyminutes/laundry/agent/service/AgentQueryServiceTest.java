@@ -16,6 +16,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Agent query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class AgentQueryServiceTest {
 
@@ -24,6 +27,9 @@ class AgentQueryServiceTest {
     @InjectMocks
     private AgentQueryService agentQueryService;
 
+    /**
+     * Find agent by id should return agent.
+     */
     @Test
     void findAgentById_shouldReturnAgent() {
         AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);

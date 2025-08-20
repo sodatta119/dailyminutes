@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.manager.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * The type Create manager request.
+ */
 public record CreateManagerRequest(
         @NotBlank(message = "Manager name cannot be blank")
         String name,

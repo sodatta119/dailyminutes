@@ -4,5 +4,8 @@
  */
 package com.dailyminutes.laundry.task.domain.event;
 
+/**
+ * The type Task updated event.
+ */
 public record TaskUpdatedEvent(Long taskId) {
 }

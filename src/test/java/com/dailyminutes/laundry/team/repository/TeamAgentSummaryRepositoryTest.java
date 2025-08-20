@@ -19,8 +19,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Team agent summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -38,6 +40,9 @@ class TeamAgentSummaryRepositoryTest {
         return "9" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9);
     }
 
+    /**
+     * Test save and find team agent summary.
+     */
     @Test
     void testSaveAndFindTeamAgentSummary() {
         TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -60,6 +65,9 @@ class TeamAgentSummaryRepositoryTest {
         assertThat(foundSummary.get().getAgentName()).isEqualTo("Agent Alpha");
     }
 
+    /**
+     * Test update team agent summary.
+     */
     @Test
     void testUpdateTeamAgentSummary() {
         TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -78,6 +86,9 @@ class TeamAgentSummaryRepositoryTest {
         assertThat(updatedSummary.get().getAgentName()).isEqualTo("Agent Beta (Inactive)");
     }
 
+    /**
+     * Test delete team agent summary.
+     */
     @Test
     void testDeleteTeamAgentSummary() {
         TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -91,6 +102,9 @@ class TeamAgentSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by team id.
+     */
     @Test
     void testFindByTeamId() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -104,6 +118,9 @@ class TeamAgentSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getTeamId().equals(team1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by agent id.
+     */
     @Test
     void testFindByAgentId() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -116,6 +133,9 @@ class TeamAgentSummaryRepositoryTest {
         assertThat(foundSummary.get().getAgentName()).isEqualTo("Agent G");
     }
 
+    /**
+     * Test find by agent designation.
+     */
     @Test
     void testFindByAgentDesignation() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -130,6 +150,9 @@ class TeamAgentSummaryRepositoryTest {
         assertThat(fleetAgents.stream().allMatch(s -> s.getAgentDesignation().equals("FLEET_AGENT"))).isTrue();
     }
 
+    /**
+     * Test find by agent state.
+     */
     @Test
     void testFindByAgentState() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));

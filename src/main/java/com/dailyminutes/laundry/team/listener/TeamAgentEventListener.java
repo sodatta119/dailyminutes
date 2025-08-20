@@ -13,12 +13,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Team agent event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class TeamAgentEventListener {
 
     private final TeamAgentSummaryRepository summaryRepository;
 
+    /**
+     * On agent created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onAgentCreated(AgentCreatedEvent event) {
         if (event.teamId() != null) {
@@ -35,6 +43,11 @@ public class TeamAgentEventListener {
         }
     }
 
+    /**
+     * On agent updated.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onAgentUpdated(AgentUpdatedEvent event) {
         summaryRepository.findByAgentId(event.agentId()).ifPresentOrElse(
@@ -64,6 +77,11 @@ public class TeamAgentEventListener {
         );
     }
 
+    /**
+     * On agent deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onAgentDeleted(AgentDeletedEvent event) {
         summaryRepository.deleteByAgentId(event.agentId());

@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.task.dto;
 
+/**
+ * The type Task geofence summary response.
+ */
 public record TaskGeofenceSummaryResponse(
         Long id,
         Long taskId,

@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.common.config;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
+/**
+ * The type Global exception handler.
+ */
 public class GlobalExceptionHandler {
 
 

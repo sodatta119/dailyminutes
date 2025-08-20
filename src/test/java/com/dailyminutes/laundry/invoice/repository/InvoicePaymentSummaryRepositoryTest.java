@@ -20,8 +20,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Invoice payment summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 12/07/25
+ * @version 12 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -40,6 +42,9 @@ class InvoicePaymentSummaryRepositoryTest {
         return "TXN-" + UUID.randomUUID().toString().substring(0, 8);
     }
 
+    /**
+     * Test save and find invoice payment summary.
+     */
     @Test
     void testSaveAndFindInvoicePaymentSummary() {
         InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
@@ -61,6 +66,9 @@ class InvoicePaymentSummaryRepositoryTest {
         assertThat(foundSummary.get().getStatus()).isEqualTo("COMPLETED");
     }
 
+    /**
+     * Test update invoice payment summary.
+     */
     @Test
     void testUpdateInvoicePaymentSummary() {
         InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
@@ -80,6 +88,9 @@ class InvoicePaymentSummaryRepositoryTest {
         assertThat(updatedSummary.get().getAmount()).isEqualByComparingTo("100.00");
     }
 
+    /**
+     * Test delete invoice payment summary.
+     */
     @Test
     void testDeleteInvoicePaymentSummary() {
         InvoiceEntity invoice = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
@@ -94,6 +105,9 @@ class InvoicePaymentSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by invoice id.
+     */
     @Test
     void testFindByInvoiceId() {
         InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
@@ -107,6 +121,9 @@ class InvoicePaymentSummaryRepositoryTest {
         assertThat(paymentsForInvoice.stream().allMatch(s -> s.getInvoiceId().equals(invoice1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by payment id.
+     */
     @Test
     void testFindByPaymentId() {
         InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
@@ -119,6 +136,9 @@ class InvoicePaymentSummaryRepositoryTest {
         assertThat(foundSummary.get().getAmount()).isEqualByComparingTo("80.00");
     }
 
+    /**
+     * Test find by status.
+     */
     @Test
     void testFindByStatus() {
         InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));
@@ -133,6 +153,9 @@ class InvoicePaymentSummaryRepositoryTest {
         assertThat(completedSummaries.stream().allMatch(s -> s.getStatus().equals("COMPLETED"))).isTrue();
     }
 
+    /**
+     * Test find by method.
+     */
     @Test
     void testFindByMethod() {
         InvoiceEntity invoice1 = invoiceRepository.save(new InvoiceEntity(null, "SWIPE123", 20L, 10L, LocalDateTime.now(), new BigDecimal("50.00"), new BigDecimal("5.00"), new BigDecimal("2.00")));

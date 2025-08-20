@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Invoice payment event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class InvoicePaymentEventListener {
@@ -21,6 +24,11 @@ public class InvoicePaymentEventListener {
     private final InvoicePaymentSummaryRepository paymentSummaryRepository;
     private final InvoiceRepository invoiceRepository;
 
+    /**
+     * On payment made.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onPaymentMade(PaymentMadeEvent event) {
         // Use the local repository to find the invoiceId from the orderId
@@ -39,6 +47,11 @@ public class InvoicePaymentEventListener {
         });
     }
 
+    /**
+     * On payment refunded.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onPaymentRefunded(PaymentRefundedEvent event) {
         paymentSummaryRepository.findByPaymentId(event.paymentId()).ifPresent(summary -> {
@@ -47,6 +60,11 @@ public class InvoicePaymentEventListener {
         });
     }
 
+    /**
+     * On payment failed.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onPaymentFailed(PaymentFailedEvent event) {
         paymentSummaryRepository.findByPaymentId(event.paymentId()).ifPresent(summary -> {

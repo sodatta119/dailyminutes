@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.order.dto;
 
+/**
+ * The type Order store summary response.
+ */
 public record OrderStoreSummaryResponse(
         Long id,
         Long orderId,

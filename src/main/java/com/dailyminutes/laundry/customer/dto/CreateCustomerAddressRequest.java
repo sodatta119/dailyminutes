@@ -8,6 +8,9 @@ package com.dailyminutes.laundry.customer.dto;
 import com.dailyminutes.laundry.customer.domain.model.AddressType;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The type Create customer address request.
+ */
 public record CreateCustomerAddressRequest(
         @NotNull(message = "Customer ID cannot be null")
         Long customerId,

@@ -21,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Order service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -30,6 +33,12 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create order order response.
+     *
+     * @param request the request
+     * @return the order response
+     */
     public OrderResponse createOrder(CreateOrderRequest request) {
         OrderEntity order = new OrderEntity(null, request.storeId(), request.customerId(), request.orderDate(), request.status(), request.totalAmount());
         OrderEntity savedOrder = orderRepository.save(order);
@@ -52,6 +61,12 @@ public class OrderService {
         return toOrderResponse(savedOrder, savedItems);
     }
 
+    /**
+     * Update order order response.
+     *
+     * @param request the request
+     * @return the order response
+     */
     public OrderResponse updateOrder(UpdateOrderRequest request) {
         OrderEntity existingOrder = orderRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Order with ID " + request.id() + " not found."));
@@ -87,6 +102,11 @@ public class OrderService {
         return toOrderResponse(updatedOrder, items);
     }
 
+    /**
+     * Delete order.
+     *
+     * @param id the id
+     */
     public void deleteOrder(Long id) {
         if (!orderRepository.existsById(id)) {
             throw new IllegalArgumentException("Order with ID " + id + " not found.");

@@ -22,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Payment service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {
 
@@ -32,6 +35,9 @@ class PaymentServiceTest {
     @InjectMocks
     private PaymentService paymentService;
 
+    /**
+     * Create payment should create and publish event.
+     */
     @Test
     void createPayment_shouldCreateAndPublishEvent() {
         CreatePaymentRequest request = new CreatePaymentRequest(1L, 1L, "txn1", BigDecimal.TEN, LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, "");
@@ -43,6 +49,9 @@ class PaymentServiceTest {
         verify(events).publishEvent(any(PaymentMadeEvent.class));
     }
 
+    /**
+     * Update payment should update and publish event.
+     */
     @Test
     void updatePayment_shouldUpdateAndPublishEvent() {
         UpdatePaymentRequest request = new UpdatePaymentRequest(1L, 1L, 1L, "txn1", BigDecimal.TEN, LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, "");
@@ -55,6 +64,9 @@ class PaymentServiceTest {
         verify(events).publishEvent(any(PaymentMadeEvent.class));
     }
 
+    /**
+     * Delete payment should delete.
+     */
     @Test
     void deletePayment_shouldDelete() {
         when(paymentRepository.existsById(1L)).thenReturn(true);
@@ -65,6 +77,9 @@ class PaymentServiceTest {
         verify(paymentRepository).deleteById(1L);
     }
 
+    /**
+     * Update payment should throw exception when payment not found.
+     */
     @Test
     void updatePayment_shouldThrowException_whenPaymentNotFound() {
         UpdatePaymentRequest request = new UpdatePaymentRequest(1L, 1L, 1L, "txn1", BigDecimal.TEN, LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, "");

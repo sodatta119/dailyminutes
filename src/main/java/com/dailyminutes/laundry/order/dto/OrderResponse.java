@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Order response.
+ */
 public record OrderResponse(
         Long id,
         Long storeId,

@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.order.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Order payment summary response.
+ */
 public record OrderPaymentSummaryResponse(
         Long id,
         Long orderId,

@@ -21,6 +21,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Geofence controller.
+ */
 @RestController
 @RequestMapping("/api/geofences")
 @RequiredArgsConstructor
@@ -30,6 +33,12 @@ public class GeofenceController {
     private final GeofenceService geofenceService;
     private final GeofenceQueryService geofenceQueryService;
 
+    /**
+     * Create geofence response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new geofence")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Geofence created successfully"),
@@ -40,6 +49,13 @@ public class GeofenceController {
         return new ResponseEntity<>(geofenceService.createGeofence(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update geofence response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing geofence")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Geofence updated successfully"),
@@ -54,6 +70,12 @@ public class GeofenceController {
         return ResponseEntity.ok(geofenceService.updateGeofence(request));
     }
 
+    /**
+     * Delete geofence response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete a geofence")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Geofence deleted successfully"),
@@ -65,6 +87,12 @@ public class GeofenceController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets geofence by id.
+     *
+     * @param id the id
+     * @return the geofence by id
+     */
     @Operation(summary = "Get a geofence by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the geofence"),
@@ -77,6 +105,11 @@ public class GeofenceController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Geofence not found"));
     }
 
+    /**
+     * Gets all geofences.
+     *
+     * @return the all geofences
+     */
     @Operation(summary = "Get all geofences")
     @ApiResponse(responseCode = "200", description = "List of all geofences")
     @GetMapping
@@ -84,6 +117,12 @@ public class GeofenceController {
         return ResponseEntity.ok(geofenceQueryService.findAllGeofences());
     }
 
+    /**
+     * Gets customer summaries.
+     *
+     * @param id the id
+     * @return the customer summaries
+     */
     @Operation(summary = "Get customer summaries for a geofence")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found customer summaries"),
@@ -94,6 +133,12 @@ public class GeofenceController {
         return ResponseEntity.ok(geofenceQueryService.findCustomerSummariesByGeofenceId(id));
     }
 
+    /**
+     * Gets order summaries.
+     *
+     * @param id the id
+     * @return the order summaries
+     */
     @Operation(summary = "Get order summaries for a geofence")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found order summaries"),

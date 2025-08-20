@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.order.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Order task summary response.
+ */
 public record OrderTaskSummaryResponse(
         Long id,
         Long orderId,

@@ -21,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Store geofence event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class StoreGeofenceEventListenerTest {
 
@@ -33,6 +36,9 @@ class StoreGeofenceEventListenerTest {
     @InjectMocks
     private StoreGeofenceEventListener listener;
 
+    /**
+     * On geofence assigned to store should publish geofence info requested event.
+     */
     @Test
     void onGeofenceAssignedToStore_shouldPublishGeofenceInfoRequestedEvent() {
         // Given: An event indicating a geofence was assigned to a store
@@ -52,6 +58,9 @@ class StoreGeofenceEventListenerTest {
         assertThat(geofenceAddedEvent.storeId()).isEqualTo(1L);
     }
 
+    /**
+     * On geofence info provided should create store geofence summary.
+     */
     @Test
     void onGeofenceInfoProvided_shouldCreateStoreGeofenceSummary() {
         // Given: An event from the geofence module providing the necessary details
@@ -75,6 +84,9 @@ class StoreGeofenceEventListenerTest {
         assertThat(savedSummary.isActive()).isTrue();
     }
 
+    /**
+     * On geofence deleted should delete summary.
+     */
     @Test
     void onGeofenceDeleted_shouldDeleteSummary() {
         // Given: a geofence is deleted

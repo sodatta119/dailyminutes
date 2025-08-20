@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Order payment event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class OrderPaymentEventListenerTest {
 
@@ -29,6 +32,9 @@ class OrderPaymentEventListenerTest {
     @InjectMocks
     private OrderPaymentEventListener listener;
 
+    /**
+     * On payment made should create summary.
+     */
     @Test
     void onPaymentMade_shouldCreateSummary() {
         // Given
@@ -52,6 +58,9 @@ class OrderPaymentEventListenerTest {
         assertThat(savedSummary.getTransactionId()).isEqualTo("txn_123");
     }
 
+    /**
+     * On payment refunded should update summary status.
+     */
     @Test
     void onPaymentRefunded_shouldUpdateSummaryStatus() {
         // Given
@@ -74,6 +83,9 @@ class OrderPaymentEventListenerTest {
         assertThat(updatedSummary.getStatus()).isEqualTo("REFUNDED");
     }
 
+    /**
+     * On payment failed should update summary status.
+     */
     @Test
     void onPaymentFailed_shouldUpdateSummaryStatus() {
         // Given

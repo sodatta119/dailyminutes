@@ -21,6 +21,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Catalog query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class CatalogQueryServiceTest {
 
@@ -32,11 +35,17 @@ class CatalogQueryServiceTest {
 
     private CatalogEntity catalogEntity;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         catalogEntity = new CatalogEntity(1L, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100));
     }
 
+    /**
+     * Find catalog by id should return catalog response when found.
+     */
     @Test
     void findCatalogById_shouldReturnCatalogResponse_whenFound() {
         when(catalogRepository.findById(1L)).thenReturn(Optional.of(catalogEntity));
@@ -47,6 +56,9 @@ class CatalogQueryServiceTest {
         assertThat(result.get().id()).isEqualTo(catalogEntity.getId());
     }
 
+    /**
+     * Find catalog by id should return empty when not found.
+     */
     @Test
     void findCatalogById_shouldReturnEmpty_whenNotFound() {
         when(catalogRepository.findById(1L)).thenReturn(Optional.empty());
@@ -56,6 +68,9 @@ class CatalogQueryServiceTest {
         assertThat(result).isNotPresent();
     }
 
+    /**
+     * Find all catalogs should return list of catalog responses.
+     */
     @Test
     void findAllCatalogs_shouldReturnListOfCatalogResponses() {
         when(catalogRepository.findAll()).thenReturn(Collections.singletonList(catalogEntity));

@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Team service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TeamServiceTest {
 
@@ -31,6 +34,9 @@ class TeamServiceTest {
     @InjectMocks
     private TeamService teamService;
 
+    /**
+     * Create team should create and publish event.
+     */
     @Test
     void createTeam_shouldCreateAndPublishEvent() {
         CreateTeamRequest request = new CreateTeamRequest("Test Team", "desc", TeamRole.OPS);
@@ -42,6 +48,9 @@ class TeamServiceTest {
         verify(events).publishEvent(any(TeamCreatedEvent.class));
     }
 
+    /**
+     * Update team should update and publish event.
+     */
     @Test
     void updateTeam_shouldUpdateAndPublishEvent() {
         UpdateTeamRequest request = new UpdateTeamRequest(1L, "Updated Team", "new desc", TeamRole.ADMIN);
@@ -54,6 +63,9 @@ class TeamServiceTest {
         verify(events).publishEvent(any(TeamUpdatedEvent.class));
     }
 
+    /**
+     * Delete team should delete and publish event.
+     */
     @Test
     void deleteTeam_shouldDeleteAndPublishEvent() {
         when(teamRepository.existsById(1L)).thenReturn(true);
@@ -64,6 +76,9 @@ class TeamServiceTest {
         verify(events).publishEvent(any(TeamDeletedEvent.class));
     }
 
+    /**
+     * Update team should throw exception when team not found.
+     */
     @Test
     void updateTeam_shouldThrowException_whenTeamNotFound() {
         UpdateTeamRequest request = new UpdateTeamRequest(1L, "Updated Team", "new desc", TeamRole.ADMIN);

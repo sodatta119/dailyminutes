@@ -4,5 +4,8 @@
  */
 package com.dailyminutes.laundry.geofence.domain.event;
 
+/**
+ * The type Geofence deleted event.
+ */
 public record GeofenceDeletedEvent(Long geofenceId) {
 }

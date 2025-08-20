@@ -14,6 +14,12 @@ public record AgentAssignedToTeamEvent(
         Long agentId,
         Long teamId
 ) {
+    /**
+     * Instantiates a new Agent assigned to team event.
+     *
+     * @param agentId the agent id
+     * @param teamId  the team id
+     */
     public AgentAssignedToTeamEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
         //if (teamId == null) throw new IllegalArgumentException("Team ID cannot be null");

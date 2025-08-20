@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.team.domain.event;
 
+/**
+ * The type Team info response event.
+ */
 public record TeamInfoResponseEvent(
         Long agentId, // Correlation ID
         Long teamId,

@@ -21,8 +21,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Order payment summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 15/07/25
+ * @version 15 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -41,6 +43,9 @@ class OrderPaymentSummaryRepositoryTest {
         return "TXN-" + UUID.randomUUID().toString().substring(0, 8);
     }
 
+    /**
+     * Test save and find order payment summary.
+     */
     @Test
     void testSaveAndFindOrderPaymentSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -62,6 +67,9 @@ class OrderPaymentSummaryRepositoryTest {
         assertThat(foundSummary.get().getStatus()).isEqualTo("COMPLETED");
     }
 
+    /**
+     * Test update order payment summary.
+     */
     @Test
     void testUpdateOrderPaymentSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -81,6 +89,9 @@ class OrderPaymentSummaryRepositoryTest {
         assertThat(updatedSummary.get().getAmount()).isEqualByComparingTo("100.00");
     }
 
+    /**
+     * Test delete order payment summary.
+     */
     @Test
     void testDeleteOrderPaymentSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -95,6 +106,9 @@ class OrderPaymentSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -108,6 +122,9 @@ class OrderPaymentSummaryRepositoryTest {
         assertThat(paymentsForOrder.stream().allMatch(s -> s.getOrderId().equals(order1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by payment id.
+     */
     @Test
     void testFindByPaymentId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -120,6 +137,9 @@ class OrderPaymentSummaryRepositoryTest {
         assertThat(foundSummary.get().getAmount()).isEqualByComparingTo("80.00");
     }
 
+    /**
+     * Test find by status.
+     */
     @Test
     void testFindByStatus() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -134,6 +154,9 @@ class OrderPaymentSummaryRepositoryTest {
         assertThat(completedSummaries.stream().allMatch(s -> s.getStatus().equals("COMPLETED"))).isTrue();
     }
 
+    /**
+     * Test find by method.
+     */
     @Test
     void testFindByMethod() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));

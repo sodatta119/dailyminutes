@@ -5,6 +5,9 @@
 package com.dailyminutes.laundry.customer.domain.event;
 
 
+/**
+ * The type Customer created event.
+ */
 public record CustomerCreatedEvent(
         Long customerId,
         String subscriberId,

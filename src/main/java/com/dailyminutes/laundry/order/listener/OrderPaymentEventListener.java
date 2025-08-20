@@ -13,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Order payment event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class OrderPaymentEventListener {
@@ -21,6 +24,8 @@ public class OrderPaymentEventListener {
 
     /**
      * Creates a new summary record when a payment is completed.
+     *
+     * @param event the event
      */
     @ApplicationModuleListener
     public void onPaymentMade(PaymentMadeEvent event) {
@@ -39,6 +44,8 @@ public class OrderPaymentEventListener {
 
     /**
      * Updates the summary status when a payment is refunded.
+     *
+     * @param event the event
      */
     @ApplicationModuleListener
     public void onPaymentRefunded(PaymentRefundedEvent event) {
@@ -50,6 +57,8 @@ public class OrderPaymentEventListener {
 
     /**
      * Updates the summary status when a payment fails.
+     *
+     * @param event the event
      */
     @ApplicationModuleListener
     public void onPaymentFailed(PaymentFailedEvent event) {

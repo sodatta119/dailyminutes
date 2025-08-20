@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.store.dto;
 
+/**
+ * The type Store agent summary response.
+ */
 public record StoreAgentSummaryResponse(
         Long id,
         Long storeId,

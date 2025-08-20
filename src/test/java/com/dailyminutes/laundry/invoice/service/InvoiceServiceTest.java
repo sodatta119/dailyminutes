@@ -25,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Invoice service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class InvoiceServiceTest {
 
@@ -37,6 +40,9 @@ class InvoiceServiceTest {
     @InjectMocks
     private InvoiceService invoiceService;
 
+    /**
+     * Create invoice should create and publish event.
+     */
     @Test
     void createInvoice_shouldCreateAndPublishEvent() {
         InvoiceItemDto item = new InvoiceItemDto(null, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);
@@ -49,6 +55,9 @@ class InvoiceServiceTest {
         verify(events).publishEvent(any(InvoiceCreatedEvent.class));
     }
 
+    /**
+     * Update invoice should update and publish event.
+     */
     @Test
     void updateInvoice_shouldUpdateAndPublishEvent() {
         InvoiceItemDto item = new InvoiceItemDto(null, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);
@@ -62,6 +71,9 @@ class InvoiceServiceTest {
         verify(events).publishEvent(any(InvoiceUpdatedEvent.class));
     }
 
+    /**
+     * Delete invoice should delete and publish event.
+     */
     @Test
     void deleteInvoice_shouldDeleteAndPublishEvent() {
         when(invoiceRepository.existsById(1L)).thenReturn(true);
@@ -72,6 +84,9 @@ class InvoiceServiceTest {
         verify(events).publishEvent(any(InvoiceDeletedEvent.class));
     }
 
+    /**
+     * Update invoice should throw exception when invoice not found.
+     */
     @Test
     void updateInvoice_shouldThrowException_whenInvoiceNotFound() {
         InvoiceItemDto item = new InvoiceItemDto(null, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);

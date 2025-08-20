@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.store.domain.event;
 
 import com.dailyminutes.laundry.common.events.CallerEvent;
 
+/**
+ * The type Store info response event.
+ */
 // Event fired by the store module with the requested details
 public record StoreInfoResponseEvent(
         Long storeId,

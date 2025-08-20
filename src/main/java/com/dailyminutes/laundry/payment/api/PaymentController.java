@@ -20,6 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Payment controller.
+ */
 @RestController
 @RequestMapping("/api/payments")
 @RequiredArgsConstructor
@@ -29,6 +32,12 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final PaymentQueryService paymentQueryService;
 
+    /**
+     * Create payment response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new payment")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Payment created successfully"),
@@ -39,6 +48,13 @@ public class PaymentController {
         return new ResponseEntity<>(paymentService.createPayment(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update payment response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing payment")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Payment updated successfully"),
@@ -53,6 +69,12 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.updatePayment(request));
     }
 
+    /**
+     * Delete payment response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete a payment")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Payment deleted successfully"),
@@ -64,6 +86,12 @@ public class PaymentController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets payment by id.
+     *
+     * @param id the id
+     * @return the payment by id
+     */
     @Operation(summary = "Get a payment by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the payment"),
@@ -76,6 +104,11 @@ public class PaymentController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment not found"));
     }
 
+    /**
+     * Gets all payments.
+     *
+     * @return the all payments
+     */
     @Operation(summary = "Get all payments")
     @ApiResponse(responseCode = "200", description = "List of all payments")
     @GetMapping

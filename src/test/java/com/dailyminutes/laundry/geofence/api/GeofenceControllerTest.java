@@ -25,6 +25,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Geofence controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(GeofenceController.class)
 class GeofenceControllerTest {
@@ -42,6 +45,9 @@ class GeofenceControllerTest {
     private CreateGeofenceRequest createGeofenceRequest;
     private UpdateGeofenceRequest updateGeofenceRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         geofenceResponse = new GeofenceResponse(1L, "coords", "type", "name", true);
@@ -49,6 +55,11 @@ class GeofenceControllerTest {
         updateGeofenceRequest = new UpdateGeofenceRequest(1L, "new-coords", "new-type", "new-name", false);
     }
 
+    /**
+     * Create geofence should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createGeofence_shouldReturnCreated() throws Exception {
         when(geofenceService.createGeofence(any())).thenReturn(geofenceResponse);
@@ -58,6 +69,11 @@ class GeofenceControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets geofence by id should return geofence.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getGeofenceById_shouldReturnGeofence() throws Exception {
         when(geofenceQueryService.findGeofenceById(1L)).thenReturn(Optional.of(geofenceResponse));
@@ -66,6 +82,11 @@ class GeofenceControllerTest {
                 .andExpect(jsonPath("$.name").value("name"));
     }
 
+    /**
+     * Update geofence should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateGeofence_shouldReturnOk() throws Exception {
         when(geofenceService.updateGeofence(any())).thenReturn(geofenceResponse);
@@ -75,6 +96,11 @@ class GeofenceControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete geofence should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteGeofence_shouldReturnNoContent() throws Exception {
         doNothing().when(geofenceService).deleteGeofence(1L);

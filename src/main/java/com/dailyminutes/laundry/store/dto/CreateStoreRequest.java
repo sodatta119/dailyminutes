@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.store.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * The type Create store request.
+ */
 public record CreateStoreRequest(
         @NotBlank(message = "Store name cannot be blank")
         String name,

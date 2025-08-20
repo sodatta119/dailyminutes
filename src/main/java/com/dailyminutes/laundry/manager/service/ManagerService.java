@@ -18,6 +18,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Manager service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -26,6 +29,12 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create manager manager response.
+     *
+     * @param request the request
+     * @return the manager response
+     */
     public ManagerResponse createManager(CreateManagerRequest request) {
         ManagerEntity manager = new ManagerEntity(null, request.name(), request.contact());
         ManagerEntity savedManager = managerRepository.save(manager);
@@ -33,6 +42,12 @@ public class ManagerService {
         return toManagerResponse(savedManager);
     }
 
+    /**
+     * Update manager manager response.
+     *
+     * @param request the request
+     * @return the manager response
+     */
     public ManagerResponse updateManager(UpdateManagerRequest request) {
         ManagerEntity existingManager = managerRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Manager with ID " + request.id() + " not found."));
@@ -45,6 +60,11 @@ public class ManagerService {
         return toManagerResponse(updatedManager);
     }
 
+    /**
+     * Delete manager.
+     *
+     * @param id the id
+     */
     public void deleteManager(Long id) {
         if (!managerRepository.existsById(id)) {
             throw new IllegalArgumentException("Manager with ID " + id + " not found.");

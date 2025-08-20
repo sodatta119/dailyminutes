@@ -21,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Store order event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class StoreOrderEventListenerTest {
 
@@ -30,6 +33,9 @@ class StoreOrderEventListenerTest {
     @InjectMocks
     private StoreOrderEventListener listener;
 
+    /**
+     * On order created should create summary.
+     */
     @Test
     void onOrderCreated_shouldCreateSummary() {
         // Given: An order creation event
@@ -53,6 +59,9 @@ class StoreOrderEventListenerTest {
         assertThat(savedSummary.getTotalAmount()).isEqualTo(new BigDecimal("99.50"));
     }
 
+    /**
+     * On order updated should update summary.
+     */
     @Test
     void onOrderUpdated_shouldUpdateSummary() {
         // Given: An order update event
@@ -81,6 +90,9 @@ class StoreOrderEventListenerTest {
         assertThat(updatedSummary.getTotalAmount()).isEqualTo(new BigDecimal("105.00"));
     }
 
+    /**
+     * On order deleted should delete summary.
+     */
     @Test
     void onOrderDeleted_shouldDeleteSummary() {
         // Given: An order deletion event

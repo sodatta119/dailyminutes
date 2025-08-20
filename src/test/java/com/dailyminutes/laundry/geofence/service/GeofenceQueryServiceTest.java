@@ -14,6 +14,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Geofence query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class GeofenceQueryServiceTest {
 
@@ -22,6 +25,9 @@ class GeofenceQueryServiceTest {
     @InjectMocks
     private GeofenceQueryService geofenceQueryService;
 
+    /**
+     * Find geofence by id should return geofence.
+     */
     @Test
     void findGeofenceById_shouldReturnGeofence() {
         GeofenceEntity geofence = new GeofenceEntity(1L, "coords", "type", "name", true);

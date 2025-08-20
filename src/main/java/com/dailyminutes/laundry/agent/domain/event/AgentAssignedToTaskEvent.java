@@ -15,6 +15,13 @@ public record AgentAssignedToTaskEvent(
         Long fromTaskId,
         Long toTaskId
 ) {
+    /**
+     * Instantiates a new Agent assigned to task event.
+     *
+     * @param agentId    the agent id
+     * @param fromTaskId the from task id
+     * @param toTaskId   the to task id
+     */
     public AgentAssignedToTaskEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
         if (fromTaskId == null && toTaskId == null) throw new IllegalArgumentException("Task ID cannot be null");

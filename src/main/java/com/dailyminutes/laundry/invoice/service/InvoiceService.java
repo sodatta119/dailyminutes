@@ -23,6 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Invoice service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -32,6 +35,12 @@ public class InvoiceService {
     private final InvoiceItemRepository invoiceItemRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create invoice invoice response.
+     *
+     * @param request the request
+     * @return the invoice response
+     */
     public InvoiceResponse createInvoice(CreateInvoiceRequest request) {
         InvoiceEntity invoice = new InvoiceEntity(null, request.swipeInvoiceId(), request.orderId(), request.customerId(), request.invoiceDate(), request.totalPrice(), request.totalTax(), request.totalDiscount());
         InvoiceEntity savedInvoice = invoiceRepository.save(invoice);
@@ -46,6 +55,12 @@ public class InvoiceService {
         return toInvoiceResponse(savedInvoice, items);
     }
 
+    /**
+     * Update invoice invoice response.
+     *
+     * @param request the request
+     * @return the invoice response
+     */
     public InvoiceResponse updateInvoice(UpdateInvoiceRequest request) {
         InvoiceEntity existingInvoice = invoiceRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Invoice with ID " + request.id() + " not found."));
@@ -70,6 +85,11 @@ public class InvoiceService {
         return toInvoiceResponse(updatedInvoice, items);
     }
 
+    /**
+     * Delete invoice.
+     *
+     * @param id the id
+     */
     public void deleteInvoice(Long id) {
         if (!invoiceRepository.existsById(id)) {
             throw new IllegalArgumentException("Invoice with ID " + id + " not found.");

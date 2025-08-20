@@ -19,8 +19,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Team task summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -35,6 +37,9 @@ class TeamTaskSummaryRepositoryTest {
     private TeamRepository teamRepository;
 
 
+    /**
+     * Test save and find team task summary.
+     */
     @Test
     void testSaveAndFindTeamTaskSummary() {
         TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -57,6 +62,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getTaskType()).isEqualTo("PICKUP");
     }
 
+    /**
+     * Test update team task summary.
+     */
     @Test
     void testUpdateTeamTaskSummary() {
         TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -74,6 +82,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(updatedSummary.get().getAgentName()).isEqualTo("Team Agent Beta (Completed)");
     }
 
+    /**
+     * Test delete team task summary.
+     */
     @Test
     void testDeleteTeamTaskSummary() {
         TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -86,6 +97,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by team id.
+     */
     @Test
     void testFindByTeamId() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -99,6 +113,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getTeamId().equals(team1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by task id.
+     */
     @Test
     void testFindByTaskId() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -111,6 +128,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getTaskStatus()).isEqualTo("COMPLETED");
     }
 
+    /**
+     * Test find by agent id.
+     */
     @Test
     void testFindByAgentId() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -125,6 +145,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(summariesForAgent.stream().allMatch(s -> s.getAgentId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by task status.
+     */
     @Test
     void testFindByTaskStatus() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -139,6 +162,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(newTasks.stream().allMatch(s -> s.getTaskStatus().equals("NEW"))).isTrue();
     }
 
+    /**
+     * Test find by task type.
+     */
     @Test
     void testFindByTaskType() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
@@ -153,6 +179,9 @@ class TeamTaskSummaryRepositoryTest {
         assertThat(pickupTasks.stream().allMatch(s -> s.getTaskType().equals("PICKUP"))).isTrue();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));

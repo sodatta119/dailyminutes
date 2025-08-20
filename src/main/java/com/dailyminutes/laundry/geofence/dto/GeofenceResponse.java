@@ -5,6 +5,9 @@
 package com.dailyminutes.laundry.geofence.dto;
 
 
+/**
+ * The type Geofence response.
+ */
 public record GeofenceResponse(
         Long id,
         String polygonCoordinates,

@@ -8,6 +8,9 @@ package com.dailyminutes.laundry.geofence.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The type Update geofence request.
+ */
 public record UpdateGeofenceRequest(
         @NotNull(message = "Geofence ID cannot be null")
         Long id,

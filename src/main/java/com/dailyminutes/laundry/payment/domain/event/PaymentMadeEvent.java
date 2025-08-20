@@ -10,6 +10,9 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Payment made event.
+ */
 public record PaymentMadeEvent(
         Long paymentId,
         Long orderId,

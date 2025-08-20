@@ -19,6 +19,9 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Payment repository test.
+ */
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = {"com.dailyminutes.laundry.payment.repository"})
@@ -33,6 +36,9 @@ class PaymentRepositoryTest {
         return "TXN-" + UUID.randomUUID().toString();
     }
 
+    /**
+     * Test save and find payment.
+     */
     @Test
     void testSaveAndFindPayment() {
         String transactionId = generateUniqueTransactionId();
@@ -51,6 +57,9 @@ class PaymentRepositoryTest {
         assertThat(foundPayment.get().getStatus()).isEqualTo(PaymentStatus.COMPLETED);
     }
 
+    /**
+     * Test update payment.
+     */
     @Test
     void testUpdatePayment() {
         String transactionId = generateUniqueTransactionId();
@@ -67,6 +76,9 @@ class PaymentRepositoryTest {
         assertThat(foundUpdatedPayment.get().getRemarks()).isEqualTo("UPI payment successful");
     }
 
+    /**
+     * Test delete payment.
+     */
     @Test
     void testDeletePayment() {
         String transactionId = generateUniqueTransactionId();
@@ -78,6 +90,9 @@ class PaymentRepositoryTest {
         assertThat(deletedPayment).isNotPresent();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         String transactionId1 = generateUniqueTransactionId();
@@ -91,6 +106,9 @@ class PaymentRepositoryTest {
         assertThat(paymentsForOrder100.stream().allMatch(p -> p.getOrderId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by customer id.
+     */
     @Test
     void testFindByCustomerId() {
         String transactionId3 = generateUniqueTransactionId();
@@ -104,6 +122,9 @@ class PaymentRepositoryTest {
         assertThat(paymentsForCustomer30.stream().allMatch(p -> p.getCustomerId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by transaction id.
+     */
     @Test
     void testFindByTransactionId() {
         String uniqueTxnId = generateUniqueTransactionId();
@@ -113,6 +134,9 @@ class PaymentRepositoryTest {
         assertThat(foundPayment.get().getAmount()).isEqualByComparingTo("70.00");
     }
 
+    /**
+     * Test find by status.
+     */
     @Test
     void testFindByStatus() {
         paymentRepository.save(new PaymentEntity(null, 10l, 10l, generateUniqueTransactionId(), new BigDecimal("80.00"), LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CREDIT_CARD, ""));
@@ -124,6 +148,9 @@ class PaymentRepositoryTest {
         assertThat(completedPayments.stream().allMatch(p -> p.getStatus().equals(PaymentStatus.COMPLETED))).isTrue();
     }
 
+    /**
+     * Test find by method.
+     */
     @Test
     void testFindByMethod() {
         paymentRepository.save(new PaymentEntity(null, 10l, 10l, generateUniqueTransactionId(), new BigDecimal("110.00"), LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, ""));

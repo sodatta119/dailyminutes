@@ -20,6 +20,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Team agent event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TeamAgentEventListenerTest {
 
@@ -29,6 +32,9 @@ class TeamAgentEventListenerTest {
     @InjectMocks
     private TeamAgentEventListener listener;
 
+    /**
+     * On agent created should create summary.
+     */
     @Test
     void onAgentCreated_shouldCreateSummary() {
         // Given
@@ -48,6 +54,9 @@ class TeamAgentEventListenerTest {
         assertThat(summary.getAgentState()).isEqualTo(AgentState.ACTIVE.name());
     }
 
+    /**
+     * On agent updated should update agent details.
+     */
     @Test
     void onAgentUpdated_shouldUpdateAgentDetails() {
         // Given: An update event where the team ID has NOT changed
@@ -68,6 +77,9 @@ class TeamAgentEventListenerTest {
         assertThat(existingSummary.getAgentPhoneNumber()).isEqualTo("555-5678");
     }
 
+    /**
+     * On agent updated should move agent to new team.
+     */
     @Test
     void onAgentUpdated_shouldMoveAgentToNewTeam() {
         // Given: An update event where the team ID HAS changed (from 10L to 20L)
@@ -91,6 +103,9 @@ class TeamAgentEventListenerTest {
         assertThat(newSummary.getAgentName()).isEqualTo("Agent Moved");
     }
 
+    /**
+     * On agent deleted should delete summary.
+     */
     @Test
     void onAgentDeleted_shouldDeleteSummary() {
         // Given

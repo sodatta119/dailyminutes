@@ -16,6 +16,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Task query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TaskQueryServiceTest {
 
@@ -24,6 +27,9 @@ class TaskQueryServiceTest {
     @InjectMocks
     private TaskQueryService taskQueryService;
 
+    /**
+     * Find task by id should return task.
+     */
     @Test
     void findTaskById_shouldReturnTask() {
         TaskEntity task = new TaskEntity(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);

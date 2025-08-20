@@ -25,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Store service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class StoreServiceTest {
 
@@ -39,6 +42,9 @@ class StoreServiceTest {
     @InjectMocks
     private StoreService storeService;
 
+    /**
+     * Create store should create and publish event.
+     */
     @Test
     void createStore_shouldCreateAndPublishEvent() {
         CreateStoreRequest request = new CreateStoreRequest("Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
@@ -50,6 +56,9 @@ class StoreServiceTest {
         verify(events).publishEvent(any(StoreCreatedEvent.class));
     }
 
+    /**
+     * Update store should update and publish event.
+     */
     @Test
     void updateStore_shouldUpdateAndPublishEvent() {
         UpdateStoreRequest request = new UpdateStoreRequest(1L, "Updated Store", "456 Main St", "0987654321", "updated@test.com", 2L);
@@ -62,6 +71,9 @@ class StoreServiceTest {
         verify(events).publishEvent(any(StoreUpdatedEvent.class));
     }
 
+    /**
+     * Delete store should delete and publish event.
+     */
     @Test
     void deleteStore_shouldDeleteAndPublishEvent() {
         when(storeRepository.existsById(1L)).thenReturn(true);
@@ -72,6 +84,9 @@ class StoreServiceTest {
         verify(events).publishEvent(any(StoreDeletedEvent.class));
     }
 
+    /**
+     * Update store should throw exception when store not found.
+     */
     @Test
     void updateStore_shouldThrowException_whenStoreNotFound() {
         UpdateStoreRequest request = new UpdateStoreRequest(1L, "Updated Store", "456 Main St", "0987654321", "updated@test.com", 2L);
@@ -79,6 +94,9 @@ class StoreServiceTest {
         assertThrows(IllegalArgumentException.class, () -> storeService.updateStore(request));
     }
 
+    /**
+     * Remove catalog item from store should delete and publish event.
+     */
     @Test
     void removeCatalogItemFromStore_shouldDeleteAndPublishEvent() {
         // Given
@@ -101,6 +119,9 @@ class StoreServiceTest {
         assertThat(publishedEvent.catalogId()).isEqualTo(catalogId);
     }
 
+    /**
+     * Assign geofence to store should publish event.
+     */
     @Test
     void assignGeofenceToStore_shouldPublishEvent() {
         // Given
@@ -123,6 +144,9 @@ class StoreServiceTest {
         assertThat(publishedEvent.geofenceId()).isEqualTo(geofenceId);
     }
 
+    /**
+     * Remove geofence from store should delete and publish event.
+     */
     @Test
     void removeGeofenceFromStore_shouldDeleteAndPublishEvent() {
         // Given

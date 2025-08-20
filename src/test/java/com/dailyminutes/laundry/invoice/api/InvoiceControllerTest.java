@@ -28,6 +28,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Invoice controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(InvoiceController.class)
 class InvoiceControllerTest {
@@ -45,6 +48,9 @@ class InvoiceControllerTest {
     private CreateInvoiceRequest createInvoiceRequest;
     private UpdateInvoiceRequest updateInvoiceRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         InvoiceItemDto item = new InvoiceItemDto(1L, 1L, 1, BigDecimal.TEN, BigDecimal.ONE);
@@ -53,6 +59,11 @@ class InvoiceControllerTest {
         updateInvoiceRequest = new UpdateInvoiceRequest(1L, "swipe2", 2L, 1L, LocalDateTime.now(), BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, Collections.emptyList());
     }
 
+    /**
+     * Create invoice should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createInvoice_shouldReturnCreated() throws Exception {
         when(invoiceService.createInvoice(any())).thenReturn(invoiceResponse);
@@ -62,6 +73,11 @@ class InvoiceControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets invoice by id should return invoice.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getInvoiceById_shouldReturnInvoice() throws Exception {
         when(invoiceQueryService.findInvoiceById(1L)).thenReturn(Optional.of(invoiceResponse));
@@ -70,6 +86,11 @@ class InvoiceControllerTest {
                 .andExpect(jsonPath("$.swipeInvoiceId").value("swipe1"));
     }
 
+    /**
+     * Update invoice should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateInvoice_shouldReturnOk() throws Exception {
         when(invoiceService.updateInvoice(any())).thenReturn(invoiceResponse);
@@ -79,6 +100,11 @@ class InvoiceControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete invoice should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteInvoice_shouldReturnNoContent() throws Exception {
         doNothing().when(invoiceService).deleteInvoice(1L);

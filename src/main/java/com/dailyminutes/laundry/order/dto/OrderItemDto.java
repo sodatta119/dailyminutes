@@ -9,6 +9,9 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Order item dto.
+ */
 public record OrderItemDto(
         Long id,
         @NotNull Long catalogId,

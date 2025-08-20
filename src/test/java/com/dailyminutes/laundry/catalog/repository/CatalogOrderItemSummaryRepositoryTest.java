@@ -23,8 +23,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Catalog order item summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -42,6 +44,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         return "Item-" + UUID.randomUUID().toString().substring(0, 8);
     }
 
+    /**
+     * Test save and find catalog order item summary.
+     */
     @Test
     void testSaveAndFindCatalogOrderItemSummary() {
         CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
@@ -66,6 +71,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         assertThat(foundSummary.get().getCatalogName()).isEqualTo(catalogName);
     }
 
+    /**
+     * Test update catalog order item summary.
+     */
     @Test
     void testUpdateCatalogOrderItemSummary() {
         CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
@@ -86,6 +94,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         assertThat(updatedSummary.get().getItemPriceAtOrder()).isEqualByComparingTo("9.50");
     }
 
+    /**
+     * Test delete catalog order item summary.
+     */
     @Test
     void testDeleteCatalogOrderItemSummary() {
         CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
@@ -101,6 +112,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by catalog id.
+     */
     @Test
     void testFindByCatalogId() {
         CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
@@ -114,6 +128,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getCatalogId().equals(catalog1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
@@ -128,6 +145,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getOrderId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by order item id.
+     */
     @Test
     void testFindByOrderItemId() {
         CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.KG, new BigDecimal(100)));
@@ -138,6 +158,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         assertThat(foundSummary.get().getItemPriceAtOrder()).isEqualByComparingTo("1.75");
     }
 
+    /**
+     * Test find by catalog type.
+     */
     @Test
     void testFindByCatalogType() {
         CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
@@ -152,6 +175,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         assertThat(serviceItems.stream().allMatch(s -> s.getCatalogType().equals("SERVICE"))).isTrue();
     }
 
+    /**
+     * Test find by order date between.
+     */
     @Test
     void testFindByOrderDateBetween() {
         LocalDateTime start = LocalDateTime.of(2025, 1, 1, 0, 0);

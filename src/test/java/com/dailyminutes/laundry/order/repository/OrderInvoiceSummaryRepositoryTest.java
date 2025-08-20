@@ -20,8 +20,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Order invoice summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -36,6 +38,9 @@ class OrderInvoiceSummaryRepositoryTest {
     private OrderRepository orderRepository;
 
 
+    /**
+     * Test save and find order invoice summary.
+     */
     @Test
     void testSaveAndFindOrderInvoiceSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -55,6 +60,9 @@ class OrderInvoiceSummaryRepositoryTest {
         assertThat(foundSummary.get().getTotalTax()).isEqualByComparingTo("15.00");
     }
 
+    /**
+     * Test update order invoice summary.
+     */
     @Test
     void testUpdateOrderInvoiceSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -73,6 +81,9 @@ class OrderInvoiceSummaryRepositoryTest {
         assertThat(updatedSummary.get().getTotalDiscount()).isEqualByComparingTo("15.00");
     }
 
+    /**
+     * Test delete order invoice summary.
+     */
     @Test
     void testDeleteOrderInvoiceSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -86,6 +97,9 @@ class OrderInvoiceSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -98,6 +112,9 @@ class OrderInvoiceSummaryRepositoryTest {
         assertThat(foundSummary.get().getTotalPrice()).isEqualByComparingTo("100.00");
     }
 
+    /**
+     * Test find by invoice id.
+     */
     @Test
     void testFindByInvoiceId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -110,6 +127,9 @@ class OrderInvoiceSummaryRepositoryTest {
         assertThat(foundSummary.get().getTotalPrice()).isEqualByComparingTo("80.00");
     }
 
+    /**
+     * Test find by invoice date between.
+     */
     @Test
     void testFindByInvoiceDateBetween() {
         LocalDateTime start = LocalDateTime.of(2025, 1, 1, 0, 0);

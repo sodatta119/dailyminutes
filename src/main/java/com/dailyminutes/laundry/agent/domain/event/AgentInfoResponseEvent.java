@@ -10,6 +10,9 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 
 import java.time.LocalDate;
 
+/**
+ * The type Agent info response event.
+ */
 public record AgentInfoResponseEvent(
         String name,
         AgentState state,

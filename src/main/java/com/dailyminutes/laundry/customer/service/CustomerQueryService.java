@@ -18,6 +18,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+/**
+ * The type Customer query service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -26,16 +29,33 @@ public class CustomerQueryService {
     private final CustomerRepository customerRepository;
     private final CustomerAddressRepository addressRepository;
 
+    /**
+     * Find customer by id optional.
+     *
+     * @param id the id
+     * @return the optional
+     */
     public Optional<CustomerResponse> findCustomerById(Long id) {
         return customerRepository.findById(id).map(c -> new CustomerResponse(c.getId(), c.getSubscriberId(), c.getPhoneNumber(), c.getName(), c.getEmail()));
     }
 
+    /**
+     * Find all customers list.
+     *
+     * @return the list
+     */
     public List<CustomerResponse> findAllCustomers() {
         return StreamSupport.stream(customerRepository.findAll().spliterator(), false)
                 .map(c -> new CustomerResponse(c.getId(), c.getSubscriberId(), c.getPhoneNumber(), c.getName(), c.getEmail()))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Find addresses by customer id list.
+     *
+     * @param customerId the customer id
+     * @return the list
+     */
     public List<CustomerAddressResponse> findAddressesByCustomerId(Long customerId) {
         return addressRepository.findByCustomerId(customerId).stream()
                 .map(a -> new CustomerAddressResponse(a.getId(), a.getCustomerId(), a.getAddressType(), a.isDefault(), a.getFlatApartment(), a.getAddressLine(), a.getStreet(), a.getCity(), a.getState(), a.getZipCode(), a.getCountry(), a.getLongitude(), a.getLatitude(), a.getGeofenceId()))

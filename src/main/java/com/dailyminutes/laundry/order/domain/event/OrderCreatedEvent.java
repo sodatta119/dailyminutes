@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Order created event.
+ */
 public record OrderCreatedEvent(
         Long orderId,
         Long customerId,

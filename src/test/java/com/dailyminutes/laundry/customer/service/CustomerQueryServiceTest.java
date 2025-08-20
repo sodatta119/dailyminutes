@@ -14,6 +14,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Customer query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class CustomerQueryServiceTest {
 
@@ -22,6 +25,9 @@ class CustomerQueryServiceTest {
     @InjectMocks
     private CustomerQueryService customerQueryService;
 
+    /**
+     * Find customer by id should return customer.
+     */
     @Test
     void findCustomerById_shouldReturnCustomer() {
         CustomerEntity customer = new CustomerEntity(1L, "sub1", "1234567890", "Test", "test@test.com");

@@ -38,6 +38,12 @@ public interface InvoiceRepository extends ListCrudRepository<InvoiceEntity, Lon
      */
     List<InvoiceEntity> findAllByOrderId(Long orderId);
 
+    /**
+     * Find by order id optional.
+     *
+     * @param orderId the order id
+     * @return the optional
+     */
     Optional<InvoiceEntity> findByOrderId(Long orderId);
 }
 

@@ -25,6 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Invoice customer event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class InvoiceCustomerEventListenerTest {
 
@@ -37,6 +40,9 @@ class InvoiceCustomerEventListenerTest {
     @InjectMocks
     private InvoiceCustomerEventListener listener;
 
+    /**
+     * On invoice created should request customer info.
+     */
     @Test
     void onInvoiceCreated_shouldRequestCustomerInfo() {
         // Given: An event for a newly created invoice
@@ -58,6 +64,9 @@ class InvoiceCustomerEventListenerTest {
         assertThat(invoiceCreatedEvent.invoiceId()).isEqualTo(501L);
     }
 
+    /**
+     * On customer info provided should create summary.
+     */
     @Test
     void onCustomerInfoProvided_shouldCreateSummary() {
         // Given: A response event from the customer module with the customer's details
@@ -80,6 +89,9 @@ class InvoiceCustomerEventListenerTest {
         assertThat(summary.getCustomerEmail()).isEqualTo("jane.doe@example.com");
     }
 
+    /**
+     * On invoice deleted should delete summary.
+     */
     @Test
     void onInvoiceDeleted_shouldDeleteSummary() {
         // Given: An invoice deletion event
@@ -97,6 +109,9 @@ class InvoiceCustomerEventListenerTest {
         verify(summaryRepository).deleteById(1L);
     }
 
+    /**
+     * On customer deleted should delete all summaries for that customer.
+     */
     @Test
     void onCustomerDeleted_shouldDeleteAllSummariesForThatCustomer() {
         // Given: A customer deletion event

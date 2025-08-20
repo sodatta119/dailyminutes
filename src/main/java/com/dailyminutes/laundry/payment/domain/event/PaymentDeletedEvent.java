@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.payment.domain.event;
 
+/**
+ * The type Payment deleted event.
+ */
 public record PaymentDeletedEvent(
         Long paymentId
 ) {

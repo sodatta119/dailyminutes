@@ -21,8 +21,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Task geofence summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -44,6 +46,9 @@ class TaskGeofenceSummaryRepositoryTest {
         return "POLYGON((" + UUID.randomUUID().toString().substring(0, 4) + " 0, 1 0, 1 1, 0 1, 0 0))";
     }
 
+    /**
+     * Test save and find task geofence summary.
+     */
     @Test
     void testSaveAndFindTaskGeofenceSummary() {
         TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -68,6 +73,9 @@ class TaskGeofenceSummaryRepositoryTest {
         assertThat(foundSummary.get().getGeofenceName()).isEqualTo(geofenceName);
     }
 
+    /**
+     * Test update task geofence summary.
+     */
     @Test
     void testUpdateTaskGeofenceSummary() {
         TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -89,6 +97,9 @@ class TaskGeofenceSummaryRepositoryTest {
         assertThat(updatedSummary.get().isDestination()).isFalse();
     }
 
+    /**
+     * Test delete task geofence summary.
+     */
     @Test
     void testDeleteTaskGeofenceSummary() {
         TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -103,6 +114,9 @@ class TaskGeofenceSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by task id.
+     */
     @Test
     void testFindByTaskId() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -116,6 +130,9 @@ class TaskGeofenceSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getTaskId().equals(task1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by geofence id.
+     */
     @Test
     void testFindByGeofenceId() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -130,6 +147,9 @@ class TaskGeofenceSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getGeofenceId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by geofence type.
+     */
     @Test
     void testFindByGeofenceType() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -144,6 +164,9 @@ class TaskGeofenceSummaryRepositoryTest {
         assertThat(deliveryZones.stream().allMatch(s -> s.getGeofenceType().equals("DELIVERY_ZONE"))).isTrue();
     }
 
+    /**
+     * Test find by is source.
+     */
     @Test
     void testFindByIsSource() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -158,6 +181,9 @@ class TaskGeofenceSummaryRepositoryTest {
         assertThat(sourceGeofences.stream().allMatch(TaskGeofenceSummaryEntity::isSource)).isTrue();
     }
 
+    /**
+     * Test find by is destination.
+     */
     @Test
     void testFindByIsDestination() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));

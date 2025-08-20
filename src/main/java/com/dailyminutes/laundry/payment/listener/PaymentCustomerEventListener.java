@@ -16,6 +16,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Payment customer event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class PaymentCustomerEventListener {
@@ -23,12 +26,22 @@ public class PaymentCustomerEventListener {
     private final PaymentCustomerSummaryRepository summaryRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On payment made.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onPaymentMade(PaymentMadeEvent event) {
         // Step 1: A payment was made, so ask the customer module for details.
         events.publishEvent(new CustomerInfoRequestEvent(event.customerId(), event));
     }
 
+    /**
+     * On customer info provided.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerInfoProvided(CustomerInfoResponseEvent event) {
         // Step 2: Receive the response and check if it was triggered by our event.
@@ -45,12 +58,22 @@ public class PaymentCustomerEventListener {
         }
     }
 
+    /**
+     * On payment deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onPaymentDeleted(PaymentDeletedEvent event) {
         summaryRepository.findByPaymentId(event.paymentId()).ifPresent(summary ->
                 summaryRepository.deleteById(summary.getId()));
     }
 
+    /**
+     * On customer deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerDeleted(CustomerDeletedEvent event) {
         var summariesToDelete = summaryRepository.findByCustomerId(event.customerId());

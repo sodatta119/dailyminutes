@@ -15,6 +15,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Task geofence event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class TaskGeofenceEventListener {
@@ -22,6 +25,11 @@ public class TaskGeofenceEventListener {
     private final TaskGeofenceSummaryRepository summaryRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On task created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskCreated(TaskCreatedEvent event) {
         // Ask for source geofence details, if it exists
@@ -34,6 +42,11 @@ public class TaskGeofenceEventListener {
         }
     }
 
+    /**
+     * On geofence info provided.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onGeofenceInfoProvided(GeofenceInfoResponseEvent event) {
         if(event.originalEvent() instanceof TaskCreatedEvent)
@@ -53,6 +66,11 @@ public class TaskGeofenceEventListener {
         }
     }
 
+    /**
+     * On task deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskDeleted(TaskDeletedEvent event) {
         var summariesToDelete = summaryRepository.findByTaskId(event.taskId());

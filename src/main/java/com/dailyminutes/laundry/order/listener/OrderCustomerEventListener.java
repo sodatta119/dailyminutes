@@ -16,6 +16,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Order customer event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class OrderCustomerEventListener {
@@ -23,6 +26,11 @@ public class OrderCustomerEventListener {
     private final OrderCustomerSummaryRepository summaryRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On order created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderCreated(OrderCreatedEvent event) {
         // Ask the customer module for details, using orderId as the correlationId
@@ -33,6 +41,11 @@ public class OrderCustomerEventListener {
         events.publishEvent(new CustomerInfoRequestEvent(event.customerId(), event));
     }
 
+    /**
+     * On customer info provided.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerInfoProvided(CustomerInfoResponseEvent event) {
         // The correlationId is the orderId
@@ -54,6 +67,11 @@ public class OrderCustomerEventListener {
         }
     }
 
+    /**
+     * On customer updated.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerUpdated(CustomerUpdatedEvent event) {
         // If customer details change, update all of their order summaries
@@ -66,6 +84,11 @@ public class OrderCustomerEventListener {
         summaryRepository.saveAll(summaries);
     }
 
+    /**
+     * On order deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderDeleted(OrderDeletedEvent event) {
         summaryRepository.findByOrderId(event.orderId()).ifPresent(summary ->

@@ -23,6 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Task service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TaskServiceTest {
 
@@ -33,6 +36,9 @@ class TaskServiceTest {
     @InjectMocks
     private TaskService taskService;
 
+    /**
+     * Create task should create and publish event.
+     */
     @Test
     void createTask_shouldCreateAndPublishEvent() {
         CreateTaskRequest request = new CreateTaskRequest("name", "desc", TaskType.PICKUP, LocalDateTime.now(), TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
@@ -44,6 +50,9 @@ class TaskServiceTest {
         verify(events).publishEvent(any(TaskCreatedEvent.class));
     }
 
+    /**
+     * Update task should update and publish event.
+     */
     @Test
     void updateTask_shouldUpdateAndPublishEvent() {
         UpdateTaskRequest request = new UpdateTaskRequest(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
@@ -56,6 +65,9 @@ class TaskServiceTest {
         verify(events).publishEvent(any(TaskUpdatedEvent.class));
     }
 
+    /**
+     * Delete task should delete and publish event.
+     */
     @Test
     void deleteTask_shouldDeleteAndPublishEvent() {
         when(taskRepository.existsById(1L)).thenReturn(true);
@@ -66,6 +78,9 @@ class TaskServiceTest {
         verify(events).publishEvent(any(TaskDeletedEvent.class));
     }
 
+    /**
+     * Update task should throw exception when task not found.
+     */
     @Test
     void updateTask_shouldThrowException_whenTaskNotFound() {
         UpdateTaskRequest request = new UpdateTaskRequest(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);

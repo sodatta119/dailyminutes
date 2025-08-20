@@ -21,8 +21,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Order customer summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 15/07/25
+ * @version 15 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -45,6 +47,9 @@ class OrderCustomerSummaryRepositoryTest {
         return "test_" + UUID.randomUUID().toString().substring(0, 8) + "@example.com";
     }
 
+    /**
+     * Test save and find order customer summary.
+     */
     @Test
     void testSaveAndFindOrderCustomerSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -68,6 +73,9 @@ class OrderCustomerSummaryRepositoryTest {
         assertThat(foundSummary.get().getCustomerName()).isEqualTo("Customer A");
     }
 
+    /**
+     * Test update order customer summary.
+     */
     @Test
     void testUpdateOrderCustomerSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -88,6 +96,9 @@ class OrderCustomerSummaryRepositoryTest {
         assertThat(updatedSummary.get().getCustomerEmail()).isEqualTo(savedSummary.getCustomerEmail());
     }
 
+    /**
+     * Test delete order customer summary.
+     */
     @Test
     void testDeleteOrderCustomerSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -103,6 +114,9 @@ class OrderCustomerSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -115,6 +129,9 @@ class OrderCustomerSummaryRepositoryTest {
         assertThat(foundSummary.get().getCustomerName()).isEqualTo("Cust D");
     }
 
+    /**
+     * Test find by customer id.
+     */
     @Test
     void testFindByCustomerId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -129,6 +146,9 @@ class OrderCustomerSummaryRepositoryTest {
         assertThat(summariesForCustomer.stream().allMatch(s -> s.getCustomerId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by customer phone number.
+     */
     @Test
     void testFindByCustomerPhoneNumber() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));

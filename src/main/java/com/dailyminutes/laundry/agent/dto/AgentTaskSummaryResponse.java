@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.agent.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Agent task summary response.
+ */
 public record AgentTaskSummaryResponse(
         Long taskId,
         Long agentId,

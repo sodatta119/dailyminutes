@@ -12,6 +12,9 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
+/**
+ * The type Update agent request.
+ */
 public record UpdateAgentRequest(
         @NotNull(message = "Agent ID cannot be null for update")
         Long id,

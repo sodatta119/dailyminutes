@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Create invoice request.
+ */
 public record CreateInvoiceRequest(
         @NotBlank(message = "Swipe Invoice ID cannot be blank")
         String swipeInvoiceId,

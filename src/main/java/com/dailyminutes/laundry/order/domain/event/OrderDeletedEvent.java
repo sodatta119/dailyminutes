@@ -4,5 +4,8 @@
  */
 package com.dailyminutes.laundry.order.domain.event;
 
+/**
+ * The type Order deleted event.
+ */
 public record OrderDeletedEvent(Long orderId) {
 }

@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
+/**
+ * The type Geofence removed from store event.
+ */
 public record GeofenceRemovedFromStoreEvent(
         Long storeId,
         Long geofenceId

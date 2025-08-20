@@ -19,8 +19,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Store order summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -35,6 +37,9 @@ class StoreOrderSummaryRepositoryTest {
     private StoreRepository storeRepository;
 
 
+    /**
+     * Test save and find store order summary.
+     */
     @Test
     void testSaveAndFindStoreOrderSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -54,6 +59,9 @@ class StoreOrderSummaryRepositoryTest {
         assertThat(foundSummary.get().getTotalAmount()).isEqualByComparingTo("100.00");
     }
 
+    /**
+     * Test update store order summary.
+     */
     @Test
     void testUpdateStoreOrderSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -71,6 +79,9 @@ class StoreOrderSummaryRepositoryTest {
         assertThat(updatedSummary.get().getTotalAmount()).isEqualByComparingTo("145.00");
     }
 
+    /**
+     * Test delete store order summary.
+     */
     @Test
     void testDeleteStoreOrderSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -83,6 +94,9 @@ class StoreOrderSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by store id.
+     */
     @Test
     void testFindByStoreId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -96,6 +110,9 @@ class StoreOrderSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getStoreId().equals(store1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -108,6 +125,9 @@ class StoreOrderSummaryRepositoryTest {
         assertThat(foundSummary.get().getStatus()).isEqualTo("READY_FOR_PICKUP");
     }
 
+    /**
+     * Test find by customer id.
+     */
     @Test
     void testFindByCustomerId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -122,6 +142,9 @@ class StoreOrderSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getCustomerId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by status.
+     */
     @Test
     void testFindByStatus() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));

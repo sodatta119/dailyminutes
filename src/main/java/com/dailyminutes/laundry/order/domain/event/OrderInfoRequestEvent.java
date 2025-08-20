@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.order.domain.event;
 
 import com.dailyminutes.laundry.common.events.CallerEvent;
 
+/**
+ * The type Order info request event.
+ */
 public record OrderInfoRequestEvent(
         Long orderId,
         CallerEvent originalEvent

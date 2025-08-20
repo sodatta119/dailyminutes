@@ -14,6 +14,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Team query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TeamQueryServiceTest {
 
@@ -22,6 +25,9 @@ class TeamQueryServiceTest {
     @InjectMocks
     private TeamQueryService teamQueryService;
 
+    /**
+     * Find team by id should return team.
+     */
     @Test
     void findTeamById_shouldReturnTeam() {
         TeamEntity team = new TeamEntity(1L, "Test Team", "desc", TeamRole.OPS);

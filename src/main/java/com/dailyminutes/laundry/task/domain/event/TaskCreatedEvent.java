@@ -8,6 +8,9 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Task created event.
+ */
 public record TaskCreatedEvent(
         Long taskId,
         Long orderId,

@@ -18,6 +18,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Invoice query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class InvoiceQueryServiceTest {
 
@@ -28,6 +31,9 @@ class InvoiceQueryServiceTest {
     @InjectMocks
     private InvoiceQueryService invoiceQueryService;
 
+    /**
+     * Find invoice by id should return invoice.
+     */
     @Test
     void findInvoiceById_shouldReturnInvoice() {
         InvoiceEntity invoice = new InvoiceEntity(1L, "swipe1", 2L, 1L, LocalDateTime.now(), BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ZERO);

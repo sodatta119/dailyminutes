@@ -17,6 +17,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Team service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -25,6 +28,12 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create team team response.
+     *
+     * @param request the request
+     * @return the team response
+     */
     public TeamResponse createTeam(CreateTeamRequest request) {
         TeamEntity team = new TeamEntity(null, request.name(), request.description(), request.role());
         TeamEntity savedTeam = teamRepository.save(team);
@@ -32,6 +41,12 @@ public class TeamService {
         return toTeamResponse(savedTeam);
     }
 
+    /**
+     * Update team team response.
+     *
+     * @param request the request
+     * @return the team response
+     */
     public TeamResponse updateTeam(UpdateTeamRequest request) {
         TeamEntity existingTeam = teamRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Team with ID " + request.id() + " not found."));
@@ -45,6 +60,11 @@ public class TeamService {
         return toTeamResponse(updatedTeam);
     }
 
+    /**
+     * Delete team.
+     *
+     * @param id the id
+     */
     public void deleteTeam(Long id) {
         if (!teamRepository.existsById(id)) {
             throw new IllegalArgumentException("Team with ID " + id + " not found.");

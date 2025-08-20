@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.customer;
 
 import org.springframework.modulith.ApplicationModule;
 
+/**
+ * The type Customer module.
+ */
 @ApplicationModule(id = "laundry.customer", allowedDependencies = {"laundry.common::events"})
 public class CustomerModule {
 }

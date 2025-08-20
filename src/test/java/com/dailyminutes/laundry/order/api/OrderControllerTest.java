@@ -29,6 +29,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Order controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(OrderController.class)
 class OrderControllerTest {
@@ -46,6 +49,9 @@ class OrderControllerTest {
     private CreateOrderRequest createOrderRequest;
     private UpdateOrderRequest updateOrderRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         OrderItemDto item = new OrderItemDto(1L, 1L, BigDecimal.ONE, BigDecimal.TEN, "notes");
@@ -54,6 +60,11 @@ class OrderControllerTest {
         updateOrderRequest = new UpdateOrderRequest(1L, 2L, 2L, LocalDateTime.now(), OrderStatus.ACCEPTED, BigDecimal.ONE, Collections.emptyList());
     }
 
+    /**
+     * Create order should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createOrder_shouldReturnCreated() throws Exception {
         when(orderService.createOrder(any())).thenReturn(orderResponse);
@@ -63,6 +74,11 @@ class OrderControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets order by id should return order.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getOrderById_shouldReturnOrder() throws Exception {
         when(orderQueryService.findOrderById(1L)).thenReturn(Optional.of(orderResponse));
@@ -71,6 +87,11 @@ class OrderControllerTest {
                 .andExpect(jsonPath("$.storeId").value(1L));
     }
 
+    /**
+     * Update order should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateOrder_shouldReturnOk() throws Exception {
         when(orderService.updateOrder(any())).thenReturn(orderResponse);
@@ -80,6 +101,11 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete order should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteOrder_shouldReturnNoContent() throws Exception {
         doNothing().when(orderService).deleteOrder(1L);

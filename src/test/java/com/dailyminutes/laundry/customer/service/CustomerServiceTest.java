@@ -18,6 +18,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Customer service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
 
@@ -28,6 +31,9 @@ class CustomerServiceTest {
     @InjectMocks
     private CustomerService customerService;
 
+    /**
+     * Create customer should create and publish event.
+     */
     @Test
     void createCustomer_shouldCreateAndPublishEvent() {
         CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com");

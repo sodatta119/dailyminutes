@@ -25,6 +25,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Team controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(TeamController.class)
 class TeamControllerTest {
@@ -42,6 +45,9 @@ class TeamControllerTest {
     private CreateTeamRequest createTeamRequest;
     private UpdateTeamRequest updateTeamRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         teamResponse = new TeamResponse(1L, "Test Team", "desc", TeamRole.OPS);
@@ -49,6 +55,11 @@ class TeamControllerTest {
         updateTeamRequest = new UpdateTeamRequest(1L, "Updated Team", "new desc", TeamRole.ADMIN);
     }
 
+    /**
+     * Create team should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createTeam_shouldReturnCreated() throws Exception {
         when(teamService.createTeam(any())).thenReturn(teamResponse);
@@ -58,6 +69,11 @@ class TeamControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets team by id should return team.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getTeamById_shouldReturnTeam() throws Exception {
         when(teamQueryService.findTeamById(1L)).thenReturn(Optional.of(teamResponse));
@@ -66,6 +82,11 @@ class TeamControllerTest {
                 .andExpect(jsonPath("$.name").value("Test Team"));
     }
 
+    /**
+     * Update team should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateTeam_shouldReturnOk() throws Exception {
         when(teamService.updateTeam(any())).thenReturn(teamResponse);
@@ -75,6 +96,11 @@ class TeamControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete team should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteTeam_shouldReturnNoContent() throws Exception {
         doNothing().when(teamService).deleteTeam(1L);

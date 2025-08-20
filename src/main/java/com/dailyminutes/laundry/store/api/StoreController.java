@@ -17,6 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Store controller.
+ */
 @RestController
 @RequestMapping("/api/stores")
 @RequiredArgsConstructor
@@ -26,6 +29,12 @@ public class StoreController {
     private final StoreService storeService;
     private final StoreQueryService storeQueryService;
 
+    /**
+     * Create store response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new store")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Store created successfully"),
@@ -36,6 +45,13 @@ public class StoreController {
         return new ResponseEntity<>(storeService.createStore(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update store response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing store")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Store updated successfully"),
@@ -50,6 +66,12 @@ public class StoreController {
         return ResponseEntity.ok(storeService.updateStore(request));
     }
 
+    /**
+     * Delete store response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete a store")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Store deleted successfully"),
@@ -61,6 +83,12 @@ public class StoreController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets store by id.
+     *
+     * @param id the id
+     * @return the store by id
+     */
     @Operation(summary = "Get a store by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the store"),
@@ -73,6 +101,11 @@ public class StoreController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store not found"));
     }
 
+    /**
+     * Gets all stores.
+     *
+     * @return the all stores
+     */
     @Operation(summary = "Get all stores")
     @ApiResponse(responseCode = "200", description = "List of all stores")
     @GetMapping
@@ -80,6 +113,12 @@ public class StoreController {
         return ResponseEntity.ok(storeQueryService.findAllStores());
     }
 
+    /**
+     * Gets agent summary.
+     *
+     * @param id the id
+     * @return the agent summary
+     */
     @Operation(summary = "Get agent summaries for a store")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found agent summaries"),
@@ -90,6 +129,12 @@ public class StoreController {
         return ResponseEntity.ok(storeQueryService.findAgentSummariesByStoreId(id));
     }
 
+    /**
+     * Gets geofence summary.
+     *
+     * @param id the id
+     * @return the geofence summary
+     */
     @Operation(summary = "Get geofence summaries for a store")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found geofence summaries"),
@@ -100,6 +145,12 @@ public class StoreController {
         return ResponseEntity.ok(storeQueryService.findGeofenceSummariesByStoreId(id));
     }
 
+    /**
+     * Gets order summary.
+     *
+     * @param id the id
+     * @return the order summary
+     */
     @Operation(summary = "Get order summaries for a store")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found order summaries"),
@@ -110,6 +161,12 @@ public class StoreController {
         return ResponseEntity.ok(storeQueryService.findOrderSummariesByStoreId(id));
     }
 
+    /**
+     * Gets task summary.
+     *
+     * @param id the id
+     * @return the task summary
+     */
     @Operation(summary = "Get task summaries for a store")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found task summaries"),
@@ -120,6 +177,13 @@ public class StoreController {
         return ResponseEntity.ok(storeQueryService.findTaskSummariesByStoreId(id));
     }
 
+    /**
+     * Add catalog item to store response entity.
+     *
+     * @param storeId   the store id
+     * @param catalogId the catalog id
+     * @return the response entity
+     */
     @Operation(summary = "Add a catalog item to a store's offerings")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Catalog item added successfully"),
@@ -133,6 +197,13 @@ public class StoreController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Remove catalog item from store response entity.
+     *
+     * @param storeId   the store id
+     * @param catalogId the catalog id
+     * @return the response entity
+     */
     @Operation(summary = "Remove a catalog item from a store's offerings")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Catalog item removed successfully"),
@@ -146,7 +217,14 @@ public class StoreController {
         return ResponseEntity.noContent().build();
     }
 
-    // ADD THIS NEW ENDPOINT
+    /**
+     * Assign geofence to store response entity.
+     *
+     * @param storeId    the store id
+     * @param geofenceId the geofence id
+     * @return the response entity
+     */
+// ADD THIS NEW ENDPOINT
     @Operation(summary = "Assign a geofence to a store's service area")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Geofence assignment process initiated successfully"),
@@ -160,6 +238,13 @@ public class StoreController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Remove geofence from store response entity.
+     *
+     * @param storeId    the store id
+     * @param geofenceId the geofence id
+     * @return the response entity
+     */
     @Operation(summary = "Remove a geofence from a store's service area")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Geofence removed successfully from store"),

@@ -8,6 +8,9 @@ package com.dailyminutes.laundry.customer.dto;
 import com.dailyminutes.laundry.customer.domain.model.AddressType;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The type Update customer address request.
+ */
 public record UpdateCustomerAddressRequest(
         @NotNull(message = "Address ID cannot be null")
         Long id,

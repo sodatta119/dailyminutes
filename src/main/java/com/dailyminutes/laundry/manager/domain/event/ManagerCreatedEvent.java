@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.manager.domain.event;
 
+/**
+ * The type Manager created event.
+ */
 public record ManagerCreatedEvent(
         Long managerId,
         String name

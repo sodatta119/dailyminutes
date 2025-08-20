@@ -16,6 +16,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Task service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,6 +27,12 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create task task response.
+     *
+     * @param request the request
+     * @return the task response
+     */
     public TaskResponse createTask(CreateTaskRequest request) {
         TaskEntity task = new TaskEntity(null, request.name(), request.description(), request.type(), request.taskStartTime(), null, null, request.status(), request.teamId(), request.agentId(), request.sourceAddress(), request.sourceGeofenceId(), request.destinationAddress(), request.destinationGeofenceId(), request.taskComment(), request.orderId());
         TaskEntity savedTask = taskRepository.save(task);
@@ -44,6 +53,12 @@ public class TaskService {
         return toTaskResponse(savedTask);
     }
 
+    /**
+     * Update task task response.
+     *
+     * @param request the request
+     * @return the task response
+     */
     public TaskResponse updateTask(UpdateTaskRequest request) {
         TaskEntity existingTask = taskRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Task with ID " + request.id() + " not found."));
@@ -80,6 +95,11 @@ public class TaskService {
         return toTaskResponse(updatedTask);
     }
 
+    /**
+     * Delete task.
+     *
+     * @param id the id
+     */
     public void deleteTask(Long id) {
         if (!taskRepository.existsById(id)) {
             throw new IllegalArgumentException("Task with ID " + id + " not found.");

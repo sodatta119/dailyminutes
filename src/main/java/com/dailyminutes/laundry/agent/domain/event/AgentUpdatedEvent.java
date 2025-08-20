@@ -21,6 +21,19 @@ public record AgentUpdatedEvent(
         LocalDate dateOfLeaving, // Can be null if agent is still active
         String designation
 ) {
+    /**
+     * Instantiates a new Agent updated event.
+     *
+     * @param agentId       the agent id
+     * @param name          the name
+     * @param state         the state
+     * @param teamId        the team id
+     * @param phoneNumber   the phone number
+     * @param uniqueId      the unique id
+     * @param dateOfJoining the date of joining
+     * @param dateOfLeaving the date of leaving
+     * @param designation   the designation
+     */
     public AgentUpdatedEvent {
         if (agentId == null) throw new IllegalArgumentException("Agent ID cannot be null");
         if (name == null || name.isBlank()) throw new IllegalArgumentException("Agent name cannot be null or blank");

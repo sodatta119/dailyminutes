@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * The type Catalog order event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class CatalogOrderEventListener {
@@ -24,6 +27,11 @@ public class CatalogOrderEventListener {
     private final CatalogRepository catalogRepository;
     private final CatalogOrderItemSummaryRepository summaryRepository;
 
+    /**
+     * On order created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderCreated(OrderCreatedEvent event) {
         // The listener now gets all required item info directly from the event
@@ -50,6 +58,11 @@ public class CatalogOrderEventListener {
         summaryRepository.saveAll(summaries);
     }
 
+    /**
+     * On order deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderDeleted(OrderDeletedEvent event) {
         var summariesToDelete = summaryRepository.findByOrderId(event.orderId());

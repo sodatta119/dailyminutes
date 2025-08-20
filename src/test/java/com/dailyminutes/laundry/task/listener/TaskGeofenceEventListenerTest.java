@@ -21,6 +21,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Task geofence event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TaskGeofenceEventListenerTest {
 
@@ -33,6 +36,9 @@ class TaskGeofenceEventListenerTest {
     @InjectMocks
     private TaskGeofenceEventListener listener;
 
+    /**
+     * On task created should request info for all geofences.
+     */
     @Test
     void onTaskCreated_shouldRequestInfoForAllGeofences() {
         // Given: A task is created with both a source and a destination geofence
@@ -53,6 +59,9 @@ class TaskGeofenceEventListenerTest {
         assertThat(requests).extracting(GeofenceInfoRequestEvent::geofenceId).containsExactlyInAnyOrder(10L, 20L);
     }
 
+    /**
+     * On task created should request info for only one geofence if other is null.
+     */
     @Test
     void onTaskCreated_shouldRequestInfoForOnlyOneGeofenceIfOtherIsNull() {
         // Given: A task is created with only a source geofence
@@ -69,6 +78,9 @@ class TaskGeofenceEventListenerTest {
         assertThat(captor.getValue().geofenceId()).isEqualTo(10L);
     }
 
+    /**
+     * On geofence info provided should create summary and set source flag.
+     */
     @Test
     void onGeofenceInfoProvided_shouldCreateSummaryAndSetSourceFlag() {
         // Given: A response for a SOURCE geofence
@@ -92,6 +104,9 @@ class TaskGeofenceEventListenerTest {
         assertThat(summary.isDestination()).isFalse();
     }
 
+    /**
+     * On geofence info provided should create summary and set destination flag.
+     */
     @Test
     void onGeofenceInfoProvided_shouldCreateSummaryAndSetDestinationFlag() {
         // Given: A response for a DESTINATION geofence
@@ -115,6 +130,9 @@ class TaskGeofenceEventListenerTest {
         assertThat(summary.isDestination()).isTrue();
     }
 
+    /**
+     * On geofence info provided should do nothing when original event is wrong type.
+     */
     @Test
     void onGeofenceInfoProvided_shouldDoNothing_whenOriginalEventIsWrongType() {
         // Given: A response event where the original event is not a TaskCreatedEvent
@@ -128,6 +146,9 @@ class TaskGeofenceEventListenerTest {
         verify(summaryRepository, never()).save(any());
     }
 
+    /**
+     * On task deleted should delete summaries for task.
+     */
     @Test
     void onTaskDeleted_shouldDeleteSummariesForTask() {
         // Given: A task deletion event

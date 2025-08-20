@@ -12,6 +12,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Create catalog request.
+ */
 public record CreateCatalogRequest(
         @NotNull(message = "Catalog type cannot be null")
         CatalogType type,

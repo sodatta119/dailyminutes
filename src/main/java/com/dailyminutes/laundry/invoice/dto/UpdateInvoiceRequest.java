@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The type Update invoice request.
+ */
 public record UpdateInvoiceRequest(
         @NotNull(message = "Invoice ID cannot be null")
         Long id,

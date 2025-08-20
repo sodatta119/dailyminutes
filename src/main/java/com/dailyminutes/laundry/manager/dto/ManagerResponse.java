@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.manager.dto;
 
+/**
+ * The type Manager response.
+ */
 public record ManagerResponse(
         Long id,
         String name,

@@ -8,6 +8,9 @@ package com.dailyminutes.laundry.geofence.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Geofence order summary response.
+ */
 public record GeofenceOrderSummaryResponse(
         Long id,
         Long orderId,

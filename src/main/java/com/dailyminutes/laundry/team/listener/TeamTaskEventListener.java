@@ -17,6 +17,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Team task event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class TeamTaskEventListener {
@@ -24,6 +27,11 @@ public class TeamTaskEventListener {
     private final TeamTaskSummaryRepository summaryRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On task created.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskCreated(TaskCreatedEvent event) {
         if (event.teamId() == null) {
@@ -48,6 +56,11 @@ public class TeamTaskEventListener {
         }
     }
 
+    /**
+     * On task assigned to agent.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskAssignedToAgent(TaskAssignedToAgentEvent event) {
         summaryRepository.findByTaskId(event.taskId()).ifPresent(summary -> {
@@ -58,6 +71,11 @@ public class TeamTaskEventListener {
         });
     }
 
+    /**
+     * On team agent info provided.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTeamAgentInfoProvided(AgentInfoResponseEvent event) {
         if(event.originalEvent() instanceof  TaskAssignedToAgentEvent)
@@ -78,6 +96,11 @@ public class TeamTaskEventListener {
         }
     }
 
+    /**
+     * On task status changed.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskStatusChanged(TaskStatusChangedEvent event) {
         summaryRepository.findByTaskId(event.taskId()).ifPresent(summary -> {
@@ -86,6 +109,11 @@ public class TeamTaskEventListener {
         });
     }
 
+    /**
+     * On task deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onTaskDeleted(TaskDeletedEvent event) {
         summaryRepository.findByTaskId(event.taskId()).ifPresent(summary ->

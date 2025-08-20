@@ -10,6 +10,9 @@ import com.dailyminutes.laundry.payment.domain.model.PaymentStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Payment response.
+ */
 public record PaymentResponse(
         Long id,
         Long orderId,

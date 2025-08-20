@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Store event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class StoreEventListenerTest {
 
@@ -32,6 +35,9 @@ class StoreEventListenerTest {
     @InjectMocks
     private StoreEventListener listener;
 
+    /**
+     * On store info requested should find store and publish info.
+     */
     @Test
     void onStoreInfoRequested_shouldFindStoreAndPublishInfo() {
         // Given: A request for store details, containing the original event as payload

@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.manager.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The type Update manager request.
+ */
 public record UpdateManagerRequest(
         @NotNull(message = "Manager ID cannot be null")
         Long id,

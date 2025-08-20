@@ -20,6 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Invoice controller.
+ */
 @RestController
 @RequestMapping("/api/invoices")
 @RequiredArgsConstructor
@@ -29,6 +32,12 @@ public class InvoiceController {
     private final InvoiceService invoiceService;
     private final InvoiceQueryService invoiceQueryService;
 
+    /**
+     * Create invoice response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new invoice")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Invoice created successfully"),
@@ -39,6 +48,13 @@ public class InvoiceController {
         return new ResponseEntity<>(invoiceService.createInvoice(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update invoice response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing invoice")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Invoice updated successfully"),
@@ -53,6 +69,12 @@ public class InvoiceController {
         return ResponseEntity.ok(invoiceService.updateInvoice(request));
     }
 
+    /**
+     * Delete invoice response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete an invoice")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Invoice deleted successfully"),
@@ -64,6 +86,12 @@ public class InvoiceController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets invoice by id.
+     *
+     * @param id the id
+     * @return the invoice by id
+     */
     @Operation(summary = "Get an invoice by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the invoice"),
@@ -76,6 +104,11 @@ public class InvoiceController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice not found"));
     }
 
+    /**
+     * Gets all invoices.
+     *
+     * @return the all invoices
+     */
     @Operation(summary = "Get all invoices")
     @ApiResponse(responseCode = "200", description = "List of all invoices")
     @GetMapping
@@ -83,6 +116,12 @@ public class InvoiceController {
         return ResponseEntity.ok(invoiceQueryService.findAllInvoices());
     }
 
+    /**
+     * Gets customer summary.
+     *
+     * @param id the id
+     * @return the customer summary
+     */
     @Operation(summary = "Get customer summary for an invoice")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found customer summary"),
@@ -95,6 +134,12 @@ public class InvoiceController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer summary not found for invoice"));
     }
 
+    /**
+     * Gets payment summary.
+     *
+     * @param id the id
+     * @return the payment summary
+     */
     @Operation(summary = "Get payment history for an invoice")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found payment history"),

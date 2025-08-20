@@ -25,6 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Customer service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
 
@@ -37,6 +40,9 @@ class CustomerServiceTest {
     @InjectMocks
     private CustomerService customerService;
 
+    /**
+     * Create customer should create and publish event.
+     */
     @Test
     void createCustomer_shouldCreateAndPublishEvent() {
         CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com");
@@ -50,6 +56,9 @@ class CustomerServiceTest {
         verify(events).publishEvent(any(CustomerCreatedEvent.class));
     }
 
+    /**
+     * Update customer should update and publish event.
+     */
     @Test
     void updateCustomer_shouldUpdateAndPublishEvent() {
         UpdateCustomerRequest request = new UpdateCustomerRequest(1L, "sub1", "1234567890", "Test Updated", "test.updated@test.com");
@@ -62,6 +71,9 @@ class CustomerServiceTest {
         verify(events).publishEvent(any(CustomerUpdatedEvent.class));
     }
 
+    /**
+     * Delete customer should delete and publish event.
+     */
     @Test
     void deleteCustomer_shouldDeleteAndPublishEvent() {
         when(customerRepository.existsById(1L)).thenReturn(true);
@@ -72,6 +84,9 @@ class CustomerServiceTest {
         verify(events).publishEvent(any(CustomerDeletedEvent.class));
     }
 
+    /**
+     * Add address should add and publish event.
+     */
     @Test
     void addAddress_shouldAddAndPublishEvent() {
         CreateCustomerAddressRequest request = new CreateCustomerAddressRequest(1L, AddressType.HOME, true, null, "123 Main St", null, "Anytown", null, "12345", null, null, null, null);
@@ -85,6 +100,9 @@ class CustomerServiceTest {
         verify(events).publishEvent(any(CustomerAddressAddedEvent.class));
     }
 
+    /**
+     * Update address should update and publish event.
+     */
     @Test
     void updateAddress_shouldUpdateAndPublishEvent() {
         UpdateCustomerAddressRequest request = new UpdateCustomerAddressRequest(1L, 1L, AddressType.HOME, true, null, "456 Main St", null, "Anytown", null, "12345", null, null, null, null);
@@ -99,6 +117,9 @@ class CustomerServiceTest {
         verify(events).publishEvent(any(CustomerAddressUpdatedEvent.class));
     }
 
+    /**
+     * Remove address should remove and publish event.
+     */
     @Test
     void removeAddress_shouldRemoveAndPublishEvent() {
         CustomerAddressEntity address = new CustomerAddressEntity(1L, 1L, AddressType.HOME, true, null, "123 Main St", null, "Anytown", null, "12345", null, null, null, null);
@@ -110,6 +131,9 @@ class CustomerServiceTest {
         verify(events).publishEvent(any(CustomerAddressRemovedEvent.class));
     }
 
+    /**
+     * Update customer should throw exception when customer not found.
+     */
     @Test
     void updateCustomer_shouldThrowException_whenCustomerNotFound() {
         UpdateCustomerRequest request = new UpdateCustomerRequest(1L, "sub1", "1234567890", "Test Updated", "test.updated@test.com");

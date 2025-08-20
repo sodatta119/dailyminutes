@@ -21,8 +21,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Task team summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -40,6 +42,9 @@ class TaskTeamSummaryRepositoryTest {
         return "Team-" + UUID.randomUUID().toString().substring(0, 8);
     }
 
+    /**
+     * Test save and find task team summary.
+     */
     @Test
     void testSaveAndFindTaskTeamSummary() {
         TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -60,6 +65,9 @@ class TaskTeamSummaryRepositoryTest {
         assertThat(foundSummary.get().getTeamName()).isEqualTo(teamName);
     }
 
+    /**
+     * Test update task team summary.
+     */
     @Test
     void testUpdateTaskTeamSummary() {
         TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -78,6 +86,9 @@ class TaskTeamSummaryRepositoryTest {
         assertThat(updatedSummary.get().getTeamDescription()).isEqualTo("Operations team for task management");
     }
 
+    /**
+     * Test delete task team summary.
+     */
     @Test
     void testDeleteTaskTeamSummary() {
         TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -91,6 +102,9 @@ class TaskTeamSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by task id.
+     */
     @Test
     void testFindByTaskId() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -103,6 +117,9 @@ class TaskTeamSummaryRepositoryTest {
         assertThat(foundSummary.get().getTeamRole()).isEqualTo("FLEET");
     }
 
+    /**
+     * Test find by team id.
+     */
     @Test
     void testFindByTeamId() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
@@ -117,6 +134,9 @@ class TaskTeamSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getTeamId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by team role.
+     */
     @Test
     void testFindByTeamRole() {
         TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));

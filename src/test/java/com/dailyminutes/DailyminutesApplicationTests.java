@@ -11,6 +11,9 @@ import org.springframework.context.ApplicationContext;
 @SpringBootTest
 class DailyminutesApplicationTests {
 
+    /**
+     * The Context.
+     */
     @Autowired
     ApplicationContext context;
 

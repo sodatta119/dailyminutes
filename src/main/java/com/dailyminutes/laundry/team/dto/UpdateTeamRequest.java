@@ -8,6 +8,9 @@ import com.dailyminutes.laundry.team.domain.model.TeamRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The type Update team request.
+ */
 public record UpdateTeamRequest(
         @NotNull(message = "Team ID cannot be null")
         Long id,

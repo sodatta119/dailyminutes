@@ -12,6 +12,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Store event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class StoreEventListener {
@@ -19,6 +22,11 @@ public class StoreEventListener {
     private final StoreRepository storeRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On store info requested.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onStoreInfoRequested(StoreInfoRequestEvent event) {
         storeRepository.findById(event.storeId()).ifPresent(store -> {

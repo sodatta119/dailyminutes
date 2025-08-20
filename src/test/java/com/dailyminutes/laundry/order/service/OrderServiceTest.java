@@ -26,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Order service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
 
@@ -38,6 +41,9 @@ class OrderServiceTest {
     @InjectMocks
     private OrderService orderService;
 
+    /**
+     * Create order should create and publish event.
+     */
     @Test
     void createOrder_shouldCreateAndPublishEvent() {
         OrderItemDto item = new OrderItemDto(null, 1L, BigDecimal.ONE, BigDecimal.TEN, "notes");
@@ -50,6 +56,9 @@ class OrderServiceTest {
         verify(events).publishEvent(any(OrderCreatedEvent.class));
     }
 
+    /**
+     * Update order should update and publish event.
+     */
     @Test
     void updateOrder_shouldUpdateAndPublishEvent() {
         OrderItemDto item = new OrderItemDto(null, 1L, BigDecimal.ONE, BigDecimal.TEN, "notes");
@@ -63,6 +72,9 @@ class OrderServiceTest {
         verify(events).publishEvent(any(OrderUpdatedEvent.class));
     }
 
+    /**
+     * Delete order should delete and publish event.
+     */
     @Test
     void deleteOrder_shouldDeleteAndPublishEvent() {
         when(orderRepository.existsById(1L)).thenReturn(true);
@@ -73,6 +85,9 @@ class OrderServiceTest {
         verify(events).publishEvent(any(OrderDeletedEvent.class));
     }
 
+    /**
+     * Update order should throw exception when order not found.
+     */
     @Test
     void updateOrder_shouldThrowException_whenOrderNotFound() {
         OrderItemDto item = new OrderItemDto(null, 1L, BigDecimal.ONE, BigDecimal.TEN, "notes");

@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Geofence service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class GeofenceServiceTest {
 
@@ -31,6 +34,9 @@ class GeofenceServiceTest {
     @InjectMocks
     private GeofenceService geofenceService;
 
+    /**
+     * Create geofence should create and publish event.
+     */
     @Test
     void createGeofence_shouldCreateAndPublishEvent() {
         CreateGeofenceRequest request = new CreateGeofenceRequest("coords", "type", "name", true);
@@ -42,6 +48,9 @@ class GeofenceServiceTest {
         verify(events).publishEvent(any(GeofenceCreatedEvent.class));
     }
 
+    /**
+     * Update geofence should update and publish event.
+     */
     @Test
     void updateGeofence_shouldUpdateAndPublishEvent() {
         UpdateGeofenceRequest request = new UpdateGeofenceRequest(1L, "new-coords", "new-type", "new-name", false);
@@ -54,6 +63,9 @@ class GeofenceServiceTest {
         verify(events).publishEvent(any(GeofenceUpdatedEvent.class));
     }
 
+    /**
+     * Delete geofence should delete and publish event.
+     */
     @Test
     void deleteGeofence_shouldDeleteAndPublishEvent() {
         when(geofenceRepository.existsById(1L)).thenReturn(true);
@@ -64,6 +76,9 @@ class GeofenceServiceTest {
         verify(events).publishEvent(any(GeofenceDeletedEvent.class));
     }
 
+    /**
+     * Update geofence should throw exception when geofence not found.
+     */
     @Test
     void updateGeofence_shouldThrowException_whenGeofenceNotFound() {
         UpdateGeofenceRequest request = new UpdateGeofenceRequest(1L, "new-coords", "new-type", "new-name", false);

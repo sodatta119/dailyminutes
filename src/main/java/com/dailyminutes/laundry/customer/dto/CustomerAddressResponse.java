@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.customer.dto;
 
 import com.dailyminutes.laundry.customer.domain.model.AddressType;
 
+/**
+ * The type Customer address response.
+ */
 public record CustomerAddressResponse(
         Long id,
         Long customerId,

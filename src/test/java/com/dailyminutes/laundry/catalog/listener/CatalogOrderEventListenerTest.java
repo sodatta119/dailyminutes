@@ -28,6 +28,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Catalog order event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class CatalogOrderEventListenerTest {
 
@@ -43,6 +46,9 @@ class CatalogOrderEventListenerTest {
     @InjectMocks
     private CatalogOrderEventListener listener;
 
+    /**
+     * On order created should create summaries for order items.
+     */
     @Test
     void onOrderCreated_shouldCreateSummariesForOrderItems() {
         // Given: An order is created with two distinct catalog items
@@ -84,6 +90,9 @@ class CatalogOrderEventListenerTest {
         assertThat(summary2.getQuantity()).isEqualTo(1);
     }
 
+    /**
+     * On order created should handle orders with no items.
+     */
     @Test
     void onOrderCreated_shouldHandleOrdersWithNoItems() {
         // Given: An order is created with an empty list of items
@@ -99,6 +108,9 @@ class CatalogOrderEventListenerTest {
         verify(summaryRepository).saveAll(Collections.emptyList());
     }
 
+    /**
+     * On order deleted should delete all summaries for that order.
+     */
     @Test
     void onOrderDeleted_shouldDeleteAllSummariesForThatOrder() {
         // Given: An order deletion event for order ID 55

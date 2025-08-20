@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.geofence.domain.event;
 
+/**
+ * The type Geofence created event.
+ */
 public record GeofenceCreatedEvent(
         Long geofenceId,
         String name,

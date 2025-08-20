@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.store.domain.event;
 
 import com.dailyminutes.laundry.common.events.CallerEvent;
 
+/**
+ * The type Geofence assigned to store event.
+ */
 public record GeofenceAssignedToStoreEvent(
         Long storeId,
         Long geofenceId

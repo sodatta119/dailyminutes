@@ -8,6 +8,9 @@ package com.dailyminutes.laundry.invoice.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Invoice order summary response.
+ */
 public record InvoiceOrderSummaryResponse(
         Long id,
         Long invoiceId,

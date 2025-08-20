@@ -17,6 +17,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Catalog service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -25,6 +28,12 @@ public class CatalogService {
     private final CatalogRepository catalogRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create catalog catalog response.
+     *
+     * @param request the request
+     * @return the catalog response
+     */
     public CatalogResponse createCatalog(CreateCatalogRequest request) {
         CatalogEntity catalog = new CatalogEntity(
                 null,
@@ -43,6 +52,12 @@ public class CatalogService {
         return toCatalogResponse(savedCatalog);
     }
 
+    /**
+     * Update catalog catalog response.
+     *
+     * @param request the request
+     * @return the catalog response
+     */
     public CatalogResponse updateCatalog(UpdateCatalogRequest request) {
         CatalogEntity existingCatalog = catalogRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Catalog with ID " + request.id() + " not found."));
@@ -61,6 +76,11 @@ public class CatalogService {
         return toCatalogResponse(updatedCatalog);
     }
 
+    /**
+     * Delete catalog.
+     *
+     * @param id the id
+     */
     public void deleteCatalog(Long id) {
         if (!catalogRepository.existsById(id)) {
             throw new IllegalArgumentException("Catalog with ID " + id + " not found.");

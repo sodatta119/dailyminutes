@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Manager service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class ManagerServiceTest {
 
@@ -31,6 +34,9 @@ class ManagerServiceTest {
     @InjectMocks
     private ManagerService managerService;
 
+    /**
+     * Create manager should create and publish event.
+     */
     @Test
     void createManager_shouldCreateAndPublishEvent() {
         CreateManagerRequest request = new CreateManagerRequest("Test Manager", "test@contact.com");
@@ -42,6 +48,9 @@ class ManagerServiceTest {
         verify(events).publishEvent(any(ManagerCreatedEvent.class));
     }
 
+    /**
+     * Update manager should update and publish event.
+     */
     @Test
     void updateManager_shouldUpdateAndPublishEvent() {
         UpdateManagerRequest request = new UpdateManagerRequest(1L, "Updated Manager", "updated@contact.com");
@@ -54,6 +63,9 @@ class ManagerServiceTest {
         verify(events).publishEvent(any(ManagerUpdatedEvent.class));
     }
 
+    /**
+     * Delete manager should delete and publish event.
+     */
     @Test
     void deleteManager_shouldDeleteAndPublishEvent() {
         when(managerRepository.existsById(1L)).thenReturn(true);
@@ -64,6 +76,9 @@ class ManagerServiceTest {
         verify(events).publishEvent(any(ManagerDeletedEvent.class));
     }
 
+    /**
+     * Update manager should throw exception when manager not found.
+     */
     @Test
     void updateManager_shouldThrowException_whenManagerNotFound() {
         UpdateManagerRequest request = new UpdateManagerRequest(1L, "Updated Manager", "updated@contact.com");

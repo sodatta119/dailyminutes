@@ -21,6 +21,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Team controller.
+ */
 @RestController
 @RequestMapping("/api/teams")
 @RequiredArgsConstructor
@@ -30,6 +33,12 @@ public class TeamController {
     private final TeamService teamService;
     private final TeamQueryService teamQueryService;
 
+    /**
+     * Create team response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new team")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Team created successfully"),
@@ -40,6 +49,13 @@ public class TeamController {
         return new ResponseEntity<>(teamService.createTeam(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update team response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing team")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Team updated successfully"),
@@ -54,6 +70,12 @@ public class TeamController {
         return ResponseEntity.ok(teamService.updateTeam(request));
     }
 
+    /**
+     * Delete team response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete a team")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Team deleted successfully"),
@@ -65,6 +87,12 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets team by id.
+     *
+     * @param id the id
+     * @return the team by id
+     */
     @Operation(summary = "Get a team by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the team"),
@@ -77,6 +105,11 @@ public class TeamController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
     }
 
+    /**
+     * Gets all teams.
+     *
+     * @return the all teams
+     */
     @Operation(summary = "Get all teams")
     @ApiResponse(responseCode = "200", description = "List of all teams")
     @GetMapping
@@ -84,6 +117,12 @@ public class TeamController {
         return ResponseEntity.ok(teamQueryService.findAllTeams());
     }
 
+    /**
+     * Gets agent summary.
+     *
+     * @param id the id
+     * @return the agent summary
+     */
     @Operation(summary = "Get agent summaries for a team")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found agent summaries"),
@@ -94,6 +133,12 @@ public class TeamController {
         return ResponseEntity.ok(teamQueryService.findAgentSummariesByTeamId(id));
     }
 
+    /**
+     * Gets task summary.
+     *
+     * @param id the id
+     * @return the task summary
+     */
     @Operation(summary = "Get task summaries for a team")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found task summaries"),

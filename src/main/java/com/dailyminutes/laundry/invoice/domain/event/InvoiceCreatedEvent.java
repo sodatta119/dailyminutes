@@ -9,6 +9,9 @@ import com.dailyminutes.laundry.common.events.CallerEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Invoice created event.
+ */
 public record InvoiceCreatedEvent(
         Long invoiceId,
         Long customerId,

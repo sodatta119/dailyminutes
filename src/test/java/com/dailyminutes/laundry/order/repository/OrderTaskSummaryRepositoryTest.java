@@ -20,8 +20,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Order task summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 15/07/25
+ * @version 15 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -36,6 +38,9 @@ class OrderTaskSummaryRepositoryTest {
     private OrderRepository orderRepository;
 
 
+    /**
+     * Test save and find order task summary.
+     */
     @Test
     void testSaveAndFindOrderTaskSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -58,6 +63,9 @@ class OrderTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getTaskType()).isEqualTo("PICKUP");
     }
 
+    /**
+     * Test update order task summary.
+     */
     @Test
     void testUpdateOrderTaskSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -76,6 +84,9 @@ class OrderTaskSummaryRepositoryTest {
         assertThat(updatedSummary.get().getAgentName()).isEqualTo("Agent Beta (Completed)");
     }
 
+    /**
+     * Test delete order task summary.
+     */
     @Test
     void testDeleteOrderTaskSummary() {
         OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -89,6 +100,9 @@ class OrderTaskSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -101,6 +115,9 @@ class OrderTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getTaskType()).isEqualTo("PICKUP");
     }
 
+    /**
+     * Test find by task id.
+     */
     @Test
     void testFindByTaskId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -113,6 +130,9 @@ class OrderTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getTaskStatus()).isEqualTo("STARTED");
     }
 
+    /**
+     * Test find by agent id.
+     */
     @Test
     void testFindByAgentId() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
@@ -127,6 +147,9 @@ class OrderTaskSummaryRepositoryTest {
         assertThat(summariesForAgent.stream().allMatch(s -> s.getAgentId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by task status.
+     */
     @Test
     void testFindByTaskStatus() {
         OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));

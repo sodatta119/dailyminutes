@@ -27,6 +27,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Task controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(TaskController.class)
 class TaskControllerTest {
@@ -44,6 +47,9 @@ class TaskControllerTest {
     private CreateTaskRequest createTaskRequest;
     private UpdateTaskRequest updateTaskRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         taskResponse = new TaskResponse(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
@@ -51,6 +57,11 @@ class TaskControllerTest {
         updateTaskRequest = new UpdateTaskRequest(1L, "updated name", "updated desc", TaskType.DELIVERY, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 2L, 2L, "new source", 2L, "new dest", 2L, "new comment", 2L);
     }
 
+    /**
+     * Create task should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createTask_shouldReturnCreated() throws Exception {
         when(taskService.createTask(any())).thenReturn(taskResponse);
@@ -60,6 +71,11 @@ class TaskControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets task by id should return task.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getTaskById_shouldReturnTask() throws Exception {
         when(taskQueryService.findTaskById(1L)).thenReturn(Optional.of(taskResponse));
@@ -68,6 +84,11 @@ class TaskControllerTest {
                 .andExpect(jsonPath("$.name").value("name"));
     }
 
+    /**
+     * Update task should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateTask_shouldReturnOk() throws Exception {
         when(taskService.updateTask(any())).thenReturn(taskResponse);
@@ -77,6 +98,11 @@ class TaskControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete task should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteTask_shouldReturnNoContent() throws Exception {
         doNothing().when(taskService).deleteTask(1L);

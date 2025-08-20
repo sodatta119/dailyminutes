@@ -20,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Team event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class TeamEventListenerTest {
 
@@ -32,6 +35,9 @@ class TeamEventListenerTest {
     @InjectMocks
     private TeamEventListener listener;
 
+    /**
+     * On team info requested should find team and publish info.
+     */
     @Test
     void onTeamInfoRequested_shouldFindTeamAndPublishInfo() {
         // Given: A request event for team details

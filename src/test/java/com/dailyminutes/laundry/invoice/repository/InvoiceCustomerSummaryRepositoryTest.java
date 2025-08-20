@@ -23,6 +23,9 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * The type Invoice customer summary repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = "com.dailyminutes.laundry.invoice.repository")
@@ -45,6 +48,9 @@ class InvoiceCustomerSummaryRepositoryTest {
         return "test_" + UUID.randomUUID().toString().substring(0, 8) + "@example.com";
     }
 
+    /**
+     * Test save and find invoice customer summary.
+     */
     @Test
     void testSaveAndFindInvoiceCustomerSummary() {
         // Build entity locally
@@ -64,6 +70,9 @@ class InvoiceCustomerSummaryRepositoryTest {
         assertThat(foundSummary.get().getCustomerEmail()).isEqualTo(summary.getCustomerEmail()); // Use original email for assertion
     }
 
+    /**
+     * Test update invoice customer summary.
+     */
     @Test
     void testUpdateInvoiceCustomerSummary() {
         // Build entity locally
@@ -82,6 +91,9 @@ class InvoiceCustomerSummaryRepositoryTest {
         assertThat(updatedSummary.get().getCustomerEmail()).isEqualTo(savedSummary.getCustomerEmail()); // Use updated email for assertion
     }
 
+    /**
+     * Test delete invoice customer summary.
+     */
     @Test
     void testDeleteInvoiceCustomerSummary() {
         // Build entity locally
@@ -95,6 +107,9 @@ class InvoiceCustomerSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by invoice id.
+     */
     @Test
     void testFindByInvoiceId() {
         // Build entities locally
@@ -111,6 +126,9 @@ class InvoiceCustomerSummaryRepositoryTest {
         assertThat(foundSummary.get().getCustomerId()).isEqualTo(20L);
     }
 
+    /**
+     * Test find by customer id.
+     */
     @Test
     void testFindByCustomerId() {
         // Build entities locally
@@ -129,6 +147,9 @@ class InvoiceCustomerSummaryRepositoryTest {
         assertThat(summariesForCustomer30.stream().allMatch(s -> s.getCustomerId().equals(30L))).isTrue();
     }
 
+    /**
+     * Test find by customer phone number.
+     */
     @Test
     void testFindByCustomerPhoneNumber() {
         // Build entity locally

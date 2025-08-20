@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.team.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Team task summary response.
+ */
 public record TeamTaskSummaryResponse(
         Long id,
         Long teamId,

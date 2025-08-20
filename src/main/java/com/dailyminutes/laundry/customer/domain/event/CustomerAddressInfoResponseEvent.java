@@ -7,6 +7,9 @@ package com.dailyminutes.laundry.customer.domain.event;
 
 import com.dailyminutes.laundry.common.events.CallerEvent;
 
+/**
+ * The type Customer address info response event.
+ */
 public record CustomerAddressInfoResponseEvent(
         Long customerId,
         String customerAddress,

@@ -17,6 +17,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Payment query service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class PaymentQueryServiceTest {
 
@@ -25,6 +28,9 @@ class PaymentQueryServiceTest {
     @InjectMocks
     private PaymentQueryService paymentQueryService;
 
+    /**
+     * Find payment by id should return payment.
+     */
     @Test
     void findPaymentById_shouldReturnPayment() {
         PaymentEntity payment = new PaymentEntity(1L, 1L, 1L, "txn1", BigDecimal.TEN, LocalDateTime.now(), PaymentStatus.COMPLETED, PaymentMethod.CASH, "");

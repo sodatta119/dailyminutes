@@ -15,6 +15,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Geofence order event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class GeofenceOrderEventListener {
@@ -33,12 +36,19 @@ public class GeofenceOrderEventListener {
 
     /**
      * Step 2: Hears the RESPONSE from the customer module and creates the summary.
+     *
+     * @param orderEvent the order event
      */
     @ApplicationModuleListener
     public void onOrderPlacedInGeofence(OrderCreatedEvent orderEvent) {
         events.publishEvent(new CustomerAddressInfoRequestEvent(orderEvent.customerId(), orderEvent));
     }
 
+    /**
+     * On customer address received.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerAddressReceived(CustomerAddressInfoResponseEvent event) {
         if (event.originalEvent() instanceof OrderCreatedEvent) {
@@ -57,6 +67,11 @@ public class GeofenceOrderEventListener {
         }
     }
 
+    /**
+     * On order deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onOrderDeleted(OrderDeletedEvent event) {
         summaryRepository.findByOrderId(event.orderId()).ifPresent(summary ->

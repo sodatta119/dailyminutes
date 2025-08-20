@@ -14,6 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
+/**
+ * The type Base exception handler.
+ */
 public class BaseExceptionHandler {
 
 }

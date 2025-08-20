@@ -24,6 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Order customer event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class OrderCustomerEventListenerTest {
 
@@ -36,6 +39,9 @@ class OrderCustomerEventListenerTest {
     @InjectMocks
     private OrderCustomerEventListener listener;
 
+    /**
+     * On order created should save partial summary and request customer info.
+     */
     @Test
     void onOrderCreated_shouldSavePartialSummaryAndRequestCustomerInfo() {
         // Given
@@ -66,6 +72,9 @@ class OrderCustomerEventListenerTest {
         //assertThat(capturedRequest.customerId()).isEqualTo(101L);
     }
 
+    /**
+     * On customer info provided should update summary with full details.
+     */
     @Test
     void onCustomerInfoProvided_shouldUpdateSummaryWithFullDetails() {
         // Given
@@ -94,6 +103,9 @@ class OrderCustomerEventListenerTest {
         assertThat(updatedSummary.getCustomerEmail()).isEqualTo("john@example.com");
     }
 
+    /**
+     * On customer updated should update all related summaries.
+     */
     @Test
     void onCustomerUpdated_shouldUpdateAllRelatedSummaries() {
         // Given
@@ -114,6 +126,9 @@ class OrderCustomerEventListenerTest {
         assertThat(existingSummaries.get(1).getCustomerEmail()).isEqualTo("john.doe@example.com");
     }
 
+    /**
+     * On order deleted should delete summary.
+     */
     @Test
     void onOrderDeleted_shouldDeleteSummary() {
         // Given

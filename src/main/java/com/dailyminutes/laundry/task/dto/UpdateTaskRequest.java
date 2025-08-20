@@ -11,6 +11,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Update task request.
+ */
 public record UpdateTaskRequest(
         @NotNull Long id,
         @NotBlank String name,

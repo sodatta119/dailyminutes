@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.customer.domain.event;
 
 import com.dailyminutes.laundry.customer.domain.model.AddressType;
 
+/**
+ * The type Customer address added event.
+ */
 public record CustomerAddressAddedEvent(
         Long addressId,
         Long customerId,

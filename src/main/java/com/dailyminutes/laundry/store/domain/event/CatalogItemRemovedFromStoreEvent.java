@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
+/**
+ * The type Catalog item removed from store event.
+ */
 public record CatalogItemRemovedFromStoreEvent(
         Long storeId,
         Long catalogId

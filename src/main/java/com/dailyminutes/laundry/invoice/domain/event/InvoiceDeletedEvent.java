@@ -4,5 +4,8 @@
  */
 package com.dailyminutes.laundry.invoice.domain.event;
 
+/**
+ * The type Invoice deleted event.
+ */
 public record InvoiceDeletedEvent(Long invoiceId) {
 }

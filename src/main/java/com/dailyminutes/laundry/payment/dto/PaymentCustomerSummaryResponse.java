@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.payment.dto;
 
+/**
+ * The type Payment customer summary response.
+ */
 public record PaymentCustomerSummaryResponse(
         Long id,
         Long paymentId,

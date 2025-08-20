@@ -22,6 +22,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Invoice payment event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class InvoicePaymentEventListenerTest {
 
@@ -34,6 +37,9 @@ class InvoicePaymentEventListenerTest {
     @InjectMocks
     private InvoicePaymentEventListener listener;
 
+    /**
+     * On payment made should create payment summary.
+     */
     @Test
     void onPaymentMade_shouldCreatePaymentSummary() {
         // Given: A payment was made for order 1001L
@@ -62,6 +68,9 @@ class InvoicePaymentEventListenerTest {
         assertThat(savedSummary.getTransactionId()).isEqualTo("txn_123");
     }
 
+    /**
+     * On payment made should do nothing if invoice not found.
+     */
     @Test
     void onPaymentMade_shouldDoNothingIfInvoiceNotFound() {
         // Given: A payment was made for an order that has no corresponding invoice
@@ -78,6 +87,9 @@ class InvoicePaymentEventListenerTest {
         verify(paymentSummaryRepository, never()).save(any());
     }
 
+    /**
+     * On payment refunded should update summary status.
+     */
     @Test
     void onPaymentRefunded_shouldUpdateSummaryStatus() {
         // Given: A payment is refunded
@@ -102,6 +114,9 @@ class InvoicePaymentEventListenerTest {
         assertThat(updatedSummary.getStatus()).isEqualTo("REFUNDED");
     }
 
+    /**
+     * On payment failed should update summary status.
+     */
     @Test
     void onPaymentFailed_shouldUpdateSummaryStatus() {
         // Given: A payment fails

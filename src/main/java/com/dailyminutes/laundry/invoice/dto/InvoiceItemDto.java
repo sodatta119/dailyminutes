@@ -10,6 +10,9 @@ import jakarta.validation.constraints.Positive;
 
 import java.math.BigDecimal;
 
+/**
+ * The type Invoice item dto.
+ */
 public record InvoiceItemDto(
         Long id, // Null for new items
         @NotNull(message = "Catalog ID cannot be null")

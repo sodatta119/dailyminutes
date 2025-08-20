@@ -9,6 +9,9 @@ import com.dailyminutes.laundry.task.domain.model.TaskType;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Task response.
+ */
 public record TaskResponse(
         Long id,
         String name,

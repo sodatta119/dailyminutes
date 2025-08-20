@@ -8,6 +8,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The type Update store request.
+ */
 public record UpdateStoreRequest(
         @NotNull(message = "Store ID cannot be null")
         Long id,

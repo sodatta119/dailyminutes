@@ -18,6 +18,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+/**
+ * The type Store task summary repository test.
+ */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
 @EnableJdbcRepositories(basePackages = "com.dailyminutes.laundry.store.repository") // Updated package name
@@ -31,6 +34,9 @@ class StoreTaskSummaryRepositoryTest {
     private StoreRepository storeRepository;
 
 
+    /**
+     * Test save and find store task summary.
+     */
     @Test
     void testSaveAndFindStoreTaskSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -53,6 +59,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getTaskType()).isEqualTo("PICKUP");
     }
 
+    /**
+     * Test update store task summary.
+     */
     @Test
     void testUpdateStoreTaskSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -70,6 +79,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(updatedSummary.get().getAgentName()).isEqualTo("Agent Beta (Completed)");
     }
 
+    /**
+     * Test delete store task summary.
+     */
     @Test
     void testDeleteStoreTaskSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -82,6 +94,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by store id.
+     */
     @Test
     void testFindByStoreId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -95,6 +110,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getStoreId().equals(store1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by task id.
+     */
     @Test
     void testFindByTaskId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -107,6 +125,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(foundSummary.get().getTaskStatus()).isEqualTo("COMPLETED");
     }
 
+    /**
+     * Test find by agent id.
+     */
     @Test
     void testFindByAgentId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -121,6 +142,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(summariesForAgent.stream().allMatch(s -> s.getAgentId().equals(10l))).isTrue();
     }
 
+    /**
+     * Test find by task status.
+     */
     @Test
     void testFindByTaskStatus() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -135,6 +159,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(newTasks.stream().allMatch(s -> s.getTaskStatus().equals("NEW"))).isTrue();
     }
 
+    /**
+     * Test find by task type.
+     */
     @Test
     void testFindByTaskType() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -149,6 +176,9 @@ class StoreTaskSummaryRepositoryTest {
         assertThat(pickupTasks.stream().allMatch(s -> s.getTaskType().equals("PICKUP"))).isTrue();
     }
 
+    /**
+     * Test find by order id.
+     */
     @Test
     void testFindByOrderId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));

@@ -20,6 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Customer controller.
+ */
 @RestController
 @RequestMapping("/api/customers")
 @RequiredArgsConstructor
@@ -29,6 +32,12 @@ public class CustomerController {
     private final CustomerService customerService;
     private final CustomerQueryService customerQueryService;
 
+    /**
+     * Create customer response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Customer created successfully"),
@@ -39,6 +48,13 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.createCustomer(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update customer response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Customer updated successfully"),
@@ -53,6 +69,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.updateCustomer(request));
     }
 
+    /**
+     * Delete customer response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete a customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Customer deleted successfully"),
@@ -64,6 +86,12 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets customer by id.
+     *
+     * @param id the id
+     * @return the customer by id
+     */
     @Operation(summary = "Get a customer by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the customer"),
@@ -76,6 +104,11 @@ public class CustomerController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
     }
 
+    /**
+     * Gets all customers.
+     *
+     * @return the all customers
+     */
     @Operation(summary = "Get all customers")
     @ApiResponse(responseCode = "200", description = "List of all customers")
     @GetMapping
@@ -83,6 +116,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerQueryService.findAllCustomers());
     }
 
+    /**
+     * Add address response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Add an address for a customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Address added successfully"),
@@ -94,6 +133,13 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.addAddress(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update address response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update a customer's address")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Address updated successfully"),
@@ -108,6 +154,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.updateAddress(request));
     }
 
+    /**
+     * Remove address response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Remove an address from a customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Address removed successfully"),
@@ -119,6 +171,12 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets addresses by customer id.
+     *
+     * @param id the id
+     * @return the addresses by customer id
+     */
     @Operation(summary = "Get all addresses for a customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found addresses for the customer"),

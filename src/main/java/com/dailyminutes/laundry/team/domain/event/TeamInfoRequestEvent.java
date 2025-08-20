@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.team.domain.event;
 
+/**
+ * The type Team info request event.
+ */
 public record TeamInfoRequestEvent(
         Long agentId, // Used as a correlation ID to track the request
         Long teamId

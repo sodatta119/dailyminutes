@@ -19,6 +19,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+/**
+ * The type Catalog query service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,10 +30,21 @@ public class CatalogQueryService {
     private final CatalogRepository catalogRepository;
     private final CatalogOrderItemSummaryRepository catalogOrderItemSummaryRepository;
 
+    /**
+     * Find catalog by id optional.
+     *
+     * @param id the id
+     * @return the optional
+     */
     public Optional<CatalogResponse> findCatalogById(Long id) {
         return catalogRepository.findById(id).map(this::toCatalogResponse);
     }
 
+    /**
+     * Find all catalogs list.
+     *
+     * @return the list
+     */
     public List<CatalogResponse> findAllCatalogs() {
         return StreamSupport.stream(catalogRepository.findAll().spliterator(), false)
                 .map(this::toCatalogResponse)
@@ -38,6 +52,12 @@ public class CatalogQueryService {
     }
 
 
+    /**
+     * Find order item summaries by catalog id list.
+     *
+     * @param catalogId the catalog id
+     * @return the list
+     */
     public List<CatalogOrderItemSummaryResponse> findOrderItemSummariesByCatalogId(Long catalogId) {
         return catalogOrderItemSummaryRepository.findByCatalogId(catalogId).stream()
                 .map(summary -> new CatalogOrderItemSummaryResponse(

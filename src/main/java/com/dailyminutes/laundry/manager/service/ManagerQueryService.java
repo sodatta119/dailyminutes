@@ -15,6 +15,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+/**
+ * The type Manager query service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -22,11 +25,22 @@ public class ManagerQueryService {
 
     private final ManagerRepository managerRepository;
 
+    /**
+     * Find manager by id optional.
+     *
+     * @param id the id
+     * @return the optional
+     */
     public Optional<ManagerResponse> findManagerById(Long id) {
         return managerRepository.findById(id)
                 .map(m -> new ManagerResponse(m.getId(), m.getName(), m.getContact()));
     }
 
+    /**
+     * Find all managers list.
+     *
+     * @return the list
+     */
     public List<ManagerResponse> findAllManagers() {
         return StreamSupport.stream(managerRepository.findAll().spliterator(), false)
                 .map(m -> new ManagerResponse(m.getId(), m.getName(), m.getContact()))

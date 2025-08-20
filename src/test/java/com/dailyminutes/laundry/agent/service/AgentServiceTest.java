@@ -24,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Agent service test.
+ */
 @ExtendWith(MockitoExtension.class)
 class AgentServiceTest {
 
@@ -34,6 +37,9 @@ class AgentServiceTest {
     @InjectMocks
     private AgentService agentService;
 
+    /**
+     * Create agent should create and publish event.
+     */
     @Test
     void createAgent_shouldCreateAndPublishEvent() {
         CreateAgentRequest request = new CreateAgentRequest("Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), AgentDesignation.FLEET_AGENT);
@@ -47,6 +53,9 @@ class AgentServiceTest {
         verify(events).publishEvent(any(AgentCreatedEvent.class));
     }
 
+    /**
+     * Update agent should update and publish event.
+     */
     @Test
     void updateAgent_shouldUpdateAndPublishEvent() {
         UpdateAgentRequest request = new UpdateAgentRequest(1L, "Updated Agent", AgentState.INACTIVE, 2L, "0987654321", "unique2", LocalDate.now(), null, AgentDesignation.STORE_AGENT);
@@ -59,6 +68,9 @@ class AgentServiceTest {
         verify(events).publishEvent(any(AgentUpdatedEvent.class));
     }
 
+    /**
+     * Delete agent should delete and publish event.
+     */
     @Test
     void deleteAgent_shouldDeleteAndPublishEvent() {
         when(agentRepository.existsById(1L)).thenReturn(true);
@@ -69,6 +81,9 @@ class AgentServiceTest {
         verify(events).publishEvent(any(AgentDeletedEvent.class));
     }
 
+    /**
+     * Update agent should throw exception when agent not found.
+     */
     @Test
     void updateAgent_shouldThrowException_whenAgentNotFound() {
         UpdateAgentRequest request = new UpdateAgentRequest(1L, "Updated Agent", AgentState.INACTIVE, 2L, "0987654321", "unique2", LocalDate.now(), null, AgentDesignation.STORE_AGENT);
@@ -76,6 +91,9 @@ class AgentServiceTest {
         assertThrows(IllegalArgumentException.class, () -> agentService.updateAgent(request));
     }
 
+    /**
+     * Assign team should update team id and publish event.
+     */
     @Test
     void assignTeam_shouldUpdateTeamIdAndPublishEvent() {
         AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);

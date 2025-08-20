@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
+/**
+ * The type Store created event.
+ */
 public record StoreCreatedEvent(
         Long storeId,
         String name,

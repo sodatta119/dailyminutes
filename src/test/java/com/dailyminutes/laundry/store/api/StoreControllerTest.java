@@ -24,6 +24,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Store controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(StoreController.class)
 class StoreControllerTest {
@@ -41,6 +44,9 @@ class StoreControllerTest {
     private CreateStoreRequest createStoreRequest;
     private UpdateStoreRequest updateStoreRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         storeResponse = new StoreResponse(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
@@ -48,6 +54,11 @@ class StoreControllerTest {
         updateStoreRequest = new UpdateStoreRequest(1L, "Updated Store", "456 Main St", "0987654321", "updated@test.com", 2L);
     }
 
+    /**
+     * Create store should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createStore_shouldReturnCreated() throws Exception {
         when(storeService.createStore(any())).thenReturn(storeResponse);
@@ -57,6 +68,11 @@ class StoreControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets store by id should return store.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getStoreById_shouldReturnStore() throws Exception {
         when(storeQueryService.findStoreById(1L)).thenReturn(Optional.of(storeResponse));
@@ -65,6 +81,11 @@ class StoreControllerTest {
                 .andExpect(jsonPath("$.name").value("Test Store"));
     }
 
+    /**
+     * Update store should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateStore_shouldReturnOk() throws Exception {
         when(storeService.updateStore(any())).thenReturn(storeResponse);
@@ -74,6 +95,11 @@ class StoreControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete store should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteStore_shouldReturnNoContent() throws Exception {
         doNothing().when(storeService).deleteStore(1L);
@@ -81,6 +107,11 @@ class StoreControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    /**
+     * Add catalog item to store should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void addCatalogItemToStore_shouldReturnOk() throws Exception {
         // Given
@@ -96,6 +127,11 @@ class StoreControllerTest {
         verify(storeService).addCatalogItemToStore(storeId, catalogId);
     }
 
+    /**
+     * Remove catalog item from store should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void removeCatalogItemFromStore_shouldReturnNoContent() throws Exception {
         // Given
@@ -110,6 +146,11 @@ class StoreControllerTest {
         verify(storeService).removeCatalogItemFromStore(storeId, catalogId);
     }
 
+    /**
+     * Remove geofence from store should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void removeGeofenceFromStore_shouldReturnNoContent() throws Exception {
         // Given
@@ -124,6 +165,11 @@ class StoreControllerTest {
         verify(storeService).removeGeofenceFromStore(storeId, geofenceId);
     }
 
+    /**
+     * Assign geofence to store should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void assignGeofenceToStore_shouldReturnOk() throws Exception {
         // Given

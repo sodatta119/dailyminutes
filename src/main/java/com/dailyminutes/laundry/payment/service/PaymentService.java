@@ -18,6 +18,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Payment service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -26,6 +29,12 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create payment payment response.
+     *
+     * @param request the request
+     * @return the payment response
+     */
     public PaymentResponse createPayment(CreatePaymentRequest request) {
         PaymentEntity payment = new PaymentEntity(null, request.orderId(), request.customerId(), request.transactionId(), request.amount(), request.paymentDateTime(), request.status(), request.method(), request.remarks());
         PaymentEntity savedPayment = paymentRepository.save(payment);
@@ -35,6 +44,12 @@ public class PaymentService {
         return toPaymentResponse(savedPayment);
     }
 
+    /**
+     * Update payment payment response.
+     *
+     * @param request the request
+     * @return the payment response
+     */
     public PaymentResponse updatePayment(UpdatePaymentRequest request) {
         PaymentEntity existingPayment = paymentRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Payment with ID " + request.id() + " not found."));
@@ -57,6 +72,11 @@ public class PaymentService {
         return toPaymentResponse(updatedPayment);
     }
 
+    /**
+     * Delete payment.
+     *
+     * @param id the id
+     */
     public void deletePayment(Long id) {
         if (!paymentRepository.existsById(id)) {
             throw new IllegalArgumentException("Payment with ID " + id + " not found.");

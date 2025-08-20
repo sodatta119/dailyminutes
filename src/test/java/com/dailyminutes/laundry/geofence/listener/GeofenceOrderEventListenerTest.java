@@ -23,6 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * The type Geofence order event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class GeofenceOrderEventListenerTest {
 
@@ -35,6 +38,9 @@ class GeofenceOrderEventListenerTest {
     @InjectMocks
     private GeofenceOrderEventListener listener;
 
+    /**
+     * On order created should request customer geofence info.
+     */
     @Test
     void onOrderCreated_shouldRequestCustomerGeofenceInfo() {
         // Given: An order creation event
@@ -55,6 +61,9 @@ class GeofenceOrderEventListenerTest {
         assertThat(request.originalEvent()).isEqualTo(event);
     }
 
+    /**
+     * On customer address received should create order summary.
+     */
     @Test
     void onCustomerAddressReceived_shouldCreateOrderSummary() {
         // Given: A response event from the customer module with a valid geofenceId
@@ -79,6 +88,9 @@ class GeofenceOrderEventListenerTest {
         assertThat(summary.getStatus()).isEqualTo("PENDING");
     }
 
+    /**
+     * On order deleted should delete summary.
+     */
     @Test
     void onOrderDeleted_shouldDeleteSummary() {
         // Given: An order deletion event

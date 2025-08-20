@@ -8,6 +8,9 @@ package com.dailyminutes.laundry.customer.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * The type Create customer request.
+ */
 public record CreateCustomerRequest(
         @NotBlank(message = "Subscriber ID cannot be blank")
         String subscriberId,

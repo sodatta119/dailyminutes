@@ -25,6 +25,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+/**
+ * The type Payment customer event listener test.
+ */
 @ExtendWith(MockitoExtension.class)
 class PaymentCustomerEventListenerTest {
 
@@ -37,6 +40,9 @@ class PaymentCustomerEventListenerTest {
     @InjectMocks
     private PaymentCustomerEventListener listener;
 
+    /**
+     * On payment made should request customer info.
+     */
     @Test
     void onPaymentMade_shouldRequestCustomerInfo() {
         // Given: a payment is made
@@ -53,6 +59,9 @@ class PaymentCustomerEventListenerTest {
         assertThat(requestedEvent.originalEvent()).isEqualTo(event);
     }
 
+    /**
+     * On customer info provided should create summary when original event is payment made.
+     */
     @Test
     void onCustomerInfoProvided_shouldCreateSummary_whenOriginalEventIsPaymentMade() {
         // Given: the customer module provides info, and the original event was for a payment
@@ -71,6 +80,9 @@ class PaymentCustomerEventListenerTest {
         assertThat(summary.getCustomerName()).isEqualTo("John Doe");
     }
 
+    /**
+     * On customer info provided should do nothing when original event is not payment made.
+     */
     @Test
     void onCustomerInfoProvided_shouldDoNothing_whenOriginalEventIsNotPaymentMade() {
         // Given: the customer module provides info, but the original event was something else
@@ -84,6 +96,9 @@ class PaymentCustomerEventListenerTest {
         verify(summaryRepository, never()).save(any());
     }
 
+    /**
+     * On payment deleted should delete summary.
+     */
     @Test
     void onPaymentDeleted_shouldDeleteSummary() {
         // Given
@@ -98,6 +113,9 @@ class PaymentCustomerEventListenerTest {
         verify(summaryRepository).deleteById(5L);
     }
 
+    /**
+     * On customer deleted should delete all summaries for customer.
+     */
     @Test
     void onCustomerDeleted_shouldDeleteAllSummariesForCustomer() {
         // Given

@@ -9,6 +9,9 @@ import com.dailyminutes.laundry.catalog.domain.model.UnitType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * The type Update catalog request.
+ */
 public record UpdateCatalogRequest(
         @NotNull(message = "Catalog ID cannot be null for update")
         Long id,

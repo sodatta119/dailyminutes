@@ -18,8 +18,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Store geofence summary repository test.
+ *
  * @author Somendra Datta <sodatta@example.com>
- * @version 12/07/25
+ * @version 12 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -38,6 +40,9 @@ class StoreGeofenceSummaryRepositoryTest {
         return "Geofence-" + UUID.randomUUID().toString().substring(0, 8);
     }
 
+    /**
+     * Test save and find store geofence summary.
+     */
     @Test
     void testSaveAndFindStoreGeofenceSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -59,6 +64,9 @@ class StoreGeofenceSummaryRepositoryTest {
         assertThat(foundSummary.get().getGeofenceName()).isEqualTo(geofenceName);
     }
 
+    /**
+     * Test update store geofence summary.
+     */
     @Test
     void testUpdateStoreGeofenceSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -77,6 +85,9 @@ class StoreGeofenceSummaryRepositoryTest {
         assertThat(updatedSummary.get().isActive()).isFalse();
     }
 
+    /**
+     * Test delete store geofence summary.
+     */
     @Test
     void testDeleteStoreGeofenceSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -90,6 +101,9 @@ class StoreGeofenceSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by store id.
+     */
     @Test
     void testFindByStoreId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -103,6 +117,9 @@ class StoreGeofenceSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getStoreId().equals(store1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by geofence id.
+     */
     @Test
     void testFindByGeofenceId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -115,6 +132,9 @@ class StoreGeofenceSummaryRepositoryTest {
         assertThat(foundSummary.get().getGeofenceType()).isEqualTo("DELIVERY_ZONE");
     }
 
+    /**
+     * Test find by geofence type.
+     */
     @Test
     void testFindByGeofenceType() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -129,6 +149,9 @@ class StoreGeofenceSummaryRepositoryTest {
         assertThat(deliveryZones.stream().allMatch(s -> s.getGeofenceType().equals("DELIVERY_ZONE"))).isTrue();
     }
 
+    /**
+     * Test find by active.
+     */
     @Test
     void testFindByActive() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));

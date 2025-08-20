@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.store.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * The type Store task summary response.
+ */
 public record StoreTaskSummaryResponse(
         Long id,
         Long storeId,

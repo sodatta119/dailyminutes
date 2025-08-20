@@ -18,6 +18,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Geofence service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -26,6 +29,12 @@ public class GeofenceService {
     private final GeofenceRepository geofenceRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create geofence geofence response.
+     *
+     * @param request the request
+     * @return the geofence response
+     */
     public GeofenceResponse createGeofence(CreateGeofenceRequest request) {
         GeofenceEntity geofence = new GeofenceEntity(null, request.polygonCoordinates(), request.geofenceType(), request.name(), request.active());
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
@@ -33,6 +42,12 @@ public class GeofenceService {
         return toGeofenceResponse(savedGeofence);
     }
 
+    /**
+     * Update geofence geofence response.
+     *
+     * @param request the request
+     * @return the geofence response
+     */
     public GeofenceResponse updateGeofence(UpdateGeofenceRequest request) {
         GeofenceEntity existingGeofence = geofenceRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Geofence with ID " + request.id() + " not found."));
@@ -47,6 +62,11 @@ public class GeofenceService {
         return toGeofenceResponse(updatedGeofence);
     }
 
+    /**
+     * Delete geofence.
+     *
+     * @param id the id
+     */
     public void deleteGeofence(Long id) {
         if (!geofenceRepository.existsById(id)) {
             throw new IllegalArgumentException("Geofence with ID " + id + " not found.");

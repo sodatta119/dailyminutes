@@ -27,6 +27,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The type Agent controller test.
+ */
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(AgentController.class)
 class AgentControllerTest {
@@ -44,6 +47,9 @@ class AgentControllerTest {
     private CreateAgentRequest createAgentRequest;
     private UpdateAgentRequest updateAgentRequest;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     void setUp() {
         agentResponse = new AgentResponse(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);
@@ -51,6 +57,11 @@ class AgentControllerTest {
         updateAgentRequest = new UpdateAgentRequest(1L, "Updated Agent", AgentState.INACTIVE, 2L, "0987654321", "unique2", LocalDate.now(), null, AgentDesignation.STORE_AGENT);
     }
 
+    /**
+     * Create agent should return created.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void createAgent_shouldReturnCreated() throws Exception {
         when(agentService.createAgent(any())).thenReturn(agentResponse);
@@ -60,6 +71,11 @@ class AgentControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * Gets agent by id should return agent.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void getAgentById_shouldReturnAgent() throws Exception {
         when(agentQueryService.findAgentById(1L)).thenReturn(Optional.of(agentResponse));
@@ -68,6 +84,11 @@ class AgentControllerTest {
                 .andExpect(jsonPath("$.name").value("Test Agent"));
     }
 
+    /**
+     * Update agent should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void updateAgent_shouldReturnOk() throws Exception {
         when(agentService.updateAgent(any())).thenReturn(agentResponse);
@@ -77,6 +98,11 @@ class AgentControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Delete agent should return no content.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void deleteAgent_shouldReturnNoContent() throws Exception {
         doNothing().when(agentService).deleteAgent(1L);
@@ -84,6 +110,11 @@ class AgentControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    /**
+     * Assign team should return ok.
+     *
+     * @throws Exception the exception
+     */
     @Test
     void assignTeam_shouldReturnOk() throws Exception {
         when(agentService.assignTeam(1L, 2L)).thenReturn(agentResponse);

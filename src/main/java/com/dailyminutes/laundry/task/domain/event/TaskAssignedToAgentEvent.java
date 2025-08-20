@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.task.domain.event;
 
 import com.dailyminutes.laundry.common.events.CallerEvent;
 
+/**
+ * The type Task assigned to agent event.
+ */
 public record TaskAssignedToAgentEvent(
         Long taskId,
         Long agentId

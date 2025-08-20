@@ -4,6 +4,9 @@
  */
 package com.dailyminutes.laundry.invoice.dto;
 
+/**
+ * The type Invoice customer summary response.
+ */
 public record InvoiceCustomerSummaryResponse(
         Long id,
         Long invoiceId,

@@ -12,6 +12,9 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * The type Update payment request.
+ */
 public record UpdatePaymentRequest(
         @NotNull Long id,
         @NotNull Long orderId,

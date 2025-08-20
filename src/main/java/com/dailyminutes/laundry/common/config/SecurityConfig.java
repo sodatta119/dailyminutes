@@ -6,6 +6,9 @@ package com.dailyminutes.laundry.common.config;
 
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The type Security config.
+ */
 @Configuration
 public class SecurityConfig {
 

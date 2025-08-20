@@ -19,6 +19,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Store service.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,6 +32,12 @@ public class StoreService {
     private final StoreGeofenceSummaryRepository storeGeofenceSummaryRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * Create store store response.
+     *
+     * @param request the request
+     * @return the store response
+     */
     public StoreResponse createStore(CreateStoreRequest request) {
         StoreEntity store = new StoreEntity(null, request.name(), request.address(), request.contactNumber(), request.email(), request.managerId());
         StoreEntity savedStore = storeRepository.save(store);
@@ -36,6 +45,12 @@ public class StoreService {
         return toStoreResponse(savedStore);
     }
 
+    /**
+     * Update store store response.
+     *
+     * @param request the request
+     * @return the store response
+     */
     public StoreResponse updateStore(UpdateStoreRequest request) {
         StoreEntity existingStore = storeRepository.findById(request.id())
                 .orElseThrow(() -> new IllegalArgumentException("Store with ID " + request.id() + " not found."));
@@ -51,6 +66,11 @@ public class StoreService {
         return toStoreResponse(updatedStore);
     }
 
+    /**
+     * Delete store.
+     *
+     * @param id the id
+     */
     public void deleteStore(Long id) {
         if (!storeRepository.existsById(id)) {
             throw new IllegalArgumentException("Store with ID " + id + " not found.");
@@ -59,6 +79,12 @@ public class StoreService {
         events.publishEvent(new StoreDeletedEvent(id));
     }
 
+    /**
+     * Add catalog item to store.
+     *
+     * @param storeId   the store id
+     * @param catalogId the catalog id
+     */
     public void addCatalogItemToStore(Long storeId, Long catalogId) {
         // Verify that both the store and catalog item exist
         if (!storeRepository.existsById(storeId)) {
@@ -74,6 +100,12 @@ public class StoreService {
         events.publishEvent(new CatalogItemAddedToStoreEvent(storeId, catalogId));
     }
 
+    /**
+     * Remove catalog item from store.
+     *
+     * @param storeId   the store id
+     * @param catalogId the catalog id
+     */
     public void removeCatalogItemFromStore(Long storeId, Long catalogId) {
         StoreCatalogEntity association = storeCatalogRepository.findByStoreIdAndCatalogId(storeId, catalogId)
                 .orElseThrow(() -> new IllegalArgumentException(
@@ -84,6 +116,12 @@ public class StoreService {
         events.publishEvent(new CatalogItemRemovedFromStoreEvent(storeId, catalogId));
     }
 
+    /**
+     * Assign geofence to store.
+     *
+     * @param storeId    the store id
+     * @param geofenceId the geofence id
+     */
     public void assignGeofenceToStore(Long storeId, Long geofenceId) {
         // 1. Validate only what this module owns
         if (!storeRepository.existsById(storeId)) {
@@ -94,6 +132,12 @@ public class StoreService {
         events.publishEvent(new GeofenceAssignedToStoreEvent(storeId, geofenceId));
     }
 
+    /**
+     * Remove geofence from store.
+     *
+     * @param storeId    the store id
+     * @param geofenceId the geofence id
+     */
     public void removeGeofenceFromStore(Long storeId, Long geofenceId) {
         // Find the specific summary that links this store and geofence
         StoreGeofenceSummaryEntity summary = storeGeofenceSummaryRepository.findByStoreId(storeId).stream()

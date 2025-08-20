@@ -16,6 +16,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Invoice customer event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class InvoiceCustomerEventListener {
@@ -25,6 +28,8 @@ public class InvoiceCustomerEventListener {
 
     /**
      * Step 1: Hears an invoice was created and ASKS the customer module for details.
+     *
+     * @param event the event
      */
     @ApplicationModuleListener
     public void onInvoiceCreated(InvoiceCreatedEvent event) {
@@ -35,6 +40,8 @@ public class InvoiceCustomerEventListener {
 
     /**
      * Step 2: Hears the response from the customer module and CREATES the summary.
+     *
+     * @param event the event
      */
     @ApplicationModuleListener
     public void onCustomerInfoProvided(CustomerInfoResponseEvent event) {
@@ -52,6 +59,11 @@ public class InvoiceCustomerEventListener {
         }
     }
 
+    /**
+     * On invoice deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onInvoiceDeleted(InvoiceDeletedEvent event) {
         summaryRepository.findByInvoiceId(event.invoiceId()).ifPresent(summary ->
@@ -59,6 +71,11 @@ public class InvoiceCustomerEventListener {
         );
     }
 
+    /**
+     * On customer deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerDeleted(CustomerDeletedEvent event) {
         var summariesToDelete = summaryRepository.findByCustomerId(event.customerId());

@@ -18,8 +18,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * The type Store agent summary repository test.
+ *
  * @author Somendra Datta <sodatta@gmail.com>
- * @version 16/07/25
+ * @version 16 /07/25
  */
 @DataJdbcTest(excludeAutoConfiguration = DailyminutesApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -38,6 +40,9 @@ class StoreAgentSummaryRepositoryTest {
         return "9" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9);
     }
 
+    /**
+     * Test save and find store agent summary.
+     */
     @Test
     void testSaveAndFindStoreAgentSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -61,6 +66,9 @@ class StoreAgentSummaryRepositoryTest {
         assertThat(foundSummary.get().getAgentName()).isEqualTo("Agent Alpha");
     }
 
+    /**
+     * Test update store agent summary.
+     */
     @Test
     void testUpdateStoreAgentSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -78,6 +86,9 @@ class StoreAgentSummaryRepositoryTest {
         assertThat(updatedSummary.get().getAgentStatus()).isEqualTo("INACTIVE");
     }
 
+    /**
+     * Test delete store agent summary.
+     */
     @Test
     void testDeleteStoreAgentSummary() {
         StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -92,6 +103,9 @@ class StoreAgentSummaryRepositoryTest {
         assertThat(deletedSummary).isNotPresent();
     }
 
+    /**
+     * Test find by store id.
+     */
     @Test
     void testFindByStoreId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -105,6 +119,9 @@ class StoreAgentSummaryRepositoryTest {
         assertThat(summaries.stream().allMatch(s -> s.getStoreId().equals(store1.getId()))).isTrue();
     }
 
+    /**
+     * Test find by agent id.
+     */
     @Test
     void testFindByAgentId() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -117,6 +134,9 @@ class StoreAgentSummaryRepositoryTest {
         assertThat(foundSummary.get().getAgentName()).isEqualTo("Agent G");
     }
 
+    /**
+     * Test find by agent designation.
+     */
     @Test
     void testFindByAgentDesignation() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
@@ -131,6 +151,9 @@ class StoreAgentSummaryRepositoryTest {
         assertThat(fleetAgents.stream().allMatch(s -> s.getAgentDesignation().equals("FLEET_AGENT"))).isTrue();
     }
 
+    /**
+     * Test find by agent status.
+     */
     @Test
     void testFindByAgentStatus() {
         StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));

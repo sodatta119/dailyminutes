@@ -12,6 +12,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Customer address event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class CustomerAddressEventListener {
@@ -19,6 +22,11 @@ public class CustomerAddressEventListener {
     private final CustomerAddressRepository customerAddressRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On customer info requested.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerInfoRequested(CustomerAddressInfoRequestEvent event) {
         customerAddressRepository.findById(event.customerId()).ifPresent(address -> {

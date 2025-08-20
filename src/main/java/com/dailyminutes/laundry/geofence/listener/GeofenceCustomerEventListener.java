@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Geofence customer event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class GeofenceCustomerEventListener {
@@ -36,16 +39,31 @@ public class GeofenceCustomerEventListener {
         summaryRepository.save(summary);
     }
 
+    /**
+     * On customer address added.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerAddressAdded(CustomerAddressAddedEvent event) {
         createOrUpdateSummary(event.customerId(), event.geofenceId(), event.customerName(), event.customerPhoneNumber());
     }
 
+    /**
+     * On customer address updated.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerAddressUpdated(CustomerAddressUpdatedEvent event) {
         createOrUpdateSummary(event.customerId(), event.geofenceId(), event.customerName(), event.customerPhoneNumber());
     }
 
+    /**
+     * On customer address removed.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerAddressRemoved(CustomerAddressRemovedEvent event) {
         // If an address is removed, we remove the corresponding summary
@@ -54,6 +72,11 @@ public class GeofenceCustomerEventListener {
         );
     }
 
+    /**
+     * On customer deleted.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onCustomerDeleted(CustomerDeletedEvent event) {
         // If a customer is deleted, we also remove their summary

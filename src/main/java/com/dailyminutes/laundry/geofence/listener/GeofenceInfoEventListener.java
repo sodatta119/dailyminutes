@@ -12,6 +12,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Geofence info event listener.
+ */
 @Component
 @RequiredArgsConstructor
 public class GeofenceInfoEventListener {
@@ -19,6 +22,11 @@ public class GeofenceInfoEventListener {
     private final GeofenceRepository geofenceRepository;
     private final ApplicationEventPublisher events;
 
+    /**
+     * On geofence info requested.
+     *
+     * @param event the event
+     */
     @ApplicationModuleListener
     public void onGeofenceInfoRequested(GeofenceInfoRequestEvent event) {
         geofenceRepository.findById(event.geofenceId()).ifPresent(geofence -> {

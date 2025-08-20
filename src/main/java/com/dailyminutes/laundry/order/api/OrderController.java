@@ -20,6 +20,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * The type Order controller.
+ */
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
@@ -29,6 +32,12 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderQueryService orderQueryService;
 
+    /**
+     * Create order response entity.
+     *
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Create a new order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Order created successfully"),
@@ -39,6 +48,13 @@ public class OrderController {
         return new ResponseEntity<>(orderService.createOrder(request), HttpStatus.CREATED);
     }
 
+    /**
+     * Update order response entity.
+     *
+     * @param id      the id
+     * @param request the request
+     * @return the response entity
+     */
     @Operation(summary = "Update an existing order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Order updated successfully"),
@@ -53,6 +69,12 @@ public class OrderController {
         return ResponseEntity.ok(orderService.updateOrder(request));
     }
 
+    /**
+     * Delete order response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @Operation(summary = "Delete an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Order deleted successfully"),
@@ -64,6 +86,12 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets order by id.
+     *
+     * @param id the id
+     * @return the order by id
+     */
     @Operation(summary = "Get an order by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the order"),
@@ -76,6 +104,11 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
     }
 
+    /**
+     * Gets all orders.
+     *
+     * @return the all orders
+     */
     @Operation(summary = "Get all orders")
     @ApiResponse(responseCode = "200", description = "List of all orders")
     @GetMapping
@@ -83,6 +116,12 @@ public class OrderController {
         return ResponseEntity.ok(orderQueryService.findAllOrders());
     }
 
+    /**
+     * Gets customer summary.
+     *
+     * @param id the id
+     * @return the customer summary
+     */
     @Operation(summary = "Get customer summary for an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found customer summary"),
@@ -95,6 +134,12 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer summary not found for order"));
     }
 
+    /**
+     * Gets task summary.
+     *
+     * @param id the id
+     * @return the task summary
+     */
     @Operation(summary = "Get task summary for an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found task summary"),
@@ -107,6 +152,12 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task summary not found for order"));
     }
 
+    /**
+     * Gets payment summary.
+     *
+     * @param id the id
+     * @return the payment summary
+     */
     @Operation(summary = "Get payment summary for an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found payment summary"),
@@ -117,6 +168,12 @@ public class OrderController {
         return ResponseEntity.ok(orderQueryService.findPaymentSummaryByOrderId(id));
     }
 
+    /**
+     * Gets invoice summary.
+     *
+     * @param id the id
+     * @return the invoice summary
+     */
     @Operation(summary = "Get invoice summary for an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found invoice summary"),
