@@ -7,18 +7,17 @@ package com.dailyminutes.laundry.store.service;
 import com.dailyminutes.laundry.store.domain.event.*;
 import com.dailyminutes.laundry.store.domain.model.StoreCatalogEntity;
 import com.dailyminutes.laundry.store.domain.model.StoreEntity;
+import com.dailyminutes.laundry.store.domain.model.StoreGeofenceSummaryEntity;
 import com.dailyminutes.laundry.store.dto.CreateStoreRequest;
 import com.dailyminutes.laundry.store.dto.StoreResponse;
 import com.dailyminutes.laundry.store.dto.UpdateStoreRequest;
 import com.dailyminutes.laundry.store.repository.StoreCatalogRepository;
+import com.dailyminutes.laundry.store.repository.StoreGeofenceSummaryRepository;
 import com.dailyminutes.laundry.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +26,7 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final StoreCatalogRepository storeCatalogRepository;
+    private final StoreGeofenceSummaryRepository storeGeofenceSummaryRepository;
     private final ApplicationEventPublisher events;
 
     public StoreResponse createStore(CreateStoreRequest request) {
@@ -59,7 +59,7 @@ public class StoreService {
         events.publishEvent(new StoreDeletedEvent(id));
     }
 
-    public void addCatalogItemToStore(Long storeId, Long catalogId, BigDecimal price, LocalDate from, LocalDate to) {
+    public void addCatalogItemToStore(Long storeId, Long catalogId) {
         // Verify that both the store and catalog item exist
         if (!storeRepository.existsById(storeId)) {
             throw new IllegalArgumentException("Store with ID " + storeId + " not found.");
@@ -71,18 +71,40 @@ public class StoreService {
         storeCatalogRepository.save(association);
 
         // Publish the event so the catalog module can create its summary
-        events.publishEvent(new CatalogItemAddedToStoreEvent(storeId, catalogId, price, from, to, true));
+        events.publishEvent(new CatalogItemAddedToStoreEvent(storeId, catalogId));
     }
 
-    public void addGeofenceToStore(Long storeId, Long geofenceId) {
+    public void removeCatalogItemFromStore(Long storeId, Long catalogId) {
+        StoreCatalogEntity association = storeCatalogRepository.findByStoreIdAndCatalogId(storeId, catalogId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Store " + storeId + " does not have an offering for catalog item " + catalogId));
+
+        storeCatalogRepository.delete(association);
+
+        events.publishEvent(new CatalogItemRemovedFromStoreEvent(storeId, catalogId));
+    }
+
+    public void assignGeofenceToStore(Long storeId, Long geofenceId) {
+        // 1. Validate only what this module owns
         if (!storeRepository.existsById(storeId)) {
             throw new IllegalArgumentException("Store with ID " + storeId + " not found.");
         }
-        // In a real application, you would also save this association
-        // in a table within the 'store' module, e.g., DL_STORE_GEOFENCE.
-        // For now, we will just publish the event.
 
+        // 2. Publish the event, trusting the geofenceId is valid.
         events.publishEvent(new GeofenceAssignedToStoreEvent(storeId, geofenceId));
+    }
+
+    public void removeGeofenceFromStore(Long storeId, Long geofenceId) {
+        // Find the specific summary that links this store and geofence
+        StoreGeofenceSummaryEntity summary = storeGeofenceSummaryRepository.findByStoreId(storeId).stream()
+                .filter(s -> s.getGeofenceId().equals(geofenceId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Store " + storeId + " does not have an association with geofence " + geofenceId));
+
+        storeGeofenceSummaryRepository.delete(summary);
+
+        events.publishEvent(new GeofenceRemovedFromStoreEvent(storeId, geofenceId));
     }
 
     private StoreResponse toStoreResponse(StoreEntity entity) {

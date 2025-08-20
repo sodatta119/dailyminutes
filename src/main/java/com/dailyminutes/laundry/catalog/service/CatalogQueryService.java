@@ -8,10 +8,8 @@ package com.dailyminutes.laundry.catalog.service;
 import com.dailyminutes.laundry.catalog.domain.model.CatalogEntity;
 import com.dailyminutes.laundry.catalog.dto.CatalogOrderItemSummaryResponse;
 import com.dailyminutes.laundry.catalog.dto.CatalogResponse;
-import com.dailyminutes.laundry.catalog.dto.CatalogStoreOfferingSummaryResponse;
 import com.dailyminutes.laundry.catalog.repository.CatalogOrderItemSummaryRepository;
 import com.dailyminutes.laundry.catalog.repository.CatalogRepository;
-import com.dailyminutes.laundry.catalog.repository.CatalogStoreOfferingSummaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +25,6 @@ import java.util.stream.StreamSupport;
 public class CatalogQueryService {
 
     private final CatalogRepository catalogRepository;
-    private final CatalogStoreOfferingSummaryRepository catalogStoreOfferingSummaryRepository;
     private final CatalogOrderItemSummaryRepository catalogOrderItemSummaryRepository;
 
     public Optional<CatalogResponse> findCatalogById(Long id) {
@@ -40,23 +37,6 @@ public class CatalogQueryService {
                 .collect(Collectors.toList());
     }
 
-    public List<CatalogStoreOfferingSummaryResponse> findStoreOfferingsByCatalogId(Long catalogId) {
-        return catalogStoreOfferingSummaryRepository.findByCatalogId(catalogId).stream()
-                .map(summary -> new CatalogStoreOfferingSummaryResponse(
-                        summary.getId(),
-                        summary.getCatalogId(),
-                        summary.getCatalogName(),
-                        summary.getCatalogType(),
-                        summary.getUnitType(),
-                        summary.getUnitPrice(),
-                        summary.getStoreId(),
-                        summary.getStoreName(),
-                        summary.getStoreSpecificPrice(),
-                        summary.getEffectiveFrom(),
-                        summary.getEffectiveTo(),
-                        summary.isActive()
-                )).collect(Collectors.toList());
-    }
 
     public List<CatalogOrderItemSummaryResponse> findOrderItemSummariesByCatalogId(Long catalogId) {
         return catalogOrderItemSummaryRepository.findByCatalogId(catalogId).stream()
@@ -79,9 +59,7 @@ public class CatalogQueryService {
         return new CatalogResponse(
                 entity.getId(),
                 entity.getType(),
-                entity.getName(),
-                entity.getUnitType(),
-                entity.getUnitPrice()
+                entity.getName()
         );
     }
 }

@@ -44,7 +44,7 @@ class CatalogOrderItemSummaryRepositoryTest {
 
     @Test
     void testSaveAndFindCatalogOrderItemSummary() {
-        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
         String catalogName = generateUniqueCatalogName();
 
         CatalogOrderItemSummaryEntity summary = new CatalogOrderItemSummaryEntity(
@@ -68,7 +68,7 @@ class CatalogOrderItemSummaryRepositoryTest {
 
     @Test
     void testUpdateCatalogOrderItemSummary() {
-        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
         String catalogName = generateUniqueCatalogName();
 
         CatalogOrderItemSummaryEntity summary = new CatalogOrderItemSummaryEntity(
@@ -88,7 +88,7 @@ class CatalogOrderItemSummaryRepositoryTest {
 
     @Test
     void testDeleteCatalogOrderItemSummary() {
-        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
         String catalogName = generateUniqueCatalogName();
 
         CatalogOrderItemSummaryEntity summary = new CatalogOrderItemSummaryEntity(
@@ -103,8 +103,8 @@ class CatalogOrderItemSummaryRepositoryTest {
 
     @Test
     void testFindByCatalogId() {
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("5.00")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
+        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.KG, new BigDecimal(100)));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog1.getId(), generateUniqueCatalogName(), "SERVICE", "KG", 10l, 10l, 1, new BigDecimal("2.00"), LocalDateTime.now()));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog1.getId(), generateUniqueCatalogName(), "SERVICE", "PIECES", 20l, 20l, 2, new BigDecimal("3.00"), LocalDateTime.now()));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog2.getId(), generateUniqueCatalogName(), "PRODUCT", "PIECES", 30l, 30l, 1, new BigDecimal("15.00"), LocalDateTime.now()));
@@ -116,9 +116,9 @@ class CatalogOrderItemSummaryRepositoryTest {
 
     @Test
     void testFindByOrderId() {
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("5.00")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.PIECES, new BigDecimal("5.00")));
-        CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Regular", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
+        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.KG, new BigDecimal(100)));
+        CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Regular", UnitType.KG, new BigDecimal(100)));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog1.getId(), generateUniqueCatalogName(), "SERVICE", "KG", 10l, 10l, 1, new BigDecimal("2.50"), LocalDateTime.now()));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog2.getId(), generateUniqueCatalogName(), "PRODUCT", "PIECES", 10l, 20l, 2, new BigDecimal("12.00"), LocalDateTime.now()));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog3.getId(), generateUniqueCatalogName(), "SERVICE", "PIECES", 30l, 30l, 1, new BigDecimal("4.00"), LocalDateTime.now()));
@@ -130,7 +130,7 @@ class CatalogOrderItemSummaryRepositoryTest {
 
     @Test
     void testFindByOrderItemId() {
-        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.KG, new BigDecimal(100)));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog.getId(), generateUniqueCatalogName(), "SERVICE", "KG", 10l, 15l, 1, new BigDecimal("1.75"), LocalDateTime.now()));
 
         Optional<CatalogOrderItemSummaryEntity> foundSummary = catalogOrderItemSummaryRepository.findByOrderItemId(15l);
@@ -140,9 +140,9 @@ class CatalogOrderItemSummaryRepositoryTest {
 
     @Test
     void testFindByCatalogType() {
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("5.00")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.PIECES, new BigDecimal("5.00")));
-        CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Regular", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
+        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.KG, new BigDecimal(100)));
+        CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Regular", UnitType.KG, new BigDecimal(100)));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog1.getId(), generateUniqueCatalogName(), "SERVICE", "KG", 10l, 10l, 1, new BigDecimal("1.00"), LocalDateTime.now()));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog2.getId(), generateUniqueCatalogName(), "SERVICE", "PIECES", 20l, 20l, 2, new BigDecimal("2.00"), LocalDateTime.now()));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog3.getId(), generateUniqueCatalogName(), "PRODUCT", "PIECES", 30l, 30l, 1, new BigDecimal("10.00"), LocalDateTime.now()));
@@ -157,9 +157,9 @@ class CatalogOrderItemSummaryRepositoryTest {
         LocalDateTime start = LocalDateTime.of(2025, 1, 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(2025, 1, 31, 23, 59);
 
-        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("5.00")));
-        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.PIECES, new BigDecimal("5.00")));
-        CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Regular", UnitType.PIECES, new BigDecimal("5.00")));
+        CatalogEntity catalog1 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100)));
+        CatalogEntity catalog2 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Premium", UnitType.KG, new BigDecimal(100)));
+        CatalogEntity catalog3 = catalogRepository.save(new CatalogEntity(null, CatalogType.SERVICE, "Dry Cleaning Regular", UnitType.KG, new BigDecimal(100)));
 
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog1.getId(), generateUniqueCatalogName(), "SERVICE", "KG", 10l, 10l, 1, new BigDecimal("1.00"), LocalDateTime.of(2025, 1, 15, 10, 0)));
         catalogOrderItemSummaryRepository.save(new CatalogOrderItemSummaryEntity(null, catalog2.getId(), generateUniqueCatalogName(), "PRODUCT", "PIECES", 20l, 20l, 1, new BigDecimal("10.00"), LocalDateTime.of(2025, 1, 20, 11, 0)));

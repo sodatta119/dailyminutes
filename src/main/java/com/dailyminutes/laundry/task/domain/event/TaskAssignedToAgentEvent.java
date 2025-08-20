@@ -4,8 +4,10 @@
  */
 package com.dailyminutes.laundry.task.domain.event;
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
+
 public record TaskAssignedToAgentEvent(
         Long taskId,
         Long agentId
-) {
+) implements CallerEvent {
 }

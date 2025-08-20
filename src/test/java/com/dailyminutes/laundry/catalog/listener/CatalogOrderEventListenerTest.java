@@ -54,8 +54,8 @@ class CatalogOrderEventListenerTest {
         );
 
         // And the corresponding catalog entities exist
-        CatalogEntity catalog1 = new CatalogEntity(1L, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal("5.00"));
-        CatalogEntity catalog2 = new CatalogEntity(2L, CatalogType.SERVICE, "Ironing", UnitType.PIECES, new BigDecimal("5.50"));
+        CatalogEntity catalog1 = new CatalogEntity(1L, CatalogType.SERVICE, "Wash & Fold", UnitType.KG, new BigDecimal(100));
+        CatalogEntity catalog2 = new CatalogEntity(2L, CatalogType.SERVICE, "Ironing", UnitType.KG, new BigDecimal(100));
         when(catalogRepository.findById(1L)).thenReturn(Optional.of(catalog1));
         when(catalogRepository.findById(2L)).thenReturn(Optional.of(catalog2));
 

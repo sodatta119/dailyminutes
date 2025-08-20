@@ -46,7 +46,7 @@ class CatalogControllerTest {
     @BeforeEach
     void setUp() {
         createRequest = new CreateCatalogRequest(CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("12.50"));
-        catalogResponse = new CatalogResponse(1L, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("12.50"));
+        catalogResponse = new CatalogResponse(1L, CatalogType.SERVICE, "Dry Cleaning");
     }
 
     @Test

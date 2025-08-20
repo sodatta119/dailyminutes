@@ -35,7 +35,9 @@ public class TaskService {
                 savedTask.getStatus().name(),
                 savedTask.getTaskStartTime(),
                 savedTask.getSourceAddress(),
+                savedTask.getSourceGeofenceId(),
                 savedTask.getDestinationAddress(),
+                savedTask.getDestinationGeofenceId(),
                 savedTask.getAgentId(),
                 savedTask.getTeamId()
         ));

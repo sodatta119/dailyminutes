@@ -27,6 +27,7 @@ public class GeofenceInfoEventListener {
                     geofence.getName(),
                     geofence.getGeofenceType(),
                     geofence.isActive(),
+                    geofence.getPolygonCoordinates(),
                     event.originalEvent() // Pass the storeId back
             ));
         });

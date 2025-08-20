@@ -6,6 +6,6 @@ package com.dailyminutes.laundry.task;
 
 import org.springframework.modulith.ApplicationModule;
 
-@ApplicationModule(id = "laundry.task")
+@ApplicationModule(id = "laundry.task", allowedDependencies = {"laundry.common::events","laundry.geofence::events"})
 public class TaskModule {
 }

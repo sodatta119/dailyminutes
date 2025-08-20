@@ -34,6 +34,8 @@ public class OrderItemEntity {
     private BigDecimal itemPriceAtOrder;
 
     private String notes;
+
+    //private UnitType unitType;
 }
 
 

@@ -56,7 +56,7 @@ class StoreGeofenceEventListenerTest {
     void onGeofenceInfoProvided_shouldCreateStoreGeofenceSummary() {
         // Given: An event from the geofence module providing the necessary details
         GeofenceInfoResponseEvent event = new GeofenceInfoResponseEvent(
-                100L, "Downtown Zone", "DELIVERY_ZONE", true, new GeofenceAssignedToStoreEvent(1L, 10L) // correlationId is the storeId
+                100L, "Downtown Zone", "DELIVERY_ZONE", true,"", new GeofenceAssignedToStoreEvent(1L, 10L) // correlationId is the storeId
         );
         ArgumentCaptor<StoreGeofenceSummaryEntity> captor = ArgumentCaptor.forClass(StoreGeofenceSummaryEntity.class);
 

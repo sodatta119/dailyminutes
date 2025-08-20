@@ -6,6 +6,7 @@ import com.dailyminutes.laundry.customer.domain.event.CustomerInfoResponseEvent;
 import com.dailyminutes.laundry.invoice.domain.event.InvoiceCreatedEvent;
 import com.dailyminutes.laundry.invoice.domain.event.InvoiceDeletedEvent;
 import com.dailyminutes.laundry.invoice.domain.model.InvoiceCustomerSummaryEntity;
+import com.dailyminutes.laundry.invoice.listener.InvoiceCustomerEventListener;
 import com.dailyminutes.laundry.invoice.repository.InvoiceCustomerSummaryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

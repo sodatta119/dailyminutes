@@ -38,9 +38,7 @@ public class CatalogService {
         events.publishEvent(new CatalogCreatedEvent(
                 savedCatalog.getId(),
                 savedCatalog.getType(),
-                savedCatalog.getName(),
-                savedCatalog.getUnitType(),
-                savedCatalog.getUnitPrice()
+                savedCatalog.getName()
         ));
         return toCatalogResponse(savedCatalog);
     }
@@ -51,17 +49,13 @@ public class CatalogService {
 
         existingCatalog.setType(request.type());
         existingCatalog.setName(request.name());
-        existingCatalog.setUnitType(request.unit());
-        existingCatalog.setUnitPrice(request.unitPrice());
 
         CatalogEntity updatedCatalog = catalogRepository.save(existingCatalog);
 
         events.publishEvent(new CatalogUpdatedEvent(
                 updatedCatalog.getId(),
                 updatedCatalog.getType(),
-                updatedCatalog.getName(),
-                updatedCatalog.getUnitType(),
-                updatedCatalog.getUnitPrice()
+                updatedCatalog.getName()
         ));
 
         return toCatalogResponse(updatedCatalog);
@@ -79,9 +73,7 @@ public class CatalogService {
         return new CatalogResponse(
                 entity.getId(),
                 entity.getType(),
-                entity.getName(),
-                entity.getUnitType(),
-                entity.getUnitPrice()
+                entity.getName()
         );
     }
 }

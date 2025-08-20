@@ -11,5 +11,6 @@ public record GeofenceInfoResponseEvent(
         String geofenceName,
         String geofenceType,
         boolean active,
+        String polygonCoordinates,
         CallerEvent originalEvent
 ) {}

@@ -2,7 +2,7 @@
  * @author Somendra Datta <sodatta@gmail.com>
  * @version 02/08/25
  */
-package com.dailyminutes.laundry.invoice.domain.listener;
+package com.dailyminutes.laundry.invoice.listener;
 
 import com.dailyminutes.laundry.invoice.domain.model.InvoicePaymentSummaryEntity;
 import com.dailyminutes.laundry.invoice.repository.InvoicePaymentSummaryRepository;

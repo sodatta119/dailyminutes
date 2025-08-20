@@ -4,6 +4,8 @@
  */
 package com.dailyminutes.laundry.task.domain.event;
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
+
 import java.time.LocalDateTime;
 
 public record TaskCreatedEvent(
@@ -14,8 +16,10 @@ public record TaskCreatedEvent(
         String status,
         LocalDateTime taskStartTime,
         String sourceAddress,
+        Long sourceGeofenceId,
         String destinationAddress,
+        Long destinationGeofenceId,
         Long agentId,
         Long teamId
-) {
+) implements CallerEvent {
 }

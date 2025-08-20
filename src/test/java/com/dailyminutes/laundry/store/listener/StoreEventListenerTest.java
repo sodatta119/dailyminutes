@@ -14,8 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,8 +36,7 @@ class StoreEventListenerTest {
     void onStoreInfoRequested_shouldFindStoreAndPublishInfo() {
         // Given: A request for store details, containing the original event as payload
         CatalogItemAddedToStoreEvent originalEvent = new CatalogItemAddedToStoreEvent(
-                10L, 100L, new BigDecimal("12.50"),
-                LocalDate.now(), LocalDate.now().plusYears(1), true
+                10L, 100L
         );
         StoreInfoRequestEvent requestEvent = new StoreInfoRequestEvent(10L, originalEvent);
 

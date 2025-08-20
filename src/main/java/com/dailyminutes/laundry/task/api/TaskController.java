@@ -80,16 +80,6 @@ public class TaskController {
         return ResponseEntity.ok(taskQueryService.findAllTasks());
     }
 
-    @Operation(summary = "Get agent summary for a task")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found agent summary"),
-            @ApiResponse(responseCode = "404", description = "Task not found")
-    })
-    @GetMapping("/{id}/agent-summary")
-    public ResponseEntity<List<TaskAgentSummaryResponse>> getAgentSummary(@PathVariable Long id) {
-        return ResponseEntity.ok(taskQueryService.findAgentSummaryByTaskId(id));
-    }
-
     @Operation(summary = "Get geofence summary for a task")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found geofence summary"),
@@ -98,16 +88,6 @@ public class TaskController {
     @GetMapping("/{id}/geofence-summary")
     public ResponseEntity<List<TaskGeofenceSummaryResponse>> getGeofenceSummary(@PathVariable Long id) {
         return ResponseEntity.ok(taskQueryService.findGeofenceSummaryByTaskId(id));
-    }
-
-    @Operation(summary = "Get order summary for a task")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found order summary"),
-            @ApiResponse(responseCode = "404", description = "Task not found")
-    })
-    @GetMapping("/{id}/order-summary")
-    public ResponseEntity<List<TaskOrderSummaryResponse>> getOrderSummary(@PathVariable Long id) {
-        return ResponseEntity.ok(taskQueryService.findOrderSummaryByTaskId(id));
     }
 
     @Operation(summary = "Get team summary for a task")

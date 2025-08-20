@@ -34,7 +34,7 @@ class CatalogQueryServiceTest {
 
     @BeforeEach
     void setUp() {
-        catalogEntity = new CatalogEntity(1L, CatalogType.SERVICE, "Dry Cleaning", UnitType.PIECES, new BigDecimal("10.00"));
+        catalogEntity = new CatalogEntity(1L, CatalogType.SERVICE, "Dry Cleaning", UnitType.KG, new BigDecimal(100));
     }
 
     @Test

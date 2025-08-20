@@ -19,8 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -80,5 +79,63 @@ class StoreControllerTest {
         doNothing().when(storeService).deleteStore(1L);
         mockMvc.perform(delete("/api/stores/1"))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void addCatalogItemToStore_shouldReturnOk() throws Exception {
+        // Given
+        Long storeId = 1L;
+        Long catalogId = 101L;
+        doNothing().when(storeService).addCatalogItemToStore(storeId, catalogId);
+
+        // When & Then
+        mockMvc.perform(put("/api/stores/{storeId}/catalog/{catalogId}", storeId, catalogId))
+                .andExpect(status().isOk());
+
+        // Also verify that the service method was called with the correct parameters
+        verify(storeService).addCatalogItemToStore(storeId, catalogId);
+    }
+
+    @Test
+    void removeCatalogItemFromStore_shouldReturnNoContent() throws Exception {
+        // Given
+        Long storeId = 1L;
+        Long catalogId = 101L;
+        doNothing().when(storeService).removeCatalogItemFromStore(storeId, catalogId);
+
+        // When & Then
+        mockMvc.perform(delete("/api/stores/{storeId}/catalog/{catalogId}", storeId, catalogId))
+                .andExpect(status().isNoContent());
+
+        verify(storeService).removeCatalogItemFromStore(storeId, catalogId);
+    }
+
+    @Test
+    void removeGeofenceFromStore_shouldReturnNoContent() throws Exception {
+        // Given
+        Long storeId = 1L;
+        Long geofenceId = 100L;
+        doNothing().when(storeService).removeGeofenceFromStore(storeId, geofenceId);
+
+        // When & Then
+        mockMvc.perform(delete("/api/stores/{storeId}/geofences/{geofenceId}", storeId, geofenceId))
+                .andExpect(status().isNoContent());
+
+        verify(storeService).removeGeofenceFromStore(storeId, geofenceId);
+    }
+
+    @Test
+    void assignGeofenceToStore_shouldReturnOk() throws Exception {
+        // Given
+        Long storeId = 1L;
+        Long geofenceId = 100L;
+        doNothing().when(storeService).assignGeofenceToStore(storeId, geofenceId);
+
+        // When & Then
+        mockMvc.perform(put("/api/stores/{storeId}/geofences/{geofenceId}", storeId, geofenceId))
+                .andExpect(status().isOk());
+
+        // Verify that the service method was called with the correct parameters
+        verify(storeService).assignGeofenceToStore(storeId, geofenceId);
     }
 }

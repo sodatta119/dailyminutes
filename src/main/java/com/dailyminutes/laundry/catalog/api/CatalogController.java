@@ -95,20 +95,6 @@ public class CatalogController {
         return ResponseEntity.ok(catalogs);
     }
 
-    @Operation(summary = "Get store offerings for a specific catalog item")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found store offerings"),
-            @ApiResponse(responseCode = "404", description = "Catalog item not found or no stores offer it")
-    })
-    @GetMapping("/{id}/store-offerings")
-    public ResponseEntity<List<CatalogStoreOfferingSummaryResponse>> getStoreOfferingsByCatalogId(@PathVariable Long id) {
-        List<CatalogStoreOfferingSummaryResponse> offerings = catalogQueryService.findStoreOfferingsByCatalogId(id);
-        if (offerings.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(offerings);
-    }
-
     @Operation(summary = "Get order item history for a specific catalog item")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found order item history"),

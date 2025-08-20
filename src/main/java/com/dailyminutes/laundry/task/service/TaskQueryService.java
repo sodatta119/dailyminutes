@@ -21,9 +21,7 @@ import java.util.stream.StreamSupport;
 public class TaskQueryService {
 
     private final TaskRepository taskRepository;
-    private final TaskAgentSummaryRepository agentSummaryRepository;
     private final TaskGeofenceSummaryRepository geofenceSummaryRepository;
-    private final TaskOrderSummaryRepository orderSummaryRepository;
     private final TaskTeamSummaryRepository teamSummaryRepository;
 
     public Optional<TaskResponse> findTaskById(Long id) {
@@ -37,21 +35,11 @@ public class TaskQueryService {
                 .collect(Collectors.toList());
     }
 
-    public List<TaskAgentSummaryResponse> findAgentSummaryByTaskId(Long taskId) {
-        return agentSummaryRepository.findByTaskId(taskId).stream()
-                .map(s -> new TaskAgentSummaryResponse(s.getId(), s.getTaskId(), s.getAgentId(), s.getAgentName(), s.getAgentPhoneNumber(), s.getAgentDesignation(), s.getAgentState()))
-                .collect(Collectors.toList());
-    }
+
 
     public List<TaskGeofenceSummaryResponse> findGeofenceSummaryByTaskId(Long taskId) {
         return geofenceSummaryRepository.findByTaskId(taskId).stream()
                 .map(s -> new TaskGeofenceSummaryResponse(s.getId(), s.getTaskId(), s.getGeofenceId(), s.getGeofenceName(), s.getGeofenceType(), s.getPolygonCoordinates(), s.isSource(), s.isDestination()))
-                .collect(Collectors.toList());
-    }
-
-    public List<TaskOrderSummaryResponse> findOrderSummaryByTaskId(Long taskId) {
-        return orderSummaryRepository.findByTaskId(taskId).stream()
-                .map(s -> new TaskOrderSummaryResponse(s.getId(), s.getTaskId(), s.getOrderId(), s.getOrderDate(), s.getStatus(), s.getTotalAmount(), s.getCustomerId(), s.getStoreId()))
                 .collect(Collectors.toList());
     }
 

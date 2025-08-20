@@ -119,4 +119,57 @@ public class StoreController {
     public ResponseEntity<List<StoreTaskSummaryResponse>> getTaskSummary(@PathVariable Long id) {
         return ResponseEntity.ok(storeQueryService.findTaskSummariesByStoreId(id));
     }
+
+    @Operation(summary = "Add a catalog item to a store's offerings")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Catalog item added successfully"),
+            @ApiResponse(responseCode = "404", description = "Store or Catalog item not found")
+    })
+    @PutMapping("/{storeId}/catalog/{catalogId}")
+    public ResponseEntity<Void> addCatalogItemToStore(
+            @PathVariable Long storeId,
+            @PathVariable Long catalogId) {
+        storeService.addCatalogItemToStore(storeId, catalogId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Remove a catalog item from a store's offerings")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Catalog item removed successfully"),
+            @ApiResponse(responseCode = "404", description = "Store offering not found")
+    })
+    @DeleteMapping("/{storeId}/catalog/{catalogId}")
+    public ResponseEntity<Void> removeCatalogItemFromStore(
+            @PathVariable Long storeId,
+            @PathVariable Long catalogId) {
+        storeService.removeCatalogItemFromStore(storeId, catalogId);
+        return ResponseEntity.noContent().build();
+    }
+
+    // ADD THIS NEW ENDPOINT
+    @Operation(summary = "Assign a geofence to a store's service area")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Geofence assignment process initiated successfully"),
+            @ApiResponse(responseCode = "404", description = "Store not found")
+    })
+    @PutMapping("/{storeId}/geofences/{geofenceId}")
+    public ResponseEntity<Void> assignGeofenceToStore(
+            @PathVariable Long storeId,
+            @PathVariable Long geofenceId) {
+        storeService.assignGeofenceToStore(storeId, geofenceId);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Remove a geofence from a store's service area")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Geofence removed successfully from store"),
+            @ApiResponse(responseCode = "404", description = "Store or geofence association not found")
+    })
+    @DeleteMapping("/{storeId}/geofences/{geofenceId}")
+    public ResponseEntity<Void> removeGeofenceFromStore(
+            @PathVariable Long storeId,
+            @PathVariable Long geofenceId) {
+        storeService.removeGeofenceFromStore(storeId, geofenceId);
+        return ResponseEntity.noContent().build();
+    }
 }

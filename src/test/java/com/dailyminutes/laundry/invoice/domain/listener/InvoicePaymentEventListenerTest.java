@@ -2,6 +2,7 @@ package com.dailyminutes.laundry.invoice.domain.listener;
 
 import com.dailyminutes.laundry.invoice.domain.model.InvoiceEntity;
 import com.dailyminutes.laundry.invoice.domain.model.InvoicePaymentSummaryEntity;
+import com.dailyminutes.laundry.invoice.listener.InvoicePaymentEventListener;
 import com.dailyminutes.laundry.invoice.repository.InvoicePaymentSummaryRepository;
 import com.dailyminutes.laundry.invoice.repository.InvoiceRepository;
 import com.dailyminutes.laundry.payment.domain.event.PaymentFailedEvent;

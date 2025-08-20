@@ -2,7 +2,7 @@
  * @author Somendra Datta <sodatta@gmail.com>
  * @version 31/07/25
  */
-package com.dailyminutes.laundry.invoice.domain.listener;
+package com.dailyminutes.laundry.invoice.listener;
 
 import com.dailyminutes.laundry.customer.domain.event.CustomerDeletedEvent;
 import com.dailyminutes.laundry.customer.domain.event.CustomerInfoRequestEvent;
