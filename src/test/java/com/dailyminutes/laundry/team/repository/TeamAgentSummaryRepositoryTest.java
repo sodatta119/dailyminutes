@@ -45,7 +45,7 @@ class TeamAgentSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindTeamAgentSummary() {
-        TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team = teamRepository.save(new TeamEntity(null, 99L,"Operations Team A", "Handles daily operations", TeamRole.OPS));
         String phoneNumber = generateUniquePhoneNumber();
 
         TeamAgentSummaryEntity summary = new TeamAgentSummaryEntity(null, team.getId(), 10l, "Agent Alpha", phoneNumber, "FLEET_AGENT", "ACTIVE");
@@ -70,7 +70,7 @@ class TeamAgentSummaryRepositoryTest {
      */
     @Test
     void testUpdateTeamAgentSummary() {
-        TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team = teamRepository.save(new TeamEntity(null,99L, "Operations Team A", "Handles daily operations", TeamRole.OPS));
         String phoneNumber = generateUniquePhoneNumber();
 
         TeamAgentSummaryEntity summary = new TeamAgentSummaryEntity(null, team.getId(), 10l, "Agent Beta", phoneNumber, "DELIVERY_EXECUTIVE", "ACTIVE");
@@ -91,7 +91,7 @@ class TeamAgentSummaryRepositoryTest {
      */
     @Test
     void testDeleteTeamAgentSummary() {
-        TeamEntity team = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team = teamRepository.save(new TeamEntity(null, 99L,"Operations Team A", "Handles daily operations", TeamRole.OPS));
         String phoneNumber = generateUniquePhoneNumber();
 
         TeamAgentSummaryEntity summary = new TeamAgentSummaryEntity(null, team.getId(), 10l, "Agent Gamma", phoneNumber, "PROCESS_MANAGER", "ACTIVE");
@@ -107,8 +107,8 @@ class TeamAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByTeamId() {
-        TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
-        TeamEntity team2 = teamRepository.save(new TeamEntity(null, "Operations Team B", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team1 = teamRepository.save(new TeamEntity(null, 99L,"Operations Team A", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team2 = teamRepository.save(new TeamEntity(null, 999L,"Operations Team B", "Handles daily operations", TeamRole.OPS));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team1.getId(), 10l, "Agent D", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team1.getId(), 20l, "Agent E", generateUniquePhoneNumber(), "DELIVERY_EXECUTIVE", "ACTIVE"));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team2.getId(), 30l, "Agent F", generateUniquePhoneNumber(), "PROCESS_MANAGER", "ACTIVE"));
@@ -123,8 +123,8 @@ class TeamAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentId() {
-        TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
-        TeamEntity team2 = teamRepository.save(new TeamEntity(null, "Operations Team B", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team1 = teamRepository.save(new TeamEntity(null, 99L,"Operations Team A", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team2 = teamRepository.save(new TeamEntity(null, 999L,"Operations Team B", "Handles daily operations", TeamRole.OPS));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team1.getId(), 10l, "Agent G", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team2.getId(), 20l, "Agent H", generateUniquePhoneNumber(), "DELIVERY_EXECUTIVE", "ACTIVE"));
 
@@ -138,9 +138,9 @@ class TeamAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentDesignation() {
-        TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
-        TeamEntity team2 = teamRepository.save(new TeamEntity(null, "Operations Team B", "Handles daily operations", TeamRole.OPS));
-        TeamEntity team3 = teamRepository.save(new TeamEntity(null, "Operations Team C", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team1 = teamRepository.save(new TeamEntity(null, 99L,"Operations Team A", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team2 = teamRepository.save(new TeamEntity(null, 999L,"Operations Team B", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team3 = teamRepository.save(new TeamEntity(null, 9999L,"Operations Team C", "Handles daily operations", TeamRole.OPS));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team1.getId(), 10l, "Agent I", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team2.getId(), 20l, "Agent J", generateUniquePhoneNumber(), "FLEET_AGENT", "INACTIVE"));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team3.getId(), 30l, "Agent K", generateUniquePhoneNumber(), "PROCESS_MANAGER", "ACTIVE"));
@@ -155,9 +155,9 @@ class TeamAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentState() {
-        TeamEntity team1 = teamRepository.save(new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS));
-        TeamEntity team2 = teamRepository.save(new TeamEntity(null, "Operations Team B", "Handles daily operations", TeamRole.OPS));
-        TeamEntity team3 = teamRepository.save(new TeamEntity(null, "Operations Team C", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team1 = teamRepository.save(new TeamEntity(null, 99L,"Operations Team A", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team2 = teamRepository.save(new TeamEntity(null, 999L,"Operations Team B", "Handles daily operations", TeamRole.OPS));
+        TeamEntity team3 = teamRepository.save(new TeamEntity(null, 9999L,"Operations Team C", "Handles daily operations", TeamRole.OPS));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team1.getId(), 10l, "Agent L", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team2.getId(), 20l, "Agent M", generateUniquePhoneNumber(), "DELIVERY_EXECUTIVE", "ACTIVE"));
         teamAgentSummaryRepository.save(new TeamAgentSummaryEntity(null, team3.getId(), 30l, "Agent N", generateUniquePhoneNumber(), "PROCESS_MANAGER", "INACTIVE"));

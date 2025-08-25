@@ -8,6 +8,7 @@ import com.dailyminutes.laundry.agent.domain.event.AgentInfoRequestEvent;
 import com.dailyminutes.laundry.agent.domain.event.AgentInfoResponseEvent;
 import com.dailyminutes.laundry.agent.repository.AgentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AgentInfoEventListener {
 
     private final AgentRepository agentRepository;
@@ -29,6 +31,7 @@ public class AgentInfoEventListener {
      */
     @ApplicationModuleListener
     public void onAgentInfoRequested(AgentInfoRequestEvent event) {
+        log.info("Reveived AgentInfoRequestEvent for Agent id"+event.agentId()+". Going to publish AgentInfoResponseEvent.");
         agentRepository.findById(event.agentId()).ifPresent(agent -> {
             events.publishEvent(new AgentInfoResponseEvent(
                     agent.getName(),
@@ -43,16 +46,4 @@ public class AgentInfoEventListener {
             ));
         });
     }
-
-//    @ApplicationModuleListener
-//    public void onTeamAgentInfoRequested(TeamAgentInfoRequestEvent event) {
-//        agentRepository.findById(event.agentId()).ifPresent(agent -> {
-//            events.publishEvent(new TeamAgentInfoResponseEvent(
-//                    agent.getId(),
-//                    event.taskId(),
-//                    agent.getName(),
-//                    agent.getUniqueId()
-//            ));
-//        });
-//    }
 }

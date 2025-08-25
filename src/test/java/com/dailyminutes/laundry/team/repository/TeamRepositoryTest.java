@@ -32,7 +32,7 @@ class TeamRepositoryTest {
      */
     @Test
     void testSaveAndFindTeam() {
-        TeamEntity team = new TeamEntity(null, "Operations Team A", "Handles daily operations", TeamRole.OPS);
+        TeamEntity team = new TeamEntity(null, 99L, "Operations Team A", "Handles daily operations", TeamRole.OPS);
         TeamEntity savedTeam = teamRepository.save(team);
 
         assertThat(savedTeam).isNotNull();
@@ -49,7 +49,7 @@ class TeamRepositoryTest {
      */
     @Test
     void testUpdateTeam() {
-        TeamEntity team = new TeamEntity(null, "Support Team Alpha", "Customer support", TeamRole.SUPPORT);
+        TeamEntity team = new TeamEntity(null, 99L, "Support Team Alpha", "Customer support", TeamRole.SUPPORT);
         TeamEntity savedTeam = teamRepository.save(team);
 
         TeamEntity foundTeam = teamRepository.findById(savedTeam.getId()).orElseThrow();
@@ -68,7 +68,7 @@ class TeamRepositoryTest {
      */
     @Test
     void testDeleteTeam() {
-        TeamEntity team = new TeamEntity(null, "Fleet Team X", "Vehicle management", TeamRole.FLEET);
+        TeamEntity team = new TeamEntity(null, 99L, "Fleet Team X", "Vehicle management", TeamRole.FLEET);
         TeamEntity savedTeam = teamRepository.save(team);
 
         teamRepository.deleteById(savedTeam.getId());
@@ -81,7 +81,7 @@ class TeamRepositoryTest {
      */
     @Test
     void testFindByName() {
-        teamRepository.save(new TeamEntity(null, "Unique Team Name", "A unique team", TeamRole.OPS));
+        teamRepository.save(new TeamEntity(null, 99L, "Unique Team Name", "A unique team", TeamRole.OPS));
         Optional<TeamEntity> foundTeam = teamRepository.findByName("Unique Team Name");
         assertThat(foundTeam).isPresent();
         assertThat(foundTeam.get().getRole()).isEqualTo(TeamRole.OPS);

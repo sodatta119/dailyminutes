@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+
+    <!-- Appender to output JSON to the console (used by all profiles) -->
+    <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdc>true</includeMdc>
+            <customFields>{"application":"${springAppName:-}"}</customFields>
+        </encoder>
+    </appender>
+
+    <!-- ===================================================================== -->
+    <!--     Configuration for LOCAL development (default)                       -->
+    <!-- ===================================================================== -->
+    <springProfile name="!prod">
+        <appender name="jsonFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- Log to a 'logs' directory inside your project for easy access -->
+            <file>logs/app.log.json</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>logs/app.log.json.%d{yyyy-MM-dd}.gz</fileNamePattern>
+                <maxHistory>7</maxHistory>
+            </rollingPolicy>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <includeMdc>true</includeMdc>
+                <customFields>{"application":"${springAppName:-}"}</customFields>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="jsonConsoleAppender"/>
+            <appender-ref ref="jsonFileAppender"/>
+        </root>
+    </springProfile>
+
+    <!-- ===================================================================== -->
+    <!--     Configuration for PRODUCTION (EC2)                                -->
+    <!-- ===================================================================== -->
+    <springProfile name="prod">
+        <appender name="jsonFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- This path will be used on your EC2 server -->
+            <file>/var/log/dailyminutes/app.log.json</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/var/log/dailyminutes/app.log.json.%d{yyyy-MM-dd}.gz</fileNamePattern>
+                <maxHistory>30</maxHistory> <!-- Keep logs for longer in production -->
+            </rollingPolicy>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <includeMdc>true</includeMdc>
+                <customFields>{"application":"${springAppName:-}"}</customFields>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="jsonConsoleAppender"/>
+            <appender-ref ref="jsonFileAppender"/>
+        </root>
+    </springProfile>
+
+</configuration>

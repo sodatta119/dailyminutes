@@ -7,12 +7,14 @@ package com.dailyminutes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.modulith.Modulithic;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * The type Dailyminutes application.
  */
 @Modulithic(sharedModules = {"laundry.common"})
 @SpringBootApplication
+@EnableScheduling
 public class DailyminutesApplication {
 
     /**

@@ -36,6 +36,8 @@ dependencies {
     implementation("org.springframework.modulith:spring-modulith-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("net.logstash.logback:logstash-logback-encoder:7.4")
     //implementation("io.springfox:springfox-swagger-ui:3.0.0")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
