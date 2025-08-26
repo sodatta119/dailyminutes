@@ -45,7 +45,7 @@ class AgentTaskSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindAgentTaskSummary() {
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false)); // Updated
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, 10l, // taskId
                 agent1.getId(), // agentId
                 "Pickup Order 123", "PICKUP", "NEW", LocalDateTime.now(), "Customer Address A", "Store Address B", 10l);
@@ -66,7 +66,7 @@ class AgentTaskSummaryRepositoryTest {
      */
     @Test
     void testUpdateAgentTaskSummary() {
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false)); // Updated
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, 10l, // taskId
                 agent1.getId(), // agentId
                 "Process Order 456", "PROCESS", "STARTED", LocalDateTime.now(), "Facility A", "Facility B", 10l);
@@ -88,7 +88,7 @@ class AgentTaskSummaryRepositoryTest {
      */
     @Test
     void testDeleteAgentTaskSummary() {
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false)); // Updated
         AgentTaskSummaryEntity summary = new AgentTaskSummaryEntity(null, 10l, // taskId
                 agent1.getId(), // agentId
                 "Delivery Order 789", "DELIVERY", "ASSIGNED", LocalDateTime.now(), "Store C", "Customer D", 10l);
@@ -104,8 +104,8 @@ class AgentTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentId() {
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, 10l, "9876543210", "A002", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "8787879879", "A001", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false)); // Updated
+        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, 10l, "9876543210", "A002", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "999L", LocalDateTime.now(), false)); // Updated
 
         agentTaskSummaryRepository.save(new AgentTaskSummaryEntity(null, 10l, agent1.getId(), "Task for Agent 20-A", "PICKUP", "NEW", LocalDateTime.now(), "Addr E", "Dest F", 10l));
         agentTaskSummaryRepository.save(new AgentTaskSummaryEntity(null, 20l, agent1.getId(), "Task for Agent 20-B", "DELIVERY", "ASSIGNED", LocalDateTime.now(), "Addr G", "Dest H", 20l));
@@ -122,9 +122,9 @@ class AgentTaskSummaryRepositoryTest {
     @Test
     void testFindByTaskStatus() {
 
-        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, 10l, "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
-        AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, 10l, "9878768766", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT)); // Updated
+        AgentEntity agent1 = agentRepository.save(new AgentEntity(null, "Agent Alpha", AgentState.ACTIVE, 10l, "876876868", "A003", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false)); // Updated
+        AgentEntity agent2 = agentRepository.save(new AgentEntity(null, "Agent Beta", AgentState.ACTIVE, 10l, "987987987", "A004", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "999L", LocalDateTime.now(), false)); // Updated
+        AgentEntity agent3 = agentRepository.save(new AgentEntity(null, "Agent Sigma", AgentState.ACTIVE, 10l, "9878768766", "A005", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "9999L", LocalDateTime.now(), false)); // Updated
 
 
         agentTaskSummaryRepository.save(new AgentTaskSummaryEntity(null, 10l, agent1.getId(), "Task New 1", "PICKUP", "NEW", LocalDateTime.now(), "Addr K", "Dest L", 10l));

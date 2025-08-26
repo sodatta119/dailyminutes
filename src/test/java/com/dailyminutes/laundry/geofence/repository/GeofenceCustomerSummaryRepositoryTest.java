@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ class GeofenceCustomerSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindGeofenceCustomerSummary() {
-        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
 
         GeofenceCustomerSummaryEntity summary = new GeofenceCustomerSummaryEntity(
                 null, 10l, geofence.getId(), "John Doe", "1234567890");
@@ -60,7 +61,7 @@ class GeofenceCustomerSummaryRepositoryTest {
      */
     @Test
     void testUpdateGeofenceCustomerSummary() {
-        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
 
         GeofenceCustomerSummaryEntity summary = new GeofenceCustomerSummaryEntity(
                 null, 10l, geofence.getId(), "Jane Smith", "0987654321");
@@ -81,7 +82,7 @@ class GeofenceCustomerSummaryRepositoryTest {
      */
     @Test
     void testDeleteGeofenceCustomerSummary() {
-        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
 
         GeofenceCustomerSummaryEntity summary = new GeofenceCustomerSummaryEntity(
                 null, 10l, geofence.getId(), "Customer to Delete", "5555555555");
@@ -97,8 +98,8 @@ class GeofenceCustomerSummaryRepositoryTest {
      */
     @Test
     void testFindByGeofenceId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
+        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "999L", LocalDateTime.now(), false));
 
         geofenceCustomerSummaryRepository.save(new GeofenceCustomerSummaryEntity(null, 10l, geofence1.getId(), "Cust A", "111"));
         geofenceCustomerSummaryRepository.save(new GeofenceCustomerSummaryEntity(null, 20l, geofence1.getId(), "Cust B", "222"));
@@ -116,8 +117,8 @@ class GeofenceCustomerSummaryRepositoryTest {
      */
     @Test
     void testFindByCustomerId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
+        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "999L", LocalDateTime.now(), false));
 
         geofenceCustomerSummaryRepository.save(new GeofenceCustomerSummaryEntity(null, 10l, geofence1.getId(), "Cust D", "444"));
         geofenceCustomerSummaryRepository.save(new GeofenceCustomerSummaryEntity(null, 20l, geofence2.getId(), "Cust E", "555"));
@@ -133,7 +134,7 @@ class GeofenceCustomerSummaryRepositoryTest {
      */
     @Test
     void testFindByCustomerPhoneNumber() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
 
         geofenceCustomerSummaryRepository.save(new GeofenceCustomerSummaryEntity(null, 10l, geofence1.getId(), "Cust F", "9998887777"));
         Optional<GeofenceCustomerSummaryEntity> foundSummary = geofenceCustomerSummaryRepository.findByCustomerPhoneNumber("9998887777");

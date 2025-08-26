@@ -17,6 +17,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Team service.
  */
@@ -35,7 +37,7 @@ public class TeamService {
      * @return the team response
      */
     public TeamResponse createTeam(CreateTeamRequest request) {
-        TeamEntity team = new TeamEntity(null, 10L,request.name(), request.description(), request.role());
+        TeamEntity team = new TeamEntity(null, request.name(), request.description(), request.role(), null, LocalDateTime.now(), false);
         TeamEntity savedTeam = teamRepository.save(team);
         events.publishEvent(new TeamCreatedEvent(savedTeam.getId(), savedTeam.getName()));
         return toTeamResponse(savedTeam);

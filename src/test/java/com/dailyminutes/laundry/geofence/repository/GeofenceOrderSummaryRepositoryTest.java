@@ -40,7 +40,7 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindGeofenceOrderSummary() {
-        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
 
         GeofenceOrderSummaryEntity summary = new GeofenceOrderSummaryEntity(
                 null, 10l, geofence.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("50.00"), 20l, 30l);
@@ -64,7 +64,7 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testUpdateGeofenceOrderSummary() {
-        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
 
         GeofenceOrderSummaryEntity summary = new GeofenceOrderSummaryEntity(
                 null, 10l, geofence.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("75.00"), 20l, 30l);
@@ -85,7 +85,7 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testDeleteGeofenceOrderSummary() {
-        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
 
         GeofenceOrderSummaryEntity summary = new GeofenceOrderSummaryEntity(
                 null, 10l, geofence.getId(), LocalDateTime.now(), "CANCELLED", new BigDecimal("20.00"), 20l, 30l);
@@ -101,8 +101,8 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByGeofenceId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
+        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "999L", LocalDateTime.now(), false));
 
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("10.00"), 10l, 10l));
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("25.00"), 20l, 20l));
@@ -118,8 +118,8 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
+        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "999L", LocalDateTime.now(), false));
 
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "NEW", new BigDecimal("15.00"), 10l, 10l));
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence2.getId(), LocalDateTime.now(), "ACCEPTED", new BigDecimal("18.00"), 20l, 20l));
@@ -134,8 +134,8 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByCustomerId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
+        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "999L", LocalDateTime.now(), false));
 
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("100.00"), 10l, 10l));
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("120.00"), 10l, 20l));
@@ -151,8 +151,8 @@ class GeofenceOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
-        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true));
+        GeofenceEntity geofence1 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false));
+        GeofenceEntity geofence2 = geofenceRepository.save(new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "999L", LocalDateTime.now(), false));
 
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 10l, geofence1.getId(), LocalDateTime.now(), "PENDING", new BigDecimal("60.00"), 10l, 10l));
         geofenceOrderSummaryRepository.save(new GeofenceOrderSummaryEntity(null, 20l, geofence1.getId(), LocalDateTime.now(), "DELIVERED", new BigDecimal("70.00"), 20l, 10l));

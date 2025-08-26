@@ -13,6 +13,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * The type Agent entity.
@@ -42,5 +43,11 @@ public class AgentEntity {
     private LocalDate terminationDate; // Better name for exit date
 
     private AgentDesignation designation;
+
+    private String externalId;
+
+    private LocalDateTime externalSyncAt;
+
+    private Boolean isDeleted;
 }
 

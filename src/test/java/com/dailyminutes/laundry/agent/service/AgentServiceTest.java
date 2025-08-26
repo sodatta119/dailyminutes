@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -43,7 +44,7 @@ class AgentServiceTest {
     @Test
     void createAgent_shouldCreateAndPublishEvent() {
         CreateAgentRequest request = new CreateAgentRequest("Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), AgentDesignation.FLEET_AGENT);
-        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);
+        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false);
         when(agentRepository.findByPhoneNumber(any())).thenReturn(Optional.empty());
         when(agentRepository.findByUniqueId(any())).thenReturn(Optional.empty());
         when(agentRepository.save(any())).thenReturn(agent);
@@ -59,7 +60,7 @@ class AgentServiceTest {
     @Test
     void updateAgent_shouldUpdateAndPublishEvent() {
         UpdateAgentRequest request = new UpdateAgentRequest(1L, "Updated Agent", AgentState.INACTIVE, 2L, "0987654321", "unique2", LocalDate.now(), null, AgentDesignation.STORE_AGENT);
-        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);
+        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false);
         when(agentRepository.findById(1L)).thenReturn(Optional.of(agent));
         when(agentRepository.save(any())).thenReturn(agent);
 
@@ -96,7 +97,7 @@ class AgentServiceTest {
      */
     @Test
     void assignTeam_shouldUpdateTeamIdAndPublishEvent() {
-        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);
+        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false);
         when(agentRepository.findById(1L)).thenReturn(Optional.of(agent));
         when(agentRepository.save(any())).thenReturn(agent);
 

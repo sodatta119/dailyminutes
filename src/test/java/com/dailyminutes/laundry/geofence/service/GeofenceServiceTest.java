@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -40,7 +41,7 @@ class GeofenceServiceTest {
     @Test
     void createGeofence_shouldCreateAndPublishEvent() {
         CreateGeofenceRequest request = new CreateGeofenceRequest("coords", "type", "name", true);
-        GeofenceEntity geofence = new GeofenceEntity(1L, "coords", "type", "name", true);
+        GeofenceEntity geofence = new GeofenceEntity(1L, "coords", "type", "name", true, "99L", LocalDateTime.now(), false);
         when(geofenceRepository.save(any())).thenReturn(geofence);
 
         geofenceService.createGeofence(request);
@@ -54,7 +55,7 @@ class GeofenceServiceTest {
     @Test
     void updateGeofence_shouldUpdateAndPublishEvent() {
         UpdateGeofenceRequest request = new UpdateGeofenceRequest(1L, "new-coords", "new-type", "new-name", false);
-        GeofenceEntity geofence = new GeofenceEntity(1L, "coords", "type", "name", true);
+        GeofenceEntity geofence = new GeofenceEntity(1L, "coords", "type", "name", true, "99L", LocalDateTime.now(), false);
         when(geofenceRepository.findById(1L)).thenReturn(Optional.of(geofence));
         when(geofenceRepository.save(any())).thenReturn(geofence);
 

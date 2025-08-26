@@ -18,6 +18,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Agent service.
  */
@@ -43,7 +45,7 @@ public class AgentService {
             throw new IllegalArgumentException("Agent with unique ID " + request.uniqueId() + " already exists.");
         });
 
-        AgentEntity agent = new AgentEntity(null, request.name(), request.state(), request.teamId(), request.phoneNumber(), request.uniqueId(), request.joiningDate(), null, request.designation());
+        AgentEntity agent = new AgentEntity(null, request.name(), request.state(), request.teamId(), request.phoneNumber(), request.uniqueId(), request.joiningDate(), null, request.designation(), null, LocalDateTime.now(), false);
         AgentEntity savedAgent = agentRepository.save(agent);
 
         events.publishEvent(new AgentCreatedEvent(savedAgent.getId(), savedAgent.getName(), savedAgent.getState().name(), savedAgent.getTeamId(), savedAgent.getPhoneNumber(), savedAgent.getUniqueId(), savedAgent.getJoiningDate(), savedAgent.getDesignation().name()));

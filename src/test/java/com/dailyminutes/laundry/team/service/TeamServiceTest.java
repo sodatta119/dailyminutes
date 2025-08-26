@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -40,7 +41,7 @@ class TeamServiceTest {
     @Test
     void createTeam_shouldCreateAndPublishEvent() {
         CreateTeamRequest request = new CreateTeamRequest("Test Team", "desc", TeamRole.OPS);
-        TeamEntity team = new TeamEntity(1L, 99L, "Test Team", "desc", TeamRole.OPS);
+        TeamEntity team = new TeamEntity(1L, "Test Team", "desc", TeamRole.OPS, "99L", LocalDateTime.now(), false);
         when(teamRepository.save(any())).thenReturn(team);
 
         teamService.createTeam(request);
@@ -54,7 +55,7 @@ class TeamServiceTest {
     @Test
     void updateTeam_shouldUpdateAndPublishEvent() {
         UpdateTeamRequest request = new UpdateTeamRequest(1L, "Updated Team", "new desc", TeamRole.ADMIN);
-        TeamEntity team = new TeamEntity(1L, 99L, "Test Team", "desc", TeamRole.OPS);
+        TeamEntity team = new TeamEntity(1L, "Test Team", "desc", TeamRole.OPS, "99L", LocalDateTime.now(), false);
         when(teamRepository.findById(1L)).thenReturn(Optional.of(team));
         when(teamRepository.save(any())).thenReturn(team);
 

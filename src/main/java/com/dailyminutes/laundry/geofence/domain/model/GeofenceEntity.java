@@ -9,6 +9,8 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Geofence entity.
  */
@@ -30,5 +32,11 @@ public class GeofenceEntity {
     private String name;
 
     private boolean active;
+
+    private String externalId;
+
+    private LocalDateTime externalSyncAt;
+
+    private Boolean isDeleted;
 
 }

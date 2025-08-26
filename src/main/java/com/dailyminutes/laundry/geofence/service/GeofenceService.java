@@ -18,6 +18,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Geofence service.
  */
@@ -36,7 +38,7 @@ public class GeofenceService {
      * @return the geofence response
      */
     public GeofenceResponse createGeofence(CreateGeofenceRequest request) {
-        GeofenceEntity geofence = new GeofenceEntity(null, request.polygonCoordinates(), request.geofenceType(), request.name(), request.active());
+        GeofenceEntity geofence = new GeofenceEntity(null, request.polygonCoordinates(), request.geofenceType(), request.name(), request.active(), null, LocalDateTime.now(), false);
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
         events.publishEvent(new GeofenceCreatedEvent(savedGeofence.getId(), savedGeofence.getName(), savedGeofence.getGeofenceType(), savedGeofence.isActive()));
         return toGeofenceResponse(savedGeofence);

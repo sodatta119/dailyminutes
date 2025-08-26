@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +33,7 @@ class AgentQueryServiceTest {
      */
     @Test
     void findAgentById_shouldReturnAgent() {
-        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);
+        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false);
         when(agentRepository.findById(1L)).thenReturn(Optional.of(agent));
 
         assertThat(agentQueryService.findAgentById(1L)).isPresent();

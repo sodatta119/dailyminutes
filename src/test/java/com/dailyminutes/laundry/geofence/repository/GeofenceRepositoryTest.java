@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +31,7 @@ class GeofenceRepositoryTest {
      */
     @Test
     void testSaveAndFindGeofence() {
-        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true);
+        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))", "DELIVERY_ZONE", "Zone A", true, "99L", LocalDateTime.now(), false);
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
 
         assertThat(savedGeofence).isNotNull();
@@ -46,7 +47,7 @@ class GeofenceRepositoryTest {
      */
     @Test
     void testUpdateGeofence() {
-        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))", "PICKUP_ZONE", "Zone B", true);
+        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((2 2, 3 2, 3 3, 2 3, 2 2))", "PICKUP_ZONE", "Zone B", true, "99L", LocalDateTime.now(), false);
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
 
         savedGeofence.setName("Updated Zone B");
@@ -64,7 +65,7 @@ class GeofenceRepositoryTest {
      */
     @Test
     void testDeleteGeofence() {
-        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))", "TEST_ZONE", "Zone C to Delete", true);
+        GeofenceEntity geofence = new GeofenceEntity(null, "POLYGON((5 5, 6 5, 6 6, 5 6, 5 5))", "TEST_ZONE", "Zone C to Delete", true, "99L", LocalDateTime.now(), false);
         GeofenceEntity savedGeofence = geofenceRepository.save(geofence);
 
         geofenceRepository.deleteById(savedGeofence.getId());

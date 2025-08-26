@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +43,7 @@ class TeamEventListenerTest {
     void onTeamInfoRequested_shouldFindTeamAndPublishInfo() {
         // Given: A request event for team details
         TeamInfoRequestEvent requestEvent = new TeamInfoRequestEvent(1L, 10L);
-        TeamEntity teamEntity = new TeamEntity(10L, 99L, "Fleet Team A", "Handles pickups", TeamRole.FLEET);
+        TeamEntity teamEntity = new TeamEntity(10L, "Fleet Team A", "Handles pickups", TeamRole.FLEET, "99L", LocalDateTime.now(), false);
 
         when(teamRepository.findById(10L)).thenReturn(Optional.of(teamEntity));
         ArgumentCaptor<TeamInfoResponseEvent> eventCaptor = ArgumentCaptor.forClass(TeamInfoResponseEvent.class);

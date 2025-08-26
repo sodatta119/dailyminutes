@@ -8,6 +8,8 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
+
 
 /**
  * The type Team entity.
@@ -23,12 +25,16 @@ public class TeamEntity {
     @Id
     private Long id;
 
-    private Long externalId;
-
     private String name;
 
     private String description;
 
     private TeamRole role;
+
+    private String externalId;
+
+    private LocalDateTime externalSyncAt;
+
+    private Boolean isDeleted;
 }
 
