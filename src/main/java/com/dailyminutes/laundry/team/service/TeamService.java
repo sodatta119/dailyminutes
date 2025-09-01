@@ -6,8 +6,10 @@ package com.dailyminutes.laundry.team.service;
 
 import com.dailyminutes.laundry.team.domain.event.TeamCreatedEvent;
 import com.dailyminutes.laundry.team.domain.event.TeamDeletedEvent;
+import com.dailyminutes.laundry.team.domain.event.TeamSyncEvent;
 import com.dailyminutes.laundry.team.domain.event.TeamUpdatedEvent;
 import com.dailyminutes.laundry.team.domain.model.TeamEntity;
+import com.dailyminutes.laundry.team.domain.model.TeamRole;
 import com.dailyminutes.laundry.team.dto.CreateTeamRequest;
 import com.dailyminutes.laundry.team.dto.TeamResponse;
 import com.dailyminutes.laundry.team.dto.UpdateTeamRequest;
@@ -41,6 +43,18 @@ public class TeamService {
         TeamEntity savedTeam = teamRepository.save(team);
         events.publishEvent(new TeamCreatedEvent(savedTeam.getId(), savedTeam.getName()));
         return toTeamResponse(savedTeam);
+    }
+
+    /**
+     * Upsert from sync.
+     *
+     * @param payload the payload
+     */
+    public void upsertFromSync(TeamSyncEvent.TeamSyncPayload payload) {
+        TeamEntity team = teamRepository.findByExternalId(payload.externalId())
+                .orElseGet(() -> new TeamEntity(null, payload.name(), payload.description(), TeamRole.ADMIN, payload.externalId(), LocalDateTime.now(), !payload.active()));
+        TeamEntity savedTeam = teamRepository.save(team);
+        events.publishEvent(new TeamCreatedEvent(savedTeam.getId(), savedTeam.getName()));
     }
 
     /**

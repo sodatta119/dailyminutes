@@ -49,5 +49,15 @@ public class AgentEntity {
     private LocalDateTime externalSyncAt;
 
     private Boolean isDeleted;
+
+    private Double latitude;
+
+    private Double longitude;
+
+    private int active;
+
+    private int available;
+
+    private int batteryLevel;
 }
 

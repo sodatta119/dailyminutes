@@ -41,6 +41,12 @@ public interface AgentRepository extends ListCrudRepository<AgentEntity, Long> {
      */
     List<AgentEntity> findByTeamId(Long teamId);
 
+    /**
+     * Find by external id optional.
+     *
+     * @param teamId the team id
+     * @return the optional
+     */
     Optional<AgentEntity> findByExternalId(String teamId);
 
     /**

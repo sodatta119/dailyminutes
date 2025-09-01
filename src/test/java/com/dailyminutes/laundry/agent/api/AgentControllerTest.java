@@ -52,7 +52,7 @@ class AgentControllerTest {
      */
     @BeforeEach
     void setUp() {
-        agentResponse = new AgentResponse(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT);
+        agentResponse = new AgentResponse(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, Double.valueOf(1), Double.valueOf(1), 1, 1);
         createAgentRequest = new CreateAgentRequest("Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), AgentDesignation.FLEET_AGENT);
         updateAgentRequest = new UpdateAgentRequest(1L, "Updated Agent", AgentState.INACTIVE, 2L, "0987654321", "unique2", LocalDate.now(), null, AgentDesignation.STORE_AGENT);
     }
@@ -65,7 +65,7 @@ class AgentControllerTest {
     @Test
     void createAgent_shouldReturnCreated() throws Exception {
         when(agentService.createAgent(any())).thenReturn(agentResponse);
-        mockMvc.perform(post("/agents")
+        mockMvc.perform(post("/api/agents")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createAgentRequest)))
                 .andExpect(status().isCreated());
@@ -79,7 +79,7 @@ class AgentControllerTest {
     @Test
     void getAgentById_shouldReturnAgent() throws Exception {
         when(agentQueryService.findAgentById(1L)).thenReturn(Optional.of(agentResponse));
-        mockMvc.perform(get("/agents/1"))
+        mockMvc.perform(get("/api/agents/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Test Agent"));
     }
@@ -92,7 +92,7 @@ class AgentControllerTest {
     @Test
     void updateAgent_shouldReturnOk() throws Exception {
         when(agentService.updateAgent(any())).thenReturn(agentResponse);
-        mockMvc.perform(put("/agents/1")
+        mockMvc.perform(put("/api/agents/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateAgentRequest)))
                 .andExpect(status().isOk());
@@ -106,7 +106,7 @@ class AgentControllerTest {
     @Test
     void deleteAgent_shouldReturnNoContent() throws Exception {
         doNothing().when(agentService).deleteAgent(1L);
-        mockMvc.perform(delete("/agents/1"))
+        mockMvc.perform(delete("/api/agents/1"))
                 .andExpect(status().isNoContent());
     }
 
@@ -118,7 +118,7 @@ class AgentControllerTest {
     @Test
     void assignTeam_shouldReturnOk() throws Exception {
         when(agentService.assignTeam(1L, 2L)).thenReturn(agentResponse);
-        mockMvc.perform(put("/agents/1/assign-team/2"))
+        mockMvc.perform(put("/api/agents/1/assign-team/2"))
                 .andExpect(status().isOk());
     }
 

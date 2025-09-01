@@ -24,7 +24,7 @@ import java.util.List;
  * The type Agent controller.
  */
 @RestController
-@RequestMapping("/agents")
+@RequestMapping("/api/agents")
 @RequiredArgsConstructor
 @Tag(name = "Agent Management", description = "APIs for managing agents")
 public class AgentController {
@@ -113,7 +113,8 @@ public class AgentController {
     @ApiResponse(responseCode = "200", description = "List of all agents")
     @GetMapping
     public ResponseEntity<List<AgentResponse>> getAllAgents() {
-        return ResponseEntity.ok(agentQueryService.findAllAgents());
+        var agents=agentQueryService.findAllAgents();
+        return ResponseEntity.ok(agents);
     }
 
     /**

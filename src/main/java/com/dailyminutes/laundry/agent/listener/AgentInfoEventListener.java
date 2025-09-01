@@ -2,7 +2,7 @@
  * @author Somendra Datta <sodatta@gmail.com>
  * @version 20/08/25
  */
-package com.dailyminutes.laundry.agent.listeners;
+package com.dailyminutes.laundry.agent.listener;
 
 import com.dailyminutes.laundry.agent.domain.event.AgentInfoRequestEvent;
 import com.dailyminutes.laundry.agent.domain.event.AgentInfoResponseEvent;

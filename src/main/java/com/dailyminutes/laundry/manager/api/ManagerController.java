@@ -6,14 +6,18 @@ import com.dailyminutes.laundry.manager.dto.ManagerResponse;
 import com.dailyminutes.laundry.manager.dto.UpdateManagerRequest;
 import com.dailyminutes.laundry.manager.service.ManagerQueryService;
 import com.dailyminutes.laundry.manager.service.ManagerService;
+import com.dailyminutes.laundry.team.domain.event.TeamSyncEvent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,10 +30,13 @@ import java.util.List;
 @RequestMapping("/api/managers")
 @RequiredArgsConstructor
 @Tag(name = "Manager Management", description = "APIs for managing managers")
+@Slf4j
 public class ManagerController {
 
     private final ManagerService managerService;
     private final ManagerQueryService managerQueryService;
+    private final ApplicationEventPublisher events;
+
 
     /**
      * Create manager response entity.
@@ -113,5 +120,23 @@ public class ManagerController {
     @GetMapping
     public ResponseEntity<List<ManagerResponse>> getAllManagers() {
         return ResponseEntity.ok(managerQueryService.findAllManagers());
+    }
+
+    /**
+     * Test response entity.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/test")
+    @Transactional
+    public ResponseEntity<String> test() {
+        try{
+            events.publishEvent(new TeamSyncEvent(null));
+            return ResponseEntity.status(HttpStatus.OK).body("success");
+        }catch (Exception e) {
+            // Log the full error on the server side for debugging
+            log.error("Error during Tookan sync operation", e);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("failure");
     }
 }

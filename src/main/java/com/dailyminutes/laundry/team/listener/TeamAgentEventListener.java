@@ -6,9 +6,11 @@ package com.dailyminutes.laundry.team.listener;
 
 import com.dailyminutes.laundry.agent.domain.event.AgentCreatedEvent;
 import com.dailyminutes.laundry.agent.domain.event.AgentDeletedEvent;
+import com.dailyminutes.laundry.agent.domain.event.AgentSyncedEvent;
 import com.dailyminutes.laundry.agent.domain.event.AgentUpdatedEvent;
 import com.dailyminutes.laundry.team.domain.model.TeamAgentSummaryEntity;
 import com.dailyminutes.laundry.team.repository.TeamAgentSummaryRepository;
+import com.dailyminutes.laundry.team.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Component;
 public class TeamAgentEventListener {
 
     private final TeamAgentSummaryRepository summaryRepository;
+    private final TeamRepository teamRepository;
 
     /**
      * On agent created.
@@ -42,6 +45,43 @@ public class TeamAgentEventListener {
             summaryRepository.save(summary);
         }
     }
+
+    /**
+     * On agent synced.
+     *
+     * @param event the event
+     */
+    @ApplicationModuleListener
+    public void onAgentSynced(AgentSyncedEvent event) {
+        if (event.externalTeamId() != null) {
+            teamRepository.findByExternalId(event.externalTeamId().toString())
+                    .ifPresent(team -> {
+                        // Check if summary already exists for this agent+team
+                        var existing = summaryRepository.findByTeamIdAndAgentId(team.getId(), event.agentId());
+
+                        if (existing.isPresent()) {
+                            var summary = existing.get();
+                            summary.setAgentName(event.name());
+                            summary.setAgentPhoneNumber(event.phoneNumber());
+                            summary.setAgentDesignation(event.designation());
+                            summary.setAgentState(event.state());
+                            summaryRepository.save(summary);
+                        } else {
+                            TeamAgentSummaryEntity summary = new TeamAgentSummaryEntity(
+                                    null,
+                                    team.getId(),
+                                    event.agentId(),
+                                    event.name(),
+                                    event.phoneNumber(),
+                                    event.designation(),
+                                    event.state()
+                            );
+                            summaryRepository.save(summary);
+                        }
+                    });
+        }
+    }
+
 
     /**
      * On agent updated.

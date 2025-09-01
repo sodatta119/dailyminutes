@@ -9,6 +9,6 @@ import org.springframework.modulith.ApplicationModule;
 /**
  * The type Manager module.
  */
-@ApplicationModule
+@ApplicationModule(id = "laundry.manager", allowedDependencies = {"laundry.team::events"})
 public class ManagerModule {
 }

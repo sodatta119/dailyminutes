@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testSaveAndFindCustomerAddress() {
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
         CustomerAddressEntity address = new CustomerAddressEntity(
                 null, customer.getId(), AddressType.HOME, true, "Apt 101", "123 Main St", "Main Street", "Springfield", "IL", "62704", "USA", "39.79", "-89.65", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
@@ -66,7 +67,7 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testSaveAddressWithNullableFieldsNull() {
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
         CustomerAddressEntity address = new CustomerAddressEntity(
                 null, customer.getId(), AddressType.WORK, false, null, "456 Oak Ave", null, null, null, null, null, "40.71", "-74.00", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
@@ -87,7 +88,7 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testUpdateCustomerAddress() {
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
         CustomerAddressEntity address = new CustomerAddressEntity(
                 null, customer.getId(), AddressType.WORK, false, "Suite 200", "456 Oak Ave", "Oak Avenue", "Metropolis", "NY", "10001", "USA", "40.71", "-74.00", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
@@ -111,7 +112,7 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testDeleteCustomerAddress() {
-        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer = customerRepository.save(new CustomerEntity(null, "SUB123", "9876543210", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
         CustomerAddressEntity address = new CustomerAddressEntity(
                 null, customer.getId(), AddressType.OTHER, false, null, "999 Test Rd", null, "Testville", "CA", "90210", "USA", "34.05", "-118.25", 10l);
         CustomerAddressEntity savedAddress = customerAddressRepository.save(address);
@@ -126,8 +127,8 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByCustomerId() {
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
+        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
 
         customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt A", "Addr A", "St A", "City A", "ST", "11111", "USA", "1.0", "1.0", 10l));
         customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.WORK, false, null, "Addr B", "St B", "City B", "ST", "22222", "USA", "2.0", "2.0", 10l));
@@ -143,8 +144,8 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByCustomerIdAndIsDefaultTrue() {
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
+        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
 
         customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt D", "Default Home", "DefSt", "DefCity", "DF", "00000", "USA", "10.0", "10.0", 10l));
         customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.WORK, false, null, "Work Addr", "WorkSt", "WorkCity", "WK", "11111", "USA", "11.0", "11.0", 10l));
@@ -161,8 +162,8 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByGeofenceId() {
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
+        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
 
         customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt F", "GF Addr 1", "GF St", "GF City", "GF", "40001", "USA", "20.0", "20.0", 10l));
         customerAddressRepository.save(new CustomerAddressEntity(null, customer2.getId(), AddressType.WORK, false, null, "GF Addr 2", "GF St", "GF City", "GF", "40002", "USA", "21.0", "21.0", 10l));
@@ -178,8 +179,8 @@ class CustomerAddressRepositoryTest {
      */
     @Test
     void testFindByCustomerIdAndAddressType() {
-        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com"));
-        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com"));
+        CustomerEntity customer1 = customerRepository.save(new CustomerEntity(null, "SUB124", "3433423423", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
+        CustomerEntity customer2 = customerRepository.save(new CustomerEntity(null, "SUB125", "3434343434", "Jane Doe", "jane@example.com","IST", LocalDateTime.now()));
 
         customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.HOME, true, "Apt H", "Home A", "Home St", "City X", "CX", "50001", "USA", "30.0", "30.0", 10l));
         customerAddressRepository.save(new CustomerAddressEntity(null, customer1.getId(), AddressType.OTHER, false, null, "Billing A", "Billing St", "City Y", "CY", "50002", "USA", "31.0", "31.0", 20l));

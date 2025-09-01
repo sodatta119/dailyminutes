@@ -52,4 +52,14 @@ public interface TeamAgentSummaryRepository extends ListCrudRepository<TeamAgent
      * @param aLong the a long
      */
     void deleteByAgentId(Long aLong);
+
+    /**
+     * Find by team id and agent id optional.
+     *
+     * @param teamId  the team id
+     * @param agentId the agent id
+     * @return the optional
+     */
+    Optional<TeamAgentSummaryEntity> findByTeamIdAndAgentId(Long teamId, Long agentId);
+
 }

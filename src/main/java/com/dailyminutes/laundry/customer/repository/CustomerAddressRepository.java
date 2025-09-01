@@ -46,5 +46,13 @@ public interface CustomerAddressRepository extends ListCrudRepository<CustomerAd
      * @return the list
      */
     List<CustomerAddressEntity> findByCustomerIdAndAddressType(Long customerId, AddressType addressType);
+
+    /**
+     * Find first by customer id and is default true optional.
+     *
+     * @param customerId the customer id
+     * @return the optional
+     */
+    Optional<CustomerAddressEntity> findFirstByCustomerIdAndIsDefaultTrue(Long customerId);
 }
 

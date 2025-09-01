@@ -21,6 +21,10 @@ public record AgentResponse(
         String uniqueId,
         LocalDate joiningDate,
         LocalDate terminationDate,
-        AgentDesignation designation
+        AgentDesignation designation,
+        Double latitude,
+        Double longitude,
+        int active,
+        int available
 ) {
 }

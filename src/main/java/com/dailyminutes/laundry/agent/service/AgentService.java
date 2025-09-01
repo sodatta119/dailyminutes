@@ -45,7 +45,7 @@ public class AgentService {
             throw new IllegalArgumentException("Agent with unique ID " + request.uniqueId() + " already exists.");
         });
 
-        AgentEntity agent = new AgentEntity(null, request.name(), request.state(), request.teamId(), request.phoneNumber(), request.uniqueId(), request.joiningDate(), null, request.designation(), null, LocalDateTime.now(), false);
+        AgentEntity agent = new AgentEntity(null, request.name(), request.state(), request.teamId(), request.phoneNumber(), request.uniqueId(), request.joiningDate(), null, request.designation(), null, LocalDateTime.now(), false, Double.valueOf(1d), Double.valueOf(1d), 1, 1, 100);
         AgentEntity savedAgent = agentRepository.save(agent);
 
         events.publishEvent(new AgentCreatedEvent(savedAgent.getId(), savedAgent.getName(), savedAgent.getState().name(), savedAgent.getTeamId(), savedAgent.getPhoneNumber(), savedAgent.getUniqueId(), savedAgent.getJoiningDate(), savedAgent.getDesignation().name()));
@@ -136,6 +136,6 @@ public class AgentService {
 //    }
 
     private AgentResponse toAgentResponse(AgentEntity agentEntity) {
-        return new AgentResponse(agentEntity.getId(), agentEntity.getName(), agentEntity.getState(), agentEntity.getTeamId(), agentEntity.getPhoneNumber(), agentEntity.getUniqueId(), agentEntity.getJoiningDate(), agentEntity.getTerminationDate(), agentEntity.getDesignation());
+        return new AgentResponse(agentEntity.getId(), agentEntity.getName(), agentEntity.getState(), agentEntity.getTeamId(), agentEntity.getPhoneNumber(), agentEntity.getUniqueId(), agentEntity.getJoiningDate(), agentEntity.getTerminationDate(), agentEntity.getDesignation(), agentEntity.getLatitude(), agentEntity.getLongitude(), agentEntity.getActive(), agentEntity.getAvailable());
     }
 }

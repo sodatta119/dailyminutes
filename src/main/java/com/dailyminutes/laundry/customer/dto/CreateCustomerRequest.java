@@ -8,6 +8,8 @@ package com.dailyminutes.laundry.customer.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Create customer request.
  */
@@ -21,6 +23,8 @@ public record CreateCustomerRequest(
         String name,
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Email should be valid")
-        String email
+        String email,
+        String timeZone,
+        LocalDateTime subscribedAt
 ) {
 }

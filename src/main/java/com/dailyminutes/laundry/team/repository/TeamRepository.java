@@ -22,6 +22,12 @@ public interface TeamRepository extends ListCrudRepository<TeamEntity, Long> {
     Optional<TeamEntity> findByName(String uniqueTeamName);
 
 
+    /**
+     * Find by external id optional.
+     *
+     * @param externalId the external id
+     * @return the optional
+     */
     Optional<TeamEntity> findByExternalId(String externalId);
 
 

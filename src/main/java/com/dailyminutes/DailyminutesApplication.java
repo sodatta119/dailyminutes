@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Modulithic(sharedModules = {"laundry.common"})
 @SpringBootApplication
 @EnableScheduling
+//@EnableConfigurationProperties({TookanProperties.class})
 public class DailyminutesApplication {
 
     /**

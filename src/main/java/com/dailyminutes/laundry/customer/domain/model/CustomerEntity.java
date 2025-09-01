@@ -9,6 +9,8 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Customer entity.
  */
@@ -30,6 +32,10 @@ public class CustomerEntity {
     private String name;
 
     private String email;
+
+    private String timeZone;
+
+    private LocalDateTime subscribedTms;
 
 }
 

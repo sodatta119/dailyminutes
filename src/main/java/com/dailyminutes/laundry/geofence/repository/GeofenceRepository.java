@@ -15,6 +15,12 @@ import java.util.Optional;
 public interface GeofenceRepository extends ListCrudRepository<GeofenceEntity, Long> {
 
 
+    /**
+     * Find by external id optional.
+     *
+     * @param geofenceId the geofence id
+     * @return the optional
+     */
     Optional<GeofenceEntity> findByExternalId(String geofenceId);
 }
 

@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +31,7 @@ class CustomerQueryServiceTest {
      */
     @Test
     void findCustomerById_shouldReturnCustomer() {
-        CustomerEntity customer = new CustomerEntity(1L, "sub1", "1234567890", "Test", "test@test.com");
+        CustomerEntity customer = new CustomerEntity(1L, "sub1", "1234567890", "Test", "test@test.com","IST", LocalDateTime.now());
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
 
         assertThat(customerQueryService.findCustomerById(1L)).isPresent();

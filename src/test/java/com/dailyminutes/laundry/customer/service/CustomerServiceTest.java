@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -36,8 +37,8 @@ class CustomerServiceTest {
      */
     @Test
     void createCustomer_shouldCreateAndPublishEvent() {
-        CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com");
-        CustomerEntity customer = new CustomerEntity(1L, "sub1", "1234567890", "Test", "test@test.com");
+        CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com","IST", LocalDateTime.now());
+        CustomerEntity customer = new CustomerEntity(1L, "sub1", "1234567890", "Test", "test@test.com","IST", LocalDateTime.now());
         when(customerRepository.findByPhoneNumber(any())).thenReturn(Optional.empty());
         when(customerRepository.findByEmail(any())).thenReturn(Optional.empty());
         when(customerRepository.save(any())).thenReturn(customer);

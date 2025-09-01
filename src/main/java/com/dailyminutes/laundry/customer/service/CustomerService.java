@@ -42,7 +42,7 @@ public class CustomerService {
             throw new IllegalArgumentException("Customer with email " + request.email() + " already exists.");
         });
 
-        CustomerEntity customer = new CustomerEntity(null, request.subscriberId(), request.phoneNumber(), request.name(), request.email());
+        CustomerEntity customer = new CustomerEntity(null, request.subscriberId(), request.phoneNumber(), request.name(), request.email(), request.timeZone(), request.subscribedAt());
         CustomerEntity savedCustomer = customerRepository.save(customer);
 
         events.publishEvent(new CustomerCreatedEvent(savedCustomer.getId(), savedCustomer.getSubscriberId(), savedCustomer.getPhoneNumber(), savedCustomer.getName(), savedCustomer.getEmail()));

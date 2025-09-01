@@ -2,7 +2,7 @@
  * @author Somendra Datta <sodatta@gmail.com>
  * @version 27/07/25
  */
-package com.dailyminutes.laundry.agent.listeners;
+package com.dailyminutes.laundry.agent.listener;
 
 import com.dailyminutes.laundry.agent.domain.model.AgentTaskSummaryEntity;
 import com.dailyminutes.laundry.agent.repository.AgentTaskSummaryRepository;

@@ -40,9 +40,9 @@ public record AgentUpdatedEvent(
         if (state == null) throw new IllegalArgumentException("Agent state cannot be null");
         if (phoneNumber == null || phoneNumber.isBlank())
             throw new IllegalArgumentException("Agent phone number cannot be null or blank");
-        if (uniqueId == null || uniqueId.isBlank())
-            throw new IllegalArgumentException("Agent unique ID cannot be null or blank");
-        if (dateOfJoining == null) throw new IllegalArgumentException("Date of joining cannot be null");
-        if (designation == null) throw new IllegalArgumentException("Agent designation cannot be null");
+//        if (uniqueId == null || uniqueId.isBlank())
+//            throw new IllegalArgumentException("Agent unique ID cannot be null or blank");
+//        if (dateOfJoining == null) throw new IllegalArgumentException("Date of joining cannot be null");
+//        if (designation == null) throw new IllegalArgumentException("Agent designation cannot be null");
     }
 }

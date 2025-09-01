@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ class CustomerControllerTest {
      */
     @Test
     void createCustomer_shouldReturnCreated() throws Exception {
-        CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com");
+        CreateCustomerRequest request = new CreateCustomerRequest("sub1", "1234567890", "Test", "test@test.com","IST", LocalDateTime.now());
         when(customerService.createCustomer(any())).thenReturn(customerResponse);
 
         mockMvc.perform(post("/api/customers")

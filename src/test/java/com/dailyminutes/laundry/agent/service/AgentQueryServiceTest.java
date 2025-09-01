@@ -33,7 +33,7 @@ class AgentQueryServiceTest {
      */
     @Test
     void findAgentById_shouldReturnAgent() {
-        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false);
+        AgentEntity agent = new AgentEntity(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, "99L", LocalDateTime.now(), false, Double.valueOf(1d), Double.valueOf(1d), 1, 1,100);
         when(agentRepository.findById(1L)).thenReturn(Optional.of(agent));
 
         assertThat(agentQueryService.findAgentById(1L)).isPresent();
