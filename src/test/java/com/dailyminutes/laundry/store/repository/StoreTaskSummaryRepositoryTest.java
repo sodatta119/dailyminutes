@@ -39,7 +39,7 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindStoreTaskSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         StoreTaskSummaryEntity summary = new StoreTaskSummaryEntity(null, store.getId(), 10l, "PICKUP", "NEW", LocalDateTime.now(), 10l, "Agent Alpha", 10l);
         StoreTaskSummaryEntity savedSummary = storeTaskSummaryRepository.save(summary);
@@ -64,7 +64,7 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testUpdateStoreTaskSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         StoreTaskSummaryEntity summary = new StoreTaskSummaryEntity(null, store.getId(), 10l, "DELIVERY", "ASSIGNED", LocalDateTime.now(), 10l, "Agent Beta", 10l);
         StoreTaskSummaryEntity savedSummary = storeTaskSummaryRepository.save(summary);
@@ -84,7 +84,7 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testDeleteStoreTaskSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         StoreTaskSummaryEntity summary = new StoreTaskSummaryEntity(null, store.getId(), 10l, "PROCESS", "STARTED", LocalDateTime.now(), 10l, "Agent Gamma", 10l);
         StoreTaskSummaryEntity savedSummary = storeTaskSummaryRepository.save(summary);
@@ -99,8 +99,8 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store1.getId(), 10l, "PICKUP", "NEW", LocalDateTime.now(), 10l, "Agent D", 10l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store1.getId(), 20l, "DELIVERY", "ASSIGNED", LocalDateTime.now(), 20l, "Agent E", 20l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store2.getId(), 30l, "PROCESS", "STARTED", LocalDateTime.now(), 30l, "Agent F", 30l));
@@ -115,8 +115,8 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByTaskId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store1.getId(), 10l, "PROCESS", "COMPLETED", LocalDateTime.now(), 10l, "Agent G", 10l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store2.getId(), 20l, "PICKUP", "NEW", LocalDateTime.now(), 20l, "Agent H", 20l));
 
@@ -130,9 +130,9 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store1.getId(), 10l, "DELIVERY", "ASSIGNED", LocalDateTime.now(), 10l, "Agent I", 10l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store2.getId(), 20l, "PICKUP", "STARTED", LocalDateTime.now(), 10l, "Agent J", 20l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store3.getId(), 30l, "PROCESS", "NEW", LocalDateTime.now(), 30l, "Agent K", 30l));
@@ -147,9 +147,9 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByTaskStatus() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store1.getId(), 10l, "PICKUP", "NEW", LocalDateTime.now(), 10l, "Agent L", 10l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store2.getId(), 20l, "DELIVERY", "NEW", LocalDateTime.now(), 20l, "Agent M", 20l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store3.getId(), 30l, "PROCESS", "ASSIGNED", LocalDateTime.now(), 30l, "Agent N", 30l));
@@ -164,9 +164,9 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByTaskType() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store1.getId(), 10l, "PICKUP", "NEW", LocalDateTime.now(), 10l, "Agent O", 10l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store2.getId(), 20l, "PICKUP", "ASSIGNED", LocalDateTime.now(), 20l, "Agent P", 20l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store3.getId(), 30l, "DELIVERY", "STARTED", LocalDateTime.now(), 30l, "Agent Q", 30l));
@@ -181,9 +181,9 @@ class StoreTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store1.getId(), 10l, "PICKUP", "NEW", LocalDateTime.now(), 10l, "Agent R", 10l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store2.getId(), 20l, "DELIVERY", "ASSIGNED", LocalDateTime.now(), 20l, "Agent S", 10l));
         storeTaskSummaryRepository.save(new StoreTaskSummaryEntity(null, store3.getId(), 30l, "PROCESS", "STARTED", LocalDateTime.now(), 30l, "Agent T", 20l));

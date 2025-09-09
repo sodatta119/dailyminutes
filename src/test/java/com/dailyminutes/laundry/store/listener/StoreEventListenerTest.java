@@ -47,7 +47,7 @@ class StoreEventListenerTest {
         StoreInfoRequestEvent requestEvent = new StoreInfoRequestEvent(10L, originalEvent);
 
         // And a store exists in the database
-        StoreEntity storeEntity = new StoreEntity(10L, "Downtown Store", "123 Main St", "555-1234", "downtown@example.com", 1L);
+        StoreEntity storeEntity = new StoreEntity(10L, "Downtown Store", "123 Main St", "555-1234", "downtown@example.com", 1L,"00","00");
         when(storeRepository.findById(10L)).thenReturn(Optional.of(storeEntity));
 
         ArgumentCaptor<StoreInfoResponseEvent> eventCaptor = ArgumentCaptor.forClass(StoreInfoResponseEvent.class);

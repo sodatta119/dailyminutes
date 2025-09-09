@@ -47,8 +47,8 @@ class StoreServiceTest {
      */
     @Test
     void createStore_shouldCreateAndPublishEvent() {
-        CreateStoreRequest request = new CreateStoreRequest("Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
-        StoreEntity store = new StoreEntity(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
+        CreateStoreRequest request = new CreateStoreRequest("Test Store", "123 Main St", "1234567890", "test@test.com", 1L,"00","00");
+        StoreEntity store = new StoreEntity(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L,"00","00");
         when(storeRepository.save(any())).thenReturn(store);
 
         storeService.createStore(request);
@@ -62,7 +62,7 @@ class StoreServiceTest {
     @Test
     void updateStore_shouldUpdateAndPublishEvent() {
         UpdateStoreRequest request = new UpdateStoreRequest(1L, "Updated Store", "456 Main St", "0987654321", "updated@test.com", 2L);
-        StoreEntity store = new StoreEntity(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
+        StoreEntity store = new StoreEntity(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L,"00","00");
         when(storeRepository.findById(1L)).thenReturn(Optional.of(store));
         when(storeRepository.save(any())).thenReturn(store);
 
@@ -152,7 +152,7 @@ class StoreServiceTest {
         // Given
         Long storeId = 1L;
         Long geofenceId = 100L;
-        StoreGeofenceSummaryEntity summary = new StoreGeofenceSummaryEntity(5L, storeId, geofenceId, "name", "type", true);
+        StoreGeofenceSummaryEntity summary = new StoreGeofenceSummaryEntity(5L, storeId, geofenceId,"3432", "name", "type", true);
 
         // Mock the repository to return the summary
         when(storeGeofenceSummaryRepository.findByStoreId(storeId)).thenReturn(List.of(summary));

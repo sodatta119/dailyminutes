@@ -52,7 +52,7 @@ class OrderCustomerSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindOrderCustomerSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String phoneNumber = generateUniquePhoneNumber();
         String email = generateUniqueEmail();
 
@@ -78,7 +78,7 @@ class OrderCustomerSummaryRepositoryTest {
      */
     @Test
     void testUpdateOrderCustomerSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String phoneNumber = generateUniquePhoneNumber();
         String email = generateUniqueEmail();
 
@@ -101,7 +101,7 @@ class OrderCustomerSummaryRepositoryTest {
      */
     @Test
     void testDeleteOrderCustomerSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String phoneNumber = generateUniquePhoneNumber();
         String email = generateUniqueEmail();
 
@@ -119,8 +119,8 @@ class OrderCustomerSummaryRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderCustomerSummaryRepository.save(new OrderCustomerSummaryEntity(null, order1.getId(), 10l, "Cust D", generateUniquePhoneNumber(), generateUniqueEmail()));
         orderCustomerSummaryRepository.save(new OrderCustomerSummaryEntity(null, order2.getId(), 20l, "Cust E", generateUniquePhoneNumber(), generateUniqueEmail()));
 
@@ -134,9 +134,9 @@ class OrderCustomerSummaryRepositoryTest {
      */
     @Test
     void testFindByCustomerId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order3 = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderCustomerSummaryRepository.save(new OrderCustomerSummaryEntity(null, order1.getId(), 10l, "Cust F", generateUniquePhoneNumber(), generateUniqueEmail()));
         orderCustomerSummaryRepository.save(new OrderCustomerSummaryEntity(null, order2.getId(), 10l, "Cust G", generateUniquePhoneNumber(), generateUniqueEmail())); // Same customer, different order
         orderCustomerSummaryRepository.save(new OrderCustomerSummaryEntity(null, order3.getId(), 20l, "Cust H", generateUniquePhoneNumber(), generateUniqueEmail()));
@@ -151,7 +151,7 @@ class OrderCustomerSummaryRepositoryTest {
      */
     @Test
     void testFindByCustomerPhoneNumber() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String phoneNumber = generateUniquePhoneNumber();
         orderCustomerSummaryRepository.save(new OrderCustomerSummaryEntity(null, order.getId(), 10l, "Cust I", phoneNumber, generateUniqueEmail()));
 

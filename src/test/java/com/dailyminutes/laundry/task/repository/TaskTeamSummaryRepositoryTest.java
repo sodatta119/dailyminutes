@@ -47,7 +47,7 @@ class TaskTeamSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindTaskTeamSummary() {
-        TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         String teamName = generateUniqueTeamName();
 
         TaskTeamSummaryEntity summary = new TaskTeamSummaryEntity(null, task.getId(), 10l, teamName, "Team for pickup tasks", "FLEET");
@@ -70,7 +70,7 @@ class TaskTeamSummaryRepositoryTest {
      */
     @Test
     void testUpdateTaskTeamSummary() {
-        TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         String teamName = generateUniqueTeamName();
 
         TaskTeamSummaryEntity summary = new TaskTeamSummaryEntity(null, task.getId(), 10l, teamName, "Team for delivery tasks", "DELIVERY");
@@ -91,7 +91,7 @@ class TaskTeamSummaryRepositoryTest {
      */
     @Test
     void testDeleteTaskTeamSummary() {
-        TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         String teamName = generateUniqueTeamName();
 
         TaskTeamSummaryEntity summary = new TaskTeamSummaryEntity(null, task.getId(), 10l, teamName, "Team to be deleted", "SUPPORT");
@@ -107,8 +107,8 @@ class TaskTeamSummaryRepositoryTest {
      */
     @Test
     void testFindByTaskId() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         taskTeamSummaryRepository.save(new TaskTeamSummaryEntity(null, task1.getId(), 10l, generateUniqueTeamName(), "Team A", "FLEET"));
         taskTeamSummaryRepository.save(new TaskTeamSummaryEntity(null, task2.getId(), 20l, generateUniqueTeamName(), "Team B", "OPS"));
 
@@ -122,9 +122,9 @@ class TaskTeamSummaryRepositoryTest {
      */
     @Test
     void testFindByTeamId() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task3 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task3 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         taskTeamSummaryRepository.save(new TaskTeamSummaryEntity(null, task1.getId(), 10l, generateUniqueTeamName(), "Team C", "FLEET"));
         taskTeamSummaryRepository.save(new TaskTeamSummaryEntity(null, task2.getId(), 10l, generateUniqueTeamName(), "Team D", "OPS"));
         taskTeamSummaryRepository.save(new TaskTeamSummaryEntity(null, task3.getId(), 20l, generateUniqueTeamName(), "Team E", "SUPPORT"));
@@ -139,9 +139,9 @@ class TaskTeamSummaryRepositoryTest {
      */
     @Test
     void testFindByTeamRole() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task3 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task3 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
 
         taskTeamSummaryRepository.save(new TaskTeamSummaryEntity(null, task1.getId(), 10l, generateUniqueTeamName(), "Team F", "FLEET"));
         taskTeamSummaryRepository.save(new TaskTeamSummaryEntity(null, task2.getId(), 20l, generateUniqueTeamName(), "Team G", "FLEET"));

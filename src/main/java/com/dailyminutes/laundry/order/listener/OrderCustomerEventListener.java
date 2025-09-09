@@ -7,6 +7,7 @@ package com.dailyminutes.laundry.order.listener;
 import com.dailyminutes.laundry.customer.domain.event.CustomerInfoRequestEvent;
 import com.dailyminutes.laundry.customer.domain.event.CustomerInfoResponseEvent;
 import com.dailyminutes.laundry.customer.domain.event.CustomerUpdatedEvent;
+import com.dailyminutes.laundry.order.domain.event.LogisticsOrderEvent;
 import com.dailyminutes.laundry.order.domain.event.OrderCreatedEvent;
 import com.dailyminutes.laundry.order.domain.event.OrderDeletedEvent;
 import com.dailyminutes.laundry.order.domain.model.OrderCustomerSummaryEntity;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The type Order customer event listener.
@@ -61,10 +63,15 @@ public class OrderCustomerEventListener {
             summary.setCustomerName(event.customerName());
             summary.setCustomerPhoneNumber(event.customerPhoneNumber());
             summary.setCustomerEmail(event.customerEmail());
-
+            publishEvent(orderId, event);
             // Save the result. This single call handles both inserts and updates.
             summaryRepository.save(summary);
         }
+    }
+
+    @Transactional
+    private void publishEvent(Long orderId, CustomerInfoResponseEvent event){
+        events.publishEvent(new LogisticsOrderEvent(orderId, event));
     }
 
     /**

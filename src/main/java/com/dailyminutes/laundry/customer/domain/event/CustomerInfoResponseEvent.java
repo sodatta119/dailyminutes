@@ -15,6 +15,10 @@ public record CustomerInfoResponseEvent(
         String customerName,
         String customerPhoneNumber,
         String customerEmail,
+        String currentAddress,
+        String currentAddressLatitude,
+        String currentAddressLongitude,
+        Long currentAddressGeofenceId,
         CallerEvent originalEvent // The original invoiceId
 ) implements CallerEvent {
 }

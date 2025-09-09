@@ -17,10 +17,13 @@ public interface StoreRepository extends ListCrudRepository<StoreEntity, Long> {
     /**
      * Find by name optional.
      *
-     * @param uniqueStoreC the unique store c
+     * @param uniqueStore the unique store c
      * @return the optional
      */
-    Optional<StoreEntity> findByName(String uniqueStoreC);
+    Optional<StoreEntity> findByName(String uniqueStore);
+
+
+    //Optional<StoreEntity> findById(Long storeId);
 
     /**
      * Find by manager id list.

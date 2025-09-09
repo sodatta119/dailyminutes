@@ -52,7 +52,7 @@ class AgentControllerTest {
      */
     @BeforeEach
     void setUp() {
-        agentResponse = new AgentResponse(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, Double.valueOf(1), Double.valueOf(1), 1, 1);
+        agentResponse = new AgentResponse(1L, "Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), null, AgentDesignation.FLEET_AGENT, Double.valueOf(1), Double.valueOf(1), 1, 1, 100);
         createAgentRequest = new CreateAgentRequest("Test Agent", AgentState.ACTIVE, 1L, "1234567890", "unique1", LocalDate.now(), AgentDesignation.FLEET_AGENT);
         updateAgentRequest = new UpdateAgentRequest(1L, "Updated Agent", AgentState.INACTIVE, 2L, "0987654321", "unique2", LocalDate.now(), null, AgentDesignation.STORE_AGENT);
     }

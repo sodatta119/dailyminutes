@@ -25,6 +25,8 @@ public class OrderEntity {
     @Id
     private Long id; // orderId
 
+    private String externalId; // orderId
+
     private Long storeId;
 
     private Long customerId;

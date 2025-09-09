@@ -48,7 +48,7 @@ class OrderPaymentSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindOrderPaymentSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String transactionId = generateUniqueTransactionId();
         OrderPaymentSummaryEntity summary = new OrderPaymentSummaryEntity(
                 null, order.getId(), 10l, LocalDateTime.now(), new BigDecimal("150.00"),
@@ -72,7 +72,7 @@ class OrderPaymentSummaryRepositoryTest {
      */
     @Test
     void testUpdateOrderPaymentSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String transactionId = generateUniqueTransactionId();
         OrderPaymentSummaryEntity summary = new OrderPaymentSummaryEntity(
                 null, order.getId(), 10l, LocalDateTime.now(), new BigDecimal("200.00"),
@@ -94,7 +94,7 @@ class OrderPaymentSummaryRepositoryTest {
      */
     @Test
     void testDeleteOrderPaymentSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         String transactionId = generateUniqueTransactionId();
         OrderPaymentSummaryEntity summary = new OrderPaymentSummaryEntity(
                 null, order.getId(), 10l, LocalDateTime.now(), new BigDecimal("50.00"),
@@ -111,8 +111,8 @@ class OrderPaymentSummaryRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order1.getId(), 10l, LocalDateTime.now(), new BigDecimal("100.00"), "COMPLETED", "CREDIT_CARD", generateUniqueTransactionId()));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order1.getId(), 20l, LocalDateTime.now(), new BigDecimal("50.00"), "COMPLETED", "UPI", generateUniqueTransactionId()));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order2.getId(), 30l, LocalDateTime.now(), new BigDecimal("75.00"), "PENDING", "NET_BANKING", generateUniqueTransactionId()));
@@ -127,8 +127,8 @@ class OrderPaymentSummaryRepositoryTest {
      */
     @Test
     void testFindByPaymentId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order1.getId(), 10l, LocalDateTime.now(), new BigDecimal("80.00"), "COMPLETED", "DEBIT_CARD", generateUniqueTransactionId()));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order2.getId(), 20l, LocalDateTime.now(), new BigDecimal("90.00"), "PENDING", "WALLET", generateUniqueTransactionId()));
 
@@ -142,9 +142,9 @@ class OrderPaymentSummaryRepositoryTest {
      */
     @Test
     void testFindByStatus() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order3 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order1.getId(), 10l, LocalDateTime.now(), new BigDecimal("25.00"), "COMPLETED", "CASH", generateUniqueTransactionId()));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order2.getId(), 20l, LocalDateTime.now(), new BigDecimal("35.00"), "COMPLETED", "CREDIT_CARD", generateUniqueTransactionId()));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order3.getId(), 30l, LocalDateTime.now(), new BigDecimal("45.00"), "PENDING", "UPI", generateUniqueTransactionId()));
@@ -159,9 +159,9 @@ class OrderPaymentSummaryRepositoryTest {
      */
     @Test
     void testFindByMethod() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order3 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order1.getId(), 10l, LocalDateTime.now(), new BigDecimal("55.00"), "COMPLETED", "NET_BANKING", generateUniqueTransactionId()));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order2.getId(), 20l, LocalDateTime.now(), new BigDecimal("65.00"), "PENDING", "NET_BANKING", generateUniqueTransactionId()));
         orderPaymentSummaryRepository.save(new OrderPaymentSummaryEntity(null, order3.getId(), 30l, LocalDateTime.now(), new BigDecimal("75.00"), "COMPLETED", "CASH", generateUniqueTransactionId()));

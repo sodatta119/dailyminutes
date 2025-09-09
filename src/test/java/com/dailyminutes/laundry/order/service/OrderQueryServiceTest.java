@@ -38,7 +38,7 @@ class OrderQueryServiceTest {
      */
     @Test
     void findOrderById_shouldReturnOrder() {
-        OrderEntity order = new OrderEntity(1L, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN);
+        OrderEntity order = new OrderEntity(1L, null, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN);
         OrderItemEntity orderItem = new OrderItemEntity();
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
         when(orderItemRepository.findByOrderId(1L)).thenReturn(List.of(orderItem));

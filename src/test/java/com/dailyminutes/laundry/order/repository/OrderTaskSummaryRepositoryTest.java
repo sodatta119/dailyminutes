@@ -43,7 +43,7 @@ class OrderTaskSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindOrderTaskSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
 
         OrderTaskSummaryEntity summary = new OrderTaskSummaryEntity(
                 null, order.getId(), 10l, "PICKUP", "ASSIGNED", LocalDateTime.now(), 10l, "Agent Alpha");
@@ -68,7 +68,7 @@ class OrderTaskSummaryRepositoryTest {
      */
     @Test
     void testUpdateOrderTaskSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
 
         OrderTaskSummaryEntity summary = new OrderTaskSummaryEntity(
                 null, order.getId(), 10l, "DELIVERY", "STARTED", LocalDateTime.now(), 10l, "Agent Beta");
@@ -89,7 +89,7 @@ class OrderTaskSummaryRepositoryTest {
      */
     @Test
     void testDeleteOrderTaskSummary() {
-        OrderEntity order = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
 
         OrderTaskSummaryEntity summary = new OrderTaskSummaryEntity(
                 null, order.getId(), 10l, "PROCESS", "NEW", LocalDateTime.now(), 10l, "Agent Gamma");
@@ -105,8 +105,8 @@ class OrderTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order1.getId(), 10l, "PICKUP", "NEW", LocalDateTime.now(), 10l, "Agent D"));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order2.getId(), 20l, "DELIVERY", "ASSIGNED", LocalDateTime.now(), 20l, "Agent E"));
 
@@ -120,8 +120,8 @@ class OrderTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByTaskId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order1.getId(), 10l, "PROCESS", "STARTED", LocalDateTime.now(), 10l, "Agent F"));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order2.getId(), 20l, "PICKUP", "COMPLETED", LocalDateTime.now(), 20l, "Agent G"));
 
@@ -135,9 +135,9 @@ class OrderTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentId() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order3 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order1.getId(), 10l, "DELIVERY", "ASSIGNED", LocalDateTime.now(), 10l, "Agent H"));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order2.getId(), 20l, "PICKUP", "STARTED", LocalDateTime.now(), 10l, "Agent I"));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order3.getId(), 30l, "PROCESS", "NEW", LocalDateTime.now(), 20l, "Agent J"));
@@ -152,9 +152,9 @@ class OrderTaskSummaryRepositoryTest {
      */
     @Test
     void testFindByTaskStatus() {
-        OrderEntity order1 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order2 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
-        OrderEntity order3 = orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order1 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order2 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
+        OrderEntity order3 = orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50")));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order1.getId(), 10l, "PICKUP", "NEW", LocalDateTime.now(), 10l, "Agent K"));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order2.getId(), 20l, "NEW", "NEW", LocalDateTime.now(), 20l, "Agent L"));
         orderTaskSummaryRepository.save(new OrderTaskSummaryEntity(null, order3.getId(), 30l, "DELIVERY", "ASSIGNED", LocalDateTime.now(), 30l, "Agent M"));

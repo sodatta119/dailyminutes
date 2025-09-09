@@ -29,7 +29,7 @@ class StoreQueryServiceTest {
      */
     @Test
     void findStoreById_shouldReturnStore() {
-        StoreEntity store = new StoreEntity(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
+        StoreEntity store = new StoreEntity(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L,"00","00");
         when(storeRepository.findById(1L)).thenReturn(Optional.of(store));
 
         assertThat(storeQueryService.findStoreById(1L)).isPresent();

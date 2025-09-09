@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,21 +41,24 @@ public class OrderService {
      * @return the order response
      */
     public OrderResponse createOrder(CreateOrderRequest request) {
-        OrderEntity order = new OrderEntity(null, request.storeId(), request.customerId(), request.orderDate(), request.status(), request.totalAmount());
+        OrderEntity order = new OrderEntity(null, request.externalId(), request.storeId(), request.customerId(), request.orderDate(), request.status(), request.totalAmount());
         OrderEntity savedOrder = orderRepository.save(order);
+        List<OrderItemEntity> savedItems=new ArrayList<>();
+        List<OrderItemInfo> itemInfos = new ArrayList<>();
+        if(request.items()!=null)
+        {
+            List<OrderItemEntity> items = request.items().stream()
+                    .map(itemDto -> new OrderItemEntity(null, savedOrder.getId(), itemDto.catalogId(), itemDto.quantity(), itemDto.itemPriceAtOrder(), itemDto.notes()))
+                    .collect(Collectors.toList());
 
-        List<OrderItemEntity> items = request.items().stream()
-                .map(itemDto -> new OrderItemEntity(null, savedOrder.getId(), itemDto.catalogId(), itemDto.quantity(), itemDto.itemPriceAtOrder(), itemDto.notes()))
-                .collect(Collectors.toList());
+            // Use saveAll and collect the saved entities which will now have IDs
+            savedItems = (List<OrderItemEntity>) orderItemRepository.saveAll(items);
 
-        // Use saveAll and collect the saved entities which will now have IDs
-        List<OrderItemEntity> savedItems = (List<OrderItemEntity>) orderItemRepository.saveAll(items);
-
-        // Convert the saved items to DTOs for the event
-        List<OrderItemInfo> itemInfos = savedItems.stream()
-                .map(item -> new OrderItemInfo(item.getId(), item.getCatalogId(), item.getQuantity(), item.getItemPriceAtOrder()))
-                .collect(Collectors.toList());
-
+            // Convert the saved items to DTOs for the event
+            itemInfos = savedItems.stream()
+                    .map(item -> new OrderItemInfo(item.getId(), item.getCatalogId(), item.getQuantity(), item.getItemPriceAtOrder()))
+                    .collect(Collectors.toList());
+        }
         // Publish the enriched event
         events.publishEvent(new OrderCreatedEvent(savedOrder.getId(), savedOrder.getCustomerId(), savedOrder.getStoreId(), savedOrder.getStatus().name(), savedOrder.getTotalAmount(), savedOrder.getOrderDate(), itemInfos));
 

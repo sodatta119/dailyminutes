@@ -6,6 +6,8 @@ package com.dailyminutes.laundry.geofence.listener;
 
 import com.dailyminutes.laundry.geofence.domain.event.GeofenceInfoRequestEvent;
 import com.dailyminutes.laundry.geofence.domain.event.GeofenceInfoResponseEvent;
+import com.dailyminutes.laundry.geofence.domain.event.GeofenceLookupRequestEvent;
+import com.dailyminutes.laundry.geofence.domain.event.GeofenceLookupResponseEvent;
 import com.dailyminutes.laundry.geofence.repository.GeofenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -34,8 +36,20 @@ public class GeofenceInfoEventListener {
                     geofence.getId(),
                     geofence.getName(),
                     geofence.getGeofenceType(),
+                    geofence.getExternalId(),
                     geofence.isActive(),
                     geofence.getPolygonCoordinates(),
+                    event.originalEvent() // Pass the storeId back
+            ));
+        });
+    }
+
+    @ApplicationModuleListener
+    public void onGeofenceLookupRequested(GeofenceLookupRequestEvent event) {
+        geofenceRepository.findByExternalId(event.externalGeofenceId().toString()).ifPresent(geofence -> {
+            events.publishEvent(new GeofenceLookupResponseEvent(
+                    geofence.getId(),
+                    event.externalGeofenceId(),
                     event.originalEvent() // Pass the storeId back
             ));
         });

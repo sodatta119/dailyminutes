@@ -8,12 +8,16 @@ import com.dailyminutes.laundry.geofence.domain.event.GeofenceDeletedEvent;
 import com.dailyminutes.laundry.geofence.domain.event.GeofenceInfoRequestEvent;
 import com.dailyminutes.laundry.geofence.domain.event.GeofenceInfoResponseEvent;
 import com.dailyminutes.laundry.store.domain.event.GeofenceAssignedToStoreEvent;
+import com.dailyminutes.laundry.store.domain.event.LogisticsStoreGeofenceRequestEvent;
+import com.dailyminutes.laundry.store.domain.event.LogisticsStoreGeofenceResponseEvent;
 import com.dailyminutes.laundry.store.domain.model.StoreGeofenceSummaryEntity;
 import com.dailyminutes.laundry.store.repository.StoreGeofenceSummaryRepository;
+import com.dailyminutes.laundry.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The type Store geofence event listener.
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Component;
 public class StoreGeofenceEventListener {
 
     private final StoreGeofenceSummaryRepository summaryRepository;
+    private final StoreRepository storeRepository;
     private final ApplicationEventPublisher events;
 
     /**
@@ -53,6 +58,7 @@ public class StoreGeofenceEventListener {
                     null,
                     storeId,
                     event.geofenceId(),
+                    event.externalId(),
                     event.geofenceName(),
                     event.geofenceType(),
                     event.active()
@@ -73,4 +79,52 @@ public class StoreGeofenceEventListener {
                 summaryRepository.deleteById(summary.getId())
         );
     }
+
+    @ApplicationModuleListener
+    public void onLogisticsInfoRequested(LogisticsStoreGeofenceRequestEvent event) {
+        StoreGeofenceSummaryEntity summary = summaryRepository.findByGeofenceExternalId(event.geofenceId().toString()).orElse(null);
+
+        if (summary != null) {
+            storeRepository.findById(summary.getStoreId()).ifPresentOrElse(entity -> {
+                // Found valid store
+                publish(new LogisticsStoreGeofenceResponseEvent(
+                        summary.getStoreId(),
+                        entity.getName(),
+                        entity.getAddress(),
+                        entity.getLatitude(),
+                        entity.getLongitude(),
+                        event.customerEvent(),
+                        event.orderEvent()
+                ));
+            }, () -> {
+                // StoreId exists in summary but not found in storeRepository → return null
+                publish(new LogisticsStoreGeofenceResponseEvent(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        event.customerEvent(),
+                        event.orderEvent()
+                ));
+            });
+        } else {
+            // No summary at all → return null storeId
+            publish(new LogisticsStoreGeofenceResponseEvent(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    event.customerEvent(),
+                    event.orderEvent()
+            ));
+        }
+    }
+
+    @Transactional
+    private void publish(LogisticsStoreGeofenceResponseEvent event) {
+        events.publishEvent(event);
+    }
+
 }

@@ -10,8 +10,11 @@ import com.dailyminutes.laundry.integration.manychat.client.ManychatSyncClient;
 import com.dailyminutes.laundry.integration.manychat.dto.CustomField;
 import com.dailyminutes.laundry.integration.manychat.dto.Subscriber;
 import com.dailyminutes.laundry.integration.manychat.dto.customer.ManychatCustomerResponse;
+import com.dailyminutes.laundry.integration.tookan.event.CustomerGeofenceRequestEvent;
+import com.dailyminutes.laundry.integration.tookan.event.CustomerGeofenceResponseEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,14 +95,47 @@ public class CustomerSyncService {
                 subscribedAt,
                 addressLine,
                 latStr,
-                lngStr
+                lngStr,
+                null
         );
 
-        events.publishEvent(new CustomerSyncEvent(payload));
+        //events.publishEvent(new CustomerSyncEvent(payload));
+        publishCustomerGeofenceRequestEvent(new CustomerGeofenceRequestEvent(payload.externalId(), new CustomerSyncEvent(payload)));
+    }
+
+    @Transactional
+    private void publishCustomerGeofenceRequestEvent(CustomerGeofenceRequestEvent event){
+        events.publishEvent(event);
     }
 
     private static String firstNonBlank(String a, String b) {
         return (a != null && !a.isBlank()) ? a : (b != null && !b.isBlank()) ? b : null;
     }
     private static String asString(Object v) { return v == null ? null : String.valueOf(v); }
+
+    @ApplicationModuleListener
+    public void onCustomerGeofenceResponse(CustomerGeofenceResponseEvent event) {
+        CustomerSyncEvent cEvent= (CustomerSyncEvent) event.originalEvent();
+        var oldPayload = cEvent.payload();
+
+        var updatedPayload = new CustomerSyncEvent.CustomerSyncPayload(
+                oldPayload.externalId(),
+                oldPayload.name(),
+                oldPayload.email(),
+                oldPayload.phone(),
+                oldPayload.timeZone(),
+                oldPayload.subscribedAt(),
+                oldPayload.addressLine(),
+                oldPayload.latitude(),
+                oldPayload.longitude(),
+                event.geofenceId()
+        );
+
+        CustomerSyncEvent updatedEvent = new CustomerSyncEvent(updatedPayload);
+        publishCustomerEvent(updatedEvent);
+    }
+
+    private void publishCustomerEvent(CustomerSyncEvent event){
+        events.publishEvent(event);
+    }
 }

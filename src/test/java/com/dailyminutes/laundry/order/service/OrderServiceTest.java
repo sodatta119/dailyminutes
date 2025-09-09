@@ -47,8 +47,8 @@ class OrderServiceTest {
     @Test
     void createOrder_shouldCreateAndPublishEvent() {
         OrderItemDto item = new OrderItemDto(null, 1L, BigDecimal.ONE, BigDecimal.TEN, "notes");
-        CreateOrderRequest request = new CreateOrderRequest(1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN, Collections.singletonList(item));
-        OrderEntity order = new OrderEntity(1L, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN);
+        CreateOrderRequest request = new CreateOrderRequest(null,1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN, Collections.singletonList(item));
+        OrderEntity order = new OrderEntity(1L, null, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN);
         when(orderRepository.save(any())).thenReturn(order);
 
         orderService.createOrder(request);
@@ -63,7 +63,7 @@ class OrderServiceTest {
     void updateOrder_shouldUpdateAndPublishEvent() {
         OrderItemDto item = new OrderItemDto(null, 1L, BigDecimal.ONE, BigDecimal.TEN, "notes");
         UpdateOrderRequest request = new UpdateOrderRequest(1L, 1L, 1L, LocalDateTime.now(), OrderStatus.ACCEPTED, BigDecimal.TEN, Collections.singletonList(item));
-        OrderEntity order = new OrderEntity(1L, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN);
+        OrderEntity order = new OrderEntity(1L, null, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
         when(orderRepository.save(any())).thenReturn(order);
 

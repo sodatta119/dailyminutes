@@ -37,7 +37,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testSaveAndFindStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), 10l);
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
 
@@ -57,7 +57,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testUpdateStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), 10l);
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
 
@@ -81,7 +81,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testDeleteStoreCatalog() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         StoreCatalogEntity storeCatalog = new StoreCatalogEntity(null, store.getId(), 10l);
         StoreCatalogEntity savedStoreCatalog = storeCatalogRepository.save(storeCatalog);
 
@@ -95,8 +95,8 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByStoreId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 10l));
         storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 20l));
         storeCatalogRepository.save(new StoreCatalogEntity(null, store2.getId(), 30l));
@@ -111,8 +111,8 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByCatalogId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store1", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 10l));
         storeCatalogRepository.save(new StoreCatalogEntity(null, store2.getId(), 10l));
@@ -128,7 +128,7 @@ class StoreCatalogRepositoryTest { // Updated class name
      */
     @Test
     void testFindByStoreIdAndCatalogId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store2", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 10l));
         storeCatalogRepository.save(new StoreCatalogEntity(null, store1.getId(), 20l));

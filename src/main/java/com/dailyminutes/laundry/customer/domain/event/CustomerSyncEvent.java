@@ -4,6 +4,7 @@
  */
 package com.dailyminutes.laundry.customer.domain.event;
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
 import org.jmolecules.event.annotation.DomainEvent;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  * The type Customer sync event.
  */
 @DomainEvent
-public record CustomerSyncEvent(CustomerSyncPayload payload) {
+public record CustomerSyncEvent(CustomerSyncPayload payload) implements CallerEvent {
 
     /**
      * The type Customer sync payload.
@@ -26,6 +27,7 @@ public record CustomerSyncEvent(CustomerSyncPayload payload) {
             LocalDateTime subscribedAt,
             String addressLine,
             String latitude,
-            String longitude
+            String longitude,
+            String geofenceId
     ) {}
 }

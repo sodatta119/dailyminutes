@@ -28,7 +28,8 @@ public interface StoreGeofenceSummaryRepository extends ListCrudRepository<Store
      * @param geofenceId the geofence id
      * @return the optional
      */
-    Optional<StoreGeofenceSummaryEntity> findByGeofenceId(Long geofenceId); // Useful for updates from Geofence events
+    Optional<StoreGeofenceSummaryEntity> findByGeofenceId(Long geofenceId);
+    Optional<StoreGeofenceSummaryEntity> findByGeofenceExternalId(String externalId);
 
     /**
      * Find by geofence type list.

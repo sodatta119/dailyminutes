@@ -51,7 +51,7 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindTaskGeofenceSummary() {
-        TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task = taskRepository.save(new TaskEntity(null, null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         String geofenceName = generateUniqueGeofenceName();
         String coordinates = generateCoordinates();
 
@@ -78,7 +78,7 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testUpdateTaskGeofenceSummary() {
-        TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         String geofenceName = generateUniqueGeofenceName();
         String coordinates = generateCoordinates();
 
@@ -102,7 +102,7 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testDeleteTaskGeofenceSummary() {
-        TaskEntity task = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         String geofenceName = generateUniqueGeofenceName();
         String coordinates = generateCoordinates();
 
@@ -119,8 +119,8 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testFindByTaskId() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null,null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task1.getId(), 10l, generateUniqueGeofenceName(), "DELIVERY_ZONE", generateCoordinates(), true, false));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task1.getId(), 20l, generateUniqueGeofenceName(), "PICKUP_ZONE", generateCoordinates(), false, true));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task2.getId(), 30l, generateUniqueGeofenceName(), "SERVICE_AREA", generateCoordinates(), true, true));
@@ -135,9 +135,9 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testFindByGeofenceId() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task3 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null,null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null,null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task3 = taskRepository.save(new TaskEntity(null,null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task1.getId(), 10l, generateUniqueGeofenceName(), "DELIVERY_ZONE", generateCoordinates(), true, false));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task2.getId(), 10l, generateUniqueGeofenceName(), "PICKUP_ZONE", generateCoordinates(), false, true));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task3.getId(), 30l, generateUniqueGeofenceName(), "SERVICE_AREA", generateCoordinates(), true, true));
@@ -152,9 +152,9 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testFindByGeofenceType() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task3 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task3 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task1.getId(), 10l, generateUniqueGeofenceName(), "DELIVERY_ZONE", generateCoordinates(), true, false));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task2.getId(), 20l, generateUniqueGeofenceName(), "DELIVERY_ZONE", generateCoordinates(), false, true));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task3.getId(), 30l, generateUniqueGeofenceName(), "PICKUP_ZONE", generateCoordinates(), true, true));
@@ -169,9 +169,9 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testFindByIsSource() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task3 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null,null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task3 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task1.getId(), 10l, generateUniqueGeofenceName(), "DELIVERY_ZONE", generateCoordinates(), true, false));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task2.getId(), 20l, generateUniqueGeofenceName(), "PICKUP_ZONE", generateCoordinates(), true, true));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task3.getId(), 30l, generateUniqueGeofenceName(), "SERVICE_AREA", generateCoordinates(), false, true));
@@ -186,9 +186,9 @@ class TaskGeofenceSummaryRepositoryTest {
      */
     @Test
     void testFindByIsDestination() {
-        TaskEntity task1 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task2 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
-        TaskEntity task3 = taskRepository.save(new TaskEntity(null, "Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task1 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task2 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
+        TaskEntity task3 = taskRepository.save(new TaskEntity(null, null,"Task M", "Desc M", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 10l, 10l, "Addr M", null, "Dest M", null, "Comment M", 10l));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task1.getId(), 10l, generateUniqueGeofenceName(), "DELIVERY_ZONE", generateCoordinates(), true, true));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task2.getId(), 20l, generateUniqueGeofenceName(), "PICKUP_ZONE", generateCoordinates(), false, true));
         taskGeofenceSummaryRepository.save(new TaskGeofenceSummaryEntity(null, task3.getId(), 30l, generateUniqueGeofenceName(), "SERVICE_AREA", generateCoordinates(), true, false));

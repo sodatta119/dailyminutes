@@ -13,6 +13,7 @@ public record GeofenceInfoResponseEvent(
         Long geofenceId,
         String geofenceName,
         String geofenceType,
+        String externalId,
         boolean active,
         String polygonCoordinates,
         CallerEvent originalEvent

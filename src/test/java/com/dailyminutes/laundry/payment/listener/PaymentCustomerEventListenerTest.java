@@ -66,7 +66,7 @@ class PaymentCustomerEventListenerTest {
     void onCustomerInfoProvided_shouldCreateSummary_whenOriginalEventIsPaymentMade() {
         // Given: the customer module provides info, and the original event was for a payment
         PaymentMadeEvent originalEvent = new PaymentMadeEvent(1L, 101L, 201L, BigDecimal.TEN, PaymentMethod.CASH.name(), "txn123", LocalDateTime.now());
-        CustomerInfoResponseEvent event = new CustomerInfoResponseEvent(201L, "John Doe", "555-1234", "john@test.com", originalEvent);
+        CustomerInfoResponseEvent event = new CustomerInfoResponseEvent(201L, "John Doe", "555-1234", "john@test.com", "test-address", "000","000",100L, originalEvent);
         ArgumentCaptor<PaymentCustomerSummaryEntity> captor = ArgumentCaptor.forClass(PaymentCustomerSummaryEntity.class);
 
         // When: the listener handles the response
@@ -87,7 +87,7 @@ class PaymentCustomerEventListenerTest {
     void onCustomerInfoProvided_shouldDoNothing_whenOriginalEventIsNotPaymentMade() {
         // Given: the customer module provides info, but the original event was something else
         CallerEvent otherEvent = mock(CallerEvent.class);
-        CustomerInfoResponseEvent event = new CustomerInfoResponseEvent(201L, "John Doe", "555-1234", "john@test.com", otherEvent);
+        CustomerInfoResponseEvent event = new CustomerInfoResponseEvent(201L, "John Doe", "555-1234", "john@test.com", "test-address", "000","000",100L, otherEvent);
 
         // When: the listener handles the response
         listener.onCustomerInfoProvided(event);

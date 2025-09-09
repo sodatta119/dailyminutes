@@ -25,6 +25,7 @@ public record AgentResponse(
         Double latitude,
         Double longitude,
         int active,
-        int available
+        int available,
+        int batteryLevel
 ) {
 }

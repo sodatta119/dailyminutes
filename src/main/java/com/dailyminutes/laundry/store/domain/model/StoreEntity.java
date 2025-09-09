@@ -36,4 +36,8 @@ public class StoreEntity {
     private String email;
 
     private Long managerId;
+
+    private String latitude;
+
+    private String longitude;
 }

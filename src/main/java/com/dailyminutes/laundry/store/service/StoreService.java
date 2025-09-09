@@ -38,10 +38,26 @@ public class StoreService {
      * @param request the request
      * @return the store response
      */
+    @Transactional
     public StoreResponse createStore(CreateStoreRequest request) {
-        StoreEntity store = new StoreEntity(null, request.name(), request.address(), request.contactNumber(), request.email(), request.managerId());
-        StoreEntity savedStore = storeRepository.save(store);
+        var existing = storeRepository.findByName(request.name());
+        if (existing.isPresent()) {
+            return toStoreResponse(existing.get());
+        }
+        var store = new StoreEntity(
+                null,
+                request.name(),
+                request.address(),
+                request.contactNumber(),
+                request.email(),
+                request.managerId(),
+                request.latitude(),
+                request.longitude()
+        );
+
+        var savedStore = storeRepository.save(store);
         events.publishEvent(new StoreCreatedEvent(savedStore.getId(), savedStore.getName(), savedStore.getManagerId()));
+
         return toStoreResponse(savedStore);
     }
 
@@ -152,6 +168,6 @@ public class StoreService {
     }
 
     private StoreResponse toStoreResponse(StoreEntity entity) {
-        return new StoreResponse(entity.getId(), entity.getName(), entity.getAddress(), entity.getContactNumber(), entity.getEmail(), entity.getManagerId());
+        return new StoreResponse(entity.getId(), entity.getName(), entity.getAddress(), entity.getContactNumber(), entity.getEmail(), entity.getManagerId(), entity.getLatitude(), entity.getLongitude());
     }
 }

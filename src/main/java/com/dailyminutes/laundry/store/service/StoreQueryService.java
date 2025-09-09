@@ -37,7 +37,7 @@ public class StoreQueryService {
      */
     public Optional<StoreResponse> findStoreById(Long id) {
         return storeRepository.findById(id)
-                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getContactNumber(), s.getEmail(), s.getManagerId()));
+                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getContactNumber(), s.getEmail(), s.getManagerId(), s.getLatitude(), s.getLongitude()));
     }
 
     /**
@@ -47,7 +47,7 @@ public class StoreQueryService {
      */
     public List<StoreResponse> findAllStores() {
         return StreamSupport.stream(storeRepository.findAll().spliterator(), false)
-                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getContactNumber(), s.getEmail(), s.getManagerId()))
+                .map(s -> new StoreResponse(s.getId(), s.getName(), s.getAddress(), s.getContactNumber(), s.getEmail(), s.getManagerId(), s.getLatitude(), s.getLongitude()))
                 .collect(Collectors.toList());
     }
 

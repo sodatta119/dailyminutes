@@ -46,6 +46,7 @@ public class AgentSyncEvent {
             Double longitude,
             int active,               // is_active from Tookan
             int available,            // is_available from Tookan
+            Integer battery,
             String fleetThumbImage,
             LocalDateTime externalSyncAt
     ) {}

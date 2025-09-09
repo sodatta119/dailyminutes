@@ -43,6 +43,7 @@ public class AgentSyncService {
                         a.longitude(),
                         a.isActive(),
                         a.isAvailable(),
+                        a.batteryLevel(),
                         a.fleetThumbImage(),
                         LocalDateTime.now()
                 ))

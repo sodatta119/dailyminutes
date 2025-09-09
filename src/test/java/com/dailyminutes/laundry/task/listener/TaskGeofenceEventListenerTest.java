@@ -87,7 +87,7 @@ class TaskGeofenceEventListenerTest {
         TaskCreatedEvent originalEvent = new TaskCreatedEvent(1L, 101L, "Task Name", "PICKUP",
                 "NEW", LocalDateTime.now(), "Source Address", 10L,
                 "Dest Address", 20L, 301L, 401L);
-        GeofenceInfoResponseEvent responseEvent = new GeofenceInfoResponseEvent(10L, "Source Zone", "SRC_TYPE", true, "POLYGON(...)", originalEvent);
+        GeofenceInfoResponseEvent responseEvent = new GeofenceInfoResponseEvent(10L, "Source Zone", "SRC_TYPE", "991",true, "POLYGON(...)", originalEvent);
         ArgumentCaptor<TaskGeofenceSummaryEntity> summaryCaptor = ArgumentCaptor.forClass(TaskGeofenceSummaryEntity.class);
 
         // When: The listener handles the response
@@ -113,7 +113,7 @@ class TaskGeofenceEventListenerTest {
         TaskCreatedEvent originalEvent = new TaskCreatedEvent(1L, 101L, "Task Name", "PICKUP",
                 "NEW", LocalDateTime.now(), "Source Address", 10L,
                 "Dest Address", 20L, 301L, 401L);
-        GeofenceInfoResponseEvent responseEvent = new GeofenceInfoResponseEvent(20L, "Destination Zone", "DST_TYPE",  true,"POLYGON(...)", originalEvent);
+        GeofenceInfoResponseEvent responseEvent = new GeofenceInfoResponseEvent(20L, "Destination Zone", "DST_TYPE",  "992",true,"POLYGON(...)", originalEvent);
         ArgumentCaptor<TaskGeofenceSummaryEntity> summaryCaptor = ArgumentCaptor.forClass(TaskGeofenceSummaryEntity.class);
 
         // When: The listener handles the response
@@ -137,7 +137,7 @@ class TaskGeofenceEventListenerTest {
     void onGeofenceInfoProvided_shouldDoNothing_whenOriginalEventIsWrongType() {
         // Given: A response event where the original event is not a TaskCreatedEvent
         CallerEvent otherEvent = mock(CallerEvent.class);
-        GeofenceInfoResponseEvent responseEvent = new GeofenceInfoResponseEvent(10L, "Zone", "TYPE",  true, "coords", otherEvent);
+        GeofenceInfoResponseEvent responseEvent = new GeofenceInfoResponseEvent(10L, "Zone", "TYPE",  "993",true, "coords", otherEvent);
 
         // When: The listener handles the response
         listener.onGeofenceInfoProvided(responseEvent);

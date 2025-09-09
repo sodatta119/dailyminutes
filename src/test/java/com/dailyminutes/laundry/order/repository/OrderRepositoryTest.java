@@ -47,7 +47,7 @@ class OrderRepositoryTest {
     @Test
     void testSaveAndFindOrderWithItemsAndMetadata() {
 
-        OrderEntity order = new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50"));
+        OrderEntity order = new OrderEntity(null,null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("25.50"));
         OrderEntity savedOrder = orderRepository.save(order);
 
         assertThat(savedOrder).isNotNull();
@@ -86,9 +86,9 @@ class OrderRepositoryTest {
      */
     @Test
     void testFindByCustomerId() { // Updated test method name
-        orderRepository.save(new OrderEntity(null, 10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00")));
-        orderRepository.save(new OrderEntity(null, 20l, 10l, LocalDateTime.now(), OrderStatus.DELIVERED, new BigDecimal("20.00")));
-        orderRepository.save(new OrderEntity(null, 30l, 30l, LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("15.00")));
+        orderRepository.save(new OrderEntity(null, null,10L, 10L, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00")));
+        orderRepository.save(new OrderEntity(null, null,20l, 10l, LocalDateTime.now(), OrderStatus.DELIVERED, new BigDecimal("20.00")));
+        orderRepository.save(new OrderEntity(null, null,30l, 30l, LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("15.00")));
 
         List<OrderEntity> orders = orderRepository.findByCustomerId(10l); // Using customer ID
         assertThat(orders).hasSize(2);
@@ -100,9 +100,9 @@ class OrderRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        orderRepository.save(new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("50.00")));
-        orderRepository.save(new OrderEntity(null, 10l, 20l, LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("75.00")));
-        orderRepository.save(new OrderEntity(null, 30l, 30l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("30.00")));
+        orderRepository.save(new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("50.00")));
+        orderRepository.save(new OrderEntity(null, null,10l, 20l, LocalDateTime.now(), OrderStatus.ACCEPTED, new BigDecimal("75.00")));
+        orderRepository.save(new OrderEntity(null, null,30l, 30l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("30.00")));
 
         List<OrderEntity> orders = orderRepository.findByStoreId(10l);
         assertThat(orders).hasSize(2);
@@ -114,7 +114,7 @@ class OrderRepositoryTest {
      */
     @Test
     void testUpdateOrder() {
-        OrderEntity order = new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00"));
+        OrderEntity order = new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("10.00"));
         OrderEntity savedOrder = orderRepository.save(order);
 
         savedOrder.setStatus(OrderStatus.DELIVERED);
@@ -133,7 +133,7 @@ class OrderRepositoryTest {
     @Test
     void testDeleteOrderAndAssociatedItems() {
         // Create and save Order
-        OrderEntity order = new OrderEntity(null, 10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("5.00"));
+        OrderEntity order = new OrderEntity(null, null,10l, 10l, LocalDateTime.now(), OrderStatus.PENDING, new BigDecimal("5.00"));
         OrderEntity savedOrder = orderRepository.save(order);
 
         // Create and save OrderItem

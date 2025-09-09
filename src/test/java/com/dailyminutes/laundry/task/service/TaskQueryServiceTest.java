@@ -32,7 +32,7 @@ class TaskQueryServiceTest {
      */
     @Test
     void findTaskById_shouldReturnTask() {
-        TaskEntity task = new TaskEntity(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
+        TaskEntity task = new TaskEntity(1L, null,"name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
 
         assertThat(taskQueryService.findTaskById(1L)).isPresent();

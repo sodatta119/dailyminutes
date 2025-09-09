@@ -136,6 +136,6 @@ public class AgentService {
 //    }
 
     private AgentResponse toAgentResponse(AgentEntity agentEntity) {
-        return new AgentResponse(agentEntity.getId(), agentEntity.getName(), agentEntity.getState(), agentEntity.getTeamId(), agentEntity.getPhoneNumber(), agentEntity.getUniqueId(), agentEntity.getJoiningDate(), agentEntity.getTerminationDate(), agentEntity.getDesignation(), agentEntity.getLatitude(), agentEntity.getLongitude(), agentEntity.getActive(), agentEntity.getAvailable());
+        return new AgentResponse(agentEntity.getId(), agentEntity.getName(), agentEntity.getState(), agentEntity.getTeamId(), agentEntity.getPhoneNumber(), agentEntity.getUniqueId(), agentEntity.getJoiningDate(), agentEntity.getTerminationDate(), agentEntity.getDesignation(), agentEntity.getLatitude(), agentEntity.getLongitude(), agentEntity.getActive(), agentEntity.getAvailable(), agentEntity.getBatteryLevel());
     }
 }

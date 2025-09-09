@@ -13,6 +13,8 @@ public record StoreResponse(
         String address,
         String contactNumber,
         String email,
-        Long managerId
+        Long managerId,
+        String latitude,
+        String longitude
 ) {
 }

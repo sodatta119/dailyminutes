@@ -49,6 +49,7 @@ public class AgentSyncEventListener {
             entity.setActive(payload.active());
             entity.setAvailable(payload.available());
             entity.setState(payload.active()==1?AgentState.ACTIVE:AgentState.INACTIVE);
+            entity.setBatteryLevel(payload.battery());
             //entity.setFleetThumbImage(payload.fleetThumbImage());
             entity.setExternalSyncAt(payload.externalSyncAt());
             entity.setUniqueId(payload.externalId());

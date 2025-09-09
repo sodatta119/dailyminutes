@@ -45,7 +45,7 @@ class StoreAgentSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindStoreAgentSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         String phoneNumber = generateUniquePhoneNumber();
 
         StoreAgentSummaryEntity summary = new StoreAgentSummaryEntity(
@@ -71,7 +71,7 @@ class StoreAgentSummaryRepositoryTest {
      */
     @Test
     void testUpdateStoreAgentSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         String phoneNumber = generateUniquePhoneNumber();
 
         StoreAgentSummaryEntity summary = new StoreAgentSummaryEntity(
@@ -91,7 +91,7 @@ class StoreAgentSummaryRepositoryTest {
      */
     @Test
     void testDeleteStoreAgentSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         String phoneNumber = generateUniquePhoneNumber();
 
         StoreAgentSummaryEntity summary = new StoreAgentSummaryEntity(
@@ -108,8 +108,8 @@ class StoreAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store1.getId(), 10l, "Agent D", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store1.getId(), 20l, "Agent E", generateUniquePhoneNumber(), "DELIVERY_EXECUTIVE", "ACTIVE"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store2.getId(), 30l, "Agent F", generateUniquePhoneNumber(), "PROCESS_MANAGER", "ACTIVE"));
@@ -124,8 +124,8 @@ class StoreAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store1.getId(), 10l, "Agent G", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store2.getId(), 20l, "Agent H", generateUniquePhoneNumber(), "DELIVERY_EXECUTIVE", "ACTIVE"));
 
@@ -139,9 +139,9 @@ class StoreAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentDesignation() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store1.getId(), 10l, "Agent I", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store2.getId(), 20l, "Agent J", generateUniquePhoneNumber(), "FLEET_AGENT", "INACTIVE"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store3.getId(), 30l, "Agent K", generateUniquePhoneNumber(), "PROCESS_MANAGER", "ACTIVE"));
@@ -156,9 +156,9 @@ class StoreAgentSummaryRepositoryTest {
      */
     @Test
     void testFindByAgentStatus() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store1.getId(), 10l, "Agent L", generateUniquePhoneNumber(), "FLEET_AGENT", "ACTIVE"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store2.getId(), 20l, "Agent M", generateUniquePhoneNumber(), "DELIVERY_EXECUTIVE", "ACTIVE"));
         storeAgentSummaryRepository.save(new StoreAgentSummaryEntity(null, store3.getId(), 30l, "Agent N", generateUniquePhoneNumber(), "PROCESS_MANAGER", "INACTIVE"));

@@ -36,7 +36,7 @@ public class AgentQueryService {
      */
     public Optional<AgentResponse> findAgentById(Long id) {
         return agentRepository.findById(id)
-                .map(a -> new AgentResponse(a.getId(), a.getName(), a.getState(), a.getTeamId(), a.getPhoneNumber(), a.getUniqueId(), a.getJoiningDate(), a.getTerminationDate(), a.getDesignation(), a.getLatitude(), a.getLongitude(), a.getActive(), a.getAvailable()));
+                .map(a -> new AgentResponse(a.getId(), a.getName(), a.getState(), a.getTeamId(), a.getPhoneNumber(), a.getUniqueId(), a.getJoiningDate(), a.getTerminationDate(), a.getDesignation(), a.getLatitude(), a.getLongitude(), a.getActive(), a.getAvailable(), a.getBatteryLevel()));
     }
 
     /**
@@ -46,7 +46,7 @@ public class AgentQueryService {
      */
     public List<AgentResponse> findAllAgents() {
         return StreamSupport.stream(agentRepository.findAll().spliterator(), false)
-                .map(a -> new AgentResponse(a.getId(), a.getName(), a.getState(), a.getTeamId(), a.getPhoneNumber(), a.getUniqueId(), a.getJoiningDate(), a.getTerminationDate(), a.getDesignation(), a.getLatitude(), a.getLongitude(), a.getActive(), a.getAvailable()))
+                .map(a -> new AgentResponse(a.getId(), a.getName(), a.getState(), a.getTeamId(), a.getPhoneNumber(), a.getUniqueId(), a.getJoiningDate(), a.getTerminationDate(), a.getDesignation(), a.getLatitude(), a.getLongitude(), a.getActive(), a.getAvailable(), a.getBatteryLevel()))
                 .collect(Collectors.toList());
     }
 
@@ -58,7 +58,7 @@ public class AgentQueryService {
      */
     public List<AgentResponse> findAgentsByTeamId(Long teamId) {
         return agentRepository.findByTeamId(teamId).stream()
-                .map(a -> new AgentResponse(a.getId(), a.getName(), a.getState(), a.getTeamId(), a.getPhoneNumber(), a.getUniqueId(), a.getJoiningDate(), a.getTerminationDate(), a.getDesignation(), a.getLatitude(), a.getLongitude(), a.getActive(), a.getAvailable()))
+                .map(a -> new AgentResponse(a.getId(), a.getName(), a.getState(), a.getTeamId(), a.getPhoneNumber(), a.getUniqueId(), a.getJoiningDate(), a.getTerminationDate(), a.getDesignation(), a.getLatitude(), a.getLongitude(), a.getActive(), a.getAvailable(), a.getBatteryLevel()))
                 .collect(Collectors.toList());
     }
 

@@ -43,6 +43,7 @@ public class CustomerSyncListener {
         customer.setTimeZone(p.timeZone());
         customer.setSubscribedTms(p.subscribedAt());
 
+
         customer = repo.save(customer);
 
         // address upsert
@@ -59,6 +60,10 @@ public class CustomerSyncListener {
             addr.setAddressLine(p.addressLine());
             addr.setLatitude(p.latitude());
             addr.setLongitude(p.longitude());
+            if(p.geofenceId()!=null)
+            {
+                addr.setGeofenceId(Long.parseLong(p.geofenceId()));
+            }
 
             addressRepo.save(addr);
         }

@@ -56,7 +56,7 @@ class OrderControllerTest {
     void setUp() {
         OrderItemDto item = new OrderItemDto(1L, 1L, BigDecimal.ONE, BigDecimal.TEN, "notes");
         orderResponse = new OrderResponse(1L, 1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN, Collections.singletonList(item));
-        createOrderRequest = new CreateOrderRequest(1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN, Collections.singletonList(item));
+        createOrderRequest = new CreateOrderRequest(null,1L, 1L, LocalDateTime.now(), OrderStatus.PENDING, BigDecimal.TEN, Collections.singletonList(item));
         updateOrderRequest = new UpdateOrderRequest(1L, 2L, 2L, LocalDateTime.now(), OrderStatus.ACCEPTED, BigDecimal.ONE, Collections.emptyList());
     }
 

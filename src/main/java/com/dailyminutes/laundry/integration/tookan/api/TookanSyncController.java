@@ -8,6 +8,7 @@ package com.dailyminutes.laundry.integration.tookan.api;
 
 import com.dailyminutes.laundry.integration.tookan.service.AgentSyncService;
 import com.dailyminutes.laundry.integration.tookan.service.GeofenceSyncService;
+import com.dailyminutes.laundry.integration.tookan.service.StoreSyncService;
 import com.dailyminutes.laundry.integration.tookan.service.TeamSyncService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,6 +30,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class TookanSyncController {
+    private final StoreSyncService storeSync;
     private final TeamSyncService teamSync;
     private final GeofenceSyncService geofenceSync;
     private final AgentSyncService agentSyncService;
@@ -52,6 +54,36 @@ public class TookanSyncController {
             // Create a user-friendly error response body
             Map<String, Object> errorBody = Map.of(
                     "message", "An error occurred while communicating with the logistics service.",
+                    "error", e.getMessage() // Be careful about leaking internal details
+            );
+
+            // Return a proper HTTP status code.
+            // This response will now correctly pass through your CORS filter.
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(errorBody);
+        }
+    }
+
+    /**
+     * Stores response entity.
+     *
+     * @return the response entity
+     */
+    @PostMapping("/stores")
+    @Operation(summary = "Sync stores from Starterset")
+    @ApiResponse(responseCode = "202", description = "Sync job triggered successfully")
+    public ResponseEntity<Map<String, Object>> stores() {
+        try{
+            storeSync.syncStores();
+            return ResponseEntity.status(HttpStatus.OK).body(Map.of("entity", "Stores", "entities", "stores"));
+        }catch (Exception e) {
+            // Log the full error on the server side for debugging
+            log.error("Error during Store sync operation", e);
+
+            // Create a user-friendly error response body
+            Map<String, Object> errorBody = Map.of(
+                    "message", "An error occurred while communicating with the store service.",
                     "error", e.getMessage() // Be careful about leaking internal details
             );
 

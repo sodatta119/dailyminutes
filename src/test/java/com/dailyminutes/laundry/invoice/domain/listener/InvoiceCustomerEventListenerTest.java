@@ -71,7 +71,7 @@ class InvoiceCustomerEventListenerTest {
     void onCustomerInfoProvided_shouldCreateSummary() {
         // Given: A response event from the customer module with the customer's details
         CustomerInfoResponseEvent event = new CustomerInfoResponseEvent(
-                101L, "Jane Doe", "555-1234", "jane.doe@example.com", new InvoiceCreatedEvent(501L, 10L, 20L, LocalDateTime.now(), new BigDecimal(10.20), new BigDecimal(1.20), new BigDecimal(0.20)) // correlationId is the invoiceId
+                101L, "Jane Doe", "555-1234", "jane.doe@example.com", "test-address", "000","000",100L, new InvoiceCreatedEvent(501L, 10L, 20L, LocalDateTime.now(), new BigDecimal(10.20), new BigDecimal(1.20), new BigDecimal(0.20)) // correlationId is the invoiceId
         );
         ArgumentCaptor<InvoiceCustomerSummaryEntity> summaryCaptor = ArgumentCaptor.forClass(InvoiceCustomerSummaryEntity.class);
 

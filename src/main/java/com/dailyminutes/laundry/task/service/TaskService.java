@@ -16,6 +16,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * The type Task service.
  */
@@ -34,7 +36,7 @@ public class TaskService {
      * @return the task response
      */
     public TaskResponse createTask(CreateTaskRequest request) {
-        TaskEntity task = new TaskEntity(null, request.name(), request.description(), request.type(), request.taskStartTime(), null, null, request.status(), request.teamId(), request.agentId(), request.sourceAddress(), request.sourceGeofenceId(), request.destinationAddress(), request.destinationGeofenceId(), request.taskComment(), request.orderId());
+        TaskEntity task = new TaskEntity(null, null, request.name(), request.description(), request.type(), request.taskStartTime(), null, null, request.status(), request.teamId(), request.agentId(), request.sourceAddress(), request.sourceGeofenceId(), request.destinationAddress(), request.destinationGeofenceId(), request.taskComment(), request.orderId());
         TaskEntity savedTask = taskRepository.save(task);
         events.publishEvent(new TaskCreatedEvent(
                 savedTask.getId(),
@@ -84,7 +86,7 @@ public class TaskService {
 
         TaskEntity updatedTask = taskRepository.save(existingTask);
 
-        events.publishEvent(new TaskUpdatedEvent(updatedTask.getId()));
+        events.publishEvent(new TaskUpdatedEvent(updatedTask.getId(), updatedTask.getExternalId(), updatedTask.getOrderId(), updatedTask.getAgentId(), updatedTask.getStatus().name(), LocalDateTime.now()));
         if (oldStatus != updatedTask.getStatus()) {
             events.publishEvent(new TaskStatusChangedEvent(updatedTask.getId(), updatedTask.getOrderId(), oldStatus.name(), updatedTask.getStatus().name()));
         }

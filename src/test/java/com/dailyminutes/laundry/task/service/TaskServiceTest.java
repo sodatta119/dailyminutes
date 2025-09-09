@@ -42,7 +42,7 @@ class TaskServiceTest {
     @Test
     void createTask_shouldCreateAndPublishEvent() {
         CreateTaskRequest request = new CreateTaskRequest("name", "desc", TaskType.PICKUP, LocalDateTime.now(), TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
-        TaskEntity task = new TaskEntity(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
+        TaskEntity task = new TaskEntity(1L, null,"name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
         when(taskRepository.save(any())).thenReturn(task);
 
         taskService.createTask(request);
@@ -56,7 +56,7 @@ class TaskServiceTest {
     @Test
     void updateTask_shouldUpdateAndPublishEvent() {
         UpdateTaskRequest request = new UpdateTaskRequest(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.ASSIGNED, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
-        TaskEntity task = new TaskEntity(1L, "name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
+        TaskEntity task = new TaskEntity(1L, null,"name", "desc", TaskType.PICKUP, LocalDateTime.now(), null, null, TaskStatus.NEW, 1L, 1L, "source", 1L, "dest", 1L, "comment", 1L);
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
         when(taskRepository.save(any())).thenReturn(task);
 

@@ -79,7 +79,7 @@ class OrderCustomerEventListenerTest {
     void onCustomerInfoProvided_shouldUpdateSummaryWithFullDetails() {
         // Given
         CustomerInfoResponseEvent event = new CustomerInfoResponseEvent(
-                201L, "John Doe", "555-1234", "john@example.com", new OrderCreatedEvent(101L, 201L, 301L, "", new BigDecimal(10.10), LocalDateTime.now(), null) // correlationId = orderId
+                201L, "John Doe", "555-1234", "john@example.com","test-address", "000","000",100L, new OrderCreatedEvent(101L, 201L, 301L, "", new BigDecimal(10.10), LocalDateTime.now(), null) // correlationId = orderId
         );
         OrderCustomerSummaryEntity partialSummary = new OrderCustomerSummaryEntity(1L, 101L, 201L, "...", "...", "...");
 

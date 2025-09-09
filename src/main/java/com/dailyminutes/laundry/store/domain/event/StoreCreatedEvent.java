@@ -4,6 +4,8 @@
  */
 package com.dailyminutes.laundry.store.domain.event;
 
+import com.dailyminutes.laundry.common.events.CallerEvent;
+
 /**
  * The type Store created event.
  */
@@ -11,5 +13,5 @@ public record StoreCreatedEvent(
         Long storeId,
         String name,
         Long managerId
-) {
+) implements CallerEvent {
 }

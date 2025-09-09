@@ -42,7 +42,7 @@ class StoreOrderSummaryRepositoryTest {
      */
     @Test
     void testSaveAndFindStoreOrderSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(null, store.getId(), 10l, LocalDateTime.now(), "PENDING", new BigDecimal("100.00"), 10l);
         StoreOrderSummaryEntity savedSummary = storeOrderSummaryRepository.save(summary);
@@ -64,7 +64,7 @@ class StoreOrderSummaryRepositoryTest {
      */
     @Test
     void testUpdateStoreOrderSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(null, store.getId(), 10l, LocalDateTime.now(), "ACCEPTED", new BigDecimal("150.00"), 10l);
         StoreOrderSummaryEntity savedSummary = storeOrderSummaryRepository.save(summary);
@@ -84,7 +84,7 @@ class StoreOrderSummaryRepositoryTest {
      */
     @Test
     void testDeleteStoreOrderSummary() {
-        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
 
         StoreOrderSummaryEntity summary = new StoreOrderSummaryEntity(null, store.getId(), 10l, LocalDateTime.now(), "CANCELLED", new BigDecimal("50.00"), 10l);
         StoreOrderSummaryEntity savedSummary = storeOrderSummaryRepository.save(summary);
@@ -99,8 +99,8 @@ class StoreOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByStoreId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store1.getId(), 10l, LocalDateTime.now(), "PENDING", new BigDecimal("10.00"), 10l));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store1.getId(), 20l, LocalDateTime.now(), "DELIVERED", new BigDecimal("20.00"), 20l));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store2.getId(), 30l, LocalDateTime.now(), "ACCEPTED", new BigDecimal("30.00"), 30l));
@@ -115,8 +115,8 @@ class StoreOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByOrderId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store1.getId(), 10l, LocalDateTime.now(), "READY_FOR_PICKUP", new BigDecimal("75.00"), 10l));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store2.getId(), 20l, LocalDateTime.now(), "IN_PROCESS", new BigDecimal("85.00"), 20l));
 
@@ -130,9 +130,9 @@ class StoreOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByCustomerId() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store1.getId(), 10l, LocalDateTime.now(), "PENDING", new BigDecimal("110.00"), 10l));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store2.getId(), 20l, LocalDateTime.now(), "DELIVERED", new BigDecimal("120.00"), 10l));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store3.getId(), 30l, LocalDateTime.now(), "ACCEPTED", new BigDecimal("130.00"), 20l));
@@ -147,9 +147,9 @@ class StoreOrderSummaryRepositoryTest {
      */
     @Test
     void testFindByStatus() {
-        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
-        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l));
+        StoreEntity store1 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store2 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
+        StoreEntity store3 = storeRepository.save(new StoreEntity(null, "Test Store", "123 Main St", "123-456-7890", "test@example.com", 10l,"00","00"));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store1.getId(), 10l, LocalDateTime.now(), "IN_PROCESS", new BigDecimal("25.00"), 10l));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store2.getId(), 20l, LocalDateTime.now(), "IN_PROCESS", new BigDecimal("35.00"), 20l));
         storeOrderSummaryRepository.save(new StoreOrderSummaryEntity(null, store3.getId(), 30l, LocalDateTime.now(), "DELIVERED", new BigDecimal("45.00"), 30l));

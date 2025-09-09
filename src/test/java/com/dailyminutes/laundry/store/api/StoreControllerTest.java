@@ -49,8 +49,8 @@ class StoreControllerTest {
      */
     @BeforeEach
     void setUp() {
-        storeResponse = new StoreResponse(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
-        createStoreRequest = new CreateStoreRequest("Test Store", "123 Main St", "1234567890", "test@test.com", 1L);
+        storeResponse = new StoreResponse(1L, "Test Store", "123 Main St", "1234567890", "test@test.com", 1L,"000","000");
+        createStoreRequest = new CreateStoreRequest("Test Store", "123 Main St", "1234567890", "test@test.com", 1L,"00","00");
         updateStoreRequest = new UpdateStoreRequest(1L, "Updated Store", "456 Main St", "0987654321", "updated@test.com", 2L);
     }
 

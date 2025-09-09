@@ -7,8 +7,7 @@ package com.dailyminutes.laundry.integration.tookan.client;
 import com.dailyminutes.laundry.integration.tookan.config.TookanProperties;
 import com.dailyminutes.laundry.integration.tookan.dto.agent.FleetRecord;
 import com.dailyminutes.laundry.integration.tookan.dto.agent.TookanFleetsResponse;
-import com.dailyminutes.laundry.integration.tookan.dto.geofence.GeofenceRecord;
-import com.dailyminutes.laundry.integration.tookan.dto.geofence.TookanGeofencesResponse;
+import com.dailyminutes.laundry.integration.tookan.dto.geofence.*;
 import com.dailyminutes.laundry.integration.tookan.dto.team.TookanTeamRecord;
 import com.dailyminutes.laundry.integration.tookan.dto.team.TookanTeamsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -171,5 +170,61 @@ public class TookanSyncClient {
                     + body.substring(0, Math.min(200, body.length())), e);
         }
     }
+
+    /**
+     * Finds Tookan regions that contain any of the provided points.
+     *
+     * @param points list of coordinates (latitude := x, longitude := y)
+     * @return list of TookanRegion found (empty list if none)
+     */
+    public List<GeofenceRegion> findRegionFromPoints(List<RegionPoint> points) {
+        var requestBody = Map.of(
+                "api_key", props.apiKey(),
+                "points", points.stream()
+                        .map(p -> Map.of("latitude", p.x(), "longitude", p.y()))
+                        .toList()
+        );
+
+        return tookanClient.post()
+                .uri("/v2/find_region_from_points")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(requestBody))
+                .exchangeToMono(resp -> {
+                    var isJson = resp.headers().contentType()
+                            .map(ct -> ct.includes(MediaType.APPLICATION_JSON))
+                            .orElse(false);
+
+                    if (isJson) {
+                        return resp.bodyToMono(FindRegionResponse.class)
+                                .map(r -> {
+                                    if (r.status() != 200) {
+                                        throw new IllegalStateException("Tookan error: " + r.status() + " " + r.message());
+                                    }
+                                    return r.data() == null ? List.<GeofenceRegion>of() : r.data();
+                                });
+                    }
+
+                    // fallback: read as String and parse
+                    return resp.bodyToMono(String.class).map(body -> {
+                        if (body != null && body.trim().startsWith("<")) {
+                            throw new IllegalStateException("Tookan returned HTML instead of JSON. First 200 chars: "
+                                    + body.substring(0, Math.min(200, body.length())));
+                        }
+                        try {
+                            var parsed = mapper.readValue(body, FindRegionResponse.class);
+                            if (parsed.status() != 200) {
+                                throw new IllegalStateException("Tookan error: " + parsed.status() + " " + parsed.message());
+                            }
+                            return parsed.data() == null ? List.<GeofenceRegion>of() : parsed.data();
+                        } catch (JsonProcessingException e) {
+                            throw new IllegalStateException("Failed to parse Tookan JSON. Body starts: "
+                                    + (body == null ? "null" : body.substring(0, Math.min(200, body.length()))), e);
+                        }
+                    });
+                })
+                .block(); // blocking call — keep it consistent with existing client style
+    }
+
 
 }

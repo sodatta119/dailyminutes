@@ -18,6 +18,10 @@ public record CreateStoreRequest(
         String contactNumber,
         @Email(message = "Email should be valid")
         String email,
-        Long managerId
+        Long managerId,
+        @NotBlank(message = "Latitude cannot be blank")
+        String latitude,
+        @NotBlank(message = "Longitude cannot be blank")
+        String longitude
 ) {
 }

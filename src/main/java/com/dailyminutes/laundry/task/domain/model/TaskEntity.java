@@ -24,6 +24,8 @@ public class TaskEntity {
     @Id
     private Long id;
 
+    private String externalId;
+
     private String name;
 
     private String description;
